@@ -296,6 +296,7 @@ project(":code/polynomial-calculator/View").name = "polynomial-calculator-View"
 include "code/binary-search-tree"
 project(":code/binary-search-tree").name = "binary-search-tree"
 
+<<<<<<< HEAD
 // Matrix
 include "code/matrix/Model"
 project(":code/matrix/Model").name = "matrix-Model"
@@ -346,6 +347,18 @@ project(":code/numeral-systems-calculator/ViewModel").name = "numeral-systems-ca
 include "code/numeral-systems-calculator/View"
 project(":code/numeral-systems-calculator/View").name = "numeral-systems-calculator-View"
 
+// Ryabov Vladislav, AVLTree
+include "code/ryabov-avl-tree"
+project(":code/ryabov-avl-tree").name = "ryabov-avl-tree"
+
+//Pipikin Oleg, Matrix
+include "code/pipikin-oleg-matrix"
+project(":code/pipikin-oleg-matrix").name = "pipikin-oleg-matrix"
+
+// Nakhimovich Dmitry, Segments2D
+include "code/nakhimovich-dmitry-segments2d"
+project(":code/nakhimovich-dmitry-segments2d").name = "nakhimovich-dmitry-segments2d"
+
 // Krutoberezskaya Irina, numbers-in-words
 include "code/numbers-in-words/Model"
 project(":code/numbers-in-words/Model").name = "numbers-in-words-Model"
@@ -353,7 +366,3 @@ include "code/numbers-in-words/ViewModel"
 project(":code/numbers-in-words/ViewModel").name = "numbers-in-words-ViewModel"
 include "code/numbers-in-words/View"
 project(":code/numbers-in-words/View").name = "numbers-in-words-View"
-
-// Ryabov Vladislav, AVLTree
-include "code/ryabov-avl-tree"
-project(":code/ryabov-avl-tree").name = "ryabov-avl-tree"
