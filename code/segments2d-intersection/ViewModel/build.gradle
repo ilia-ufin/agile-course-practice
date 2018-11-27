@@ -1,0 +1,3 @@
+dependencies {
+    compile project(':segments2d-intersection-Model')
+}

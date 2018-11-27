@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import ru.unn.agile.LcdDigits.viewmodel.*?>
+
+<AnchorPane prefHeight="362.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.LcdDigits.view.LcdDigits">
+    <fx:define>
+        <ViewModel fx:id="viewModel" />
+    </fx:define>
+    <children>
+      <Button fx:id="btnTransform" defaultButton="true" disable="${viewModel.transferringDisabled}" layoutX="176.0" layoutY="187.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" text="Transform" />
+      <Label layoutX="171.0" layoutY="29.0" text="Enter integer value">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtDigits" layoutX="141.0" layoutY="66.0" prefHeight="47.0" prefWidth="179.0" />
+      <Label layoutX="145.0" layoutY="273.0" prefHeight="20.0" prefWidth="63.0" text="Result:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="141.0" layoutY="143.0" text="Status:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbStatus" layoutX="189.0" layoutY="143.0" text="${viewModel.status}">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="lbResult" layoutX="192.0" layoutY="273.0" text="${viewModel.result}">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+   </children>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+</AnchorPane>

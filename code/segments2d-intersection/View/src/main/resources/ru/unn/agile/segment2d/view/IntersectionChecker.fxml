@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import ru.unn.agile.segment2d.viewmodel.*?>
+
+<AnchorPane prefHeight="247.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.segment2d.view.IntersectionChecker">
+    <fx:define>
+        <ViewModel fx:id="viewModel"/>
+    </fx:define>
+    <children>
+      <Button fx:id="buttonCheckIntersection" layoutX="15.0" layoutY="169.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="512.0" text="Check Intersection" />
+      <Label layoutX="14.0" layoutY="16.0" text="First segment">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="53.0" text="First point">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="140.0" layoutY="53.0" text="Second point">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="81.0" text="x">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="111.0" text="y">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="firstSegmentFirstPointCoordX" layoutX="25.0" layoutY="82.0" prefHeight="25.0" prefWidth="83.0" />
+      <TextField fx:id="firstSegmentFirstPointCoordY" layoutX="25.0" layoutY="111.0" prefHeight="25.0" prefWidth="83.0" />
+      <TextField fx:id="firstSegmentSecondPointCoordY" layoutX="151.0" layoutY="109.0" prefHeight="25.0" prefWidth="83.0" />
+      <TextField fx:id="firstSegmentSecondPointCoordX" layoutX="151.0" layoutY="80.0" prefHeight="25.0" prefWidth="83.0" />
+      <Label layoutX="140.0" layoutY="109.0" text="y">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="140.0" layoutY="79.0" text="x">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="431.0" layoutY="79.0" text="x">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="431.0" layoutY="109.0" text="y">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="secondSegmentSecondPointCoordX" layoutX="442.0" layoutY="80.0" prefHeight="25.0" prefWidth="83.0" />
+      <TextField fx:id="secondSegmentSecondPointCoordY" layoutX="442.0" layoutY="109.0" prefHeight="25.0" prefWidth="83.0" />
+      <TextField fx:id="secondSegmentFirstPointCoordY" layoutX="316.0" layoutY="111.0" prefHeight="25.0" prefWidth="83.0" />
+      <TextField fx:id="secondSegmentFirstPointCoordX" layoutX="316.0" layoutY="82.0" prefHeight="25.0" prefWidth="83.0" />
+      <Label layoutX="305.0" layoutY="111.0" text="y">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="305.0" layoutY="81.0" text="x">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="432.0" layoutY="53.0" text="Second point">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="306.0" layoutY="53.0" text="First point">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="306.0" layoutY="16.0" text="Second segment">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="208.0" text="Result:">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Label>
+      <Label id="resultLabel" layoutX="75.0" layoutY="208.0" prefHeight="26.0" prefWidth="451.0" text="${viewModel.result}">
+         <font>
+            <Font name="System Italic" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="145.0" text="Status:">
+         <font>
+            <Font name="System Italic" size="11.0" />
+         </font>
+      </Label>
+      <Label id="firstSegmentStatus" layoutX="56.0" layoutY="136.0" prefHeight="33.0" prefWidth="176.0" text="${viewModel.firstSegmentStatus}" wrapText="true">
+         <font>
+            <Font name="System Italic" size="11.0" />
+         </font>
+      </Label>
+      <Label id="secondSegmentStatus" layoutX="343.0" layoutY="136.0" prefHeight="33.0" prefWidth="176.0" text="${viewModel.secondSegmentStatus}" wrapText="true">
+         <font>
+            <Font name="System Italic" size="11.0" />
+         </font>
+      </Label>
+      <Label layoutX="305.0" layoutY="145.0" text="Status:">
+         <font>
+            <Font name="System Italic" size="11.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

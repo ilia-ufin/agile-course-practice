@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import ru.unn.agile.polynomial.viewmodel.ViewModel?>
+
+<AnchorPane prefHeight="298.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.polynomial.view.PolynomialCalculator">
+   <fx:define>
+      <ViewModel fx:id="viewModel"/>
+   </fx:define>
+
+   <children>
+      <Button layoutX="50.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Сложить" />
+      <Button layoutX="222.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleSubtractButtonAction" text="Вычесть" />
+      <Button layoutX="132.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleMultiplyButtonAction" text="Умножить" />
+      <TextField fx:id="firstPolynomial" layoutX="28.0" layoutY="68.0" prefHeight="25.0" prefWidth="281.0" />
+      <TextField fx:id="secondPolynomial" layoutX="28.0" layoutY="132.0" prefHeight="25.0" prefWidth="281.0" />
+      <Label layoutX="32.0" layoutY="45.0" text="Первый полином " />
+      <Label layoutX="28.0" layoutY="102.0" text="Второй полином" />
+      <Label layoutX="32.0" layoutY="209.0" text="Результат" />
+      <Label layoutX="342.0" layoutY="60.0" text="Форма записи полинома" />
+      <Label layoutX="356.0" layoutY="85.0" text="-2.5x^2+3x +6.9" />
+      <Label layoutX="28.0" layoutY="236.0" prefHeight="25.0" prefWidth="500.0" text="${viewModel.resultStr}" wrapText="true" />
+   </children>
+</AnchorPane>

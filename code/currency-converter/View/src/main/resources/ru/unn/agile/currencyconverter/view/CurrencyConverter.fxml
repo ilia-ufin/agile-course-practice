@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import ru.unn.agile.currencyconverter.viewmodel.ViewModel?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.currencyconverter.view.CurrencyConverter">
+
+   <fx:define>
+      <ViewModel fx:id="viewModel"/>
+   </fx:define>
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Добавить валютную пару:" />
+      <TextField fx:id="addSrcCode" layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="77.0" />
+      <Label layoutX="104.0" layoutY="44.0" text="/" />
+      <TextField fx:id="addTgtCode" layoutX="120.0" layoutY="40.0" prefHeight="25.0" prefWidth="77.0" />
+      <Label layoutX="14.0" layoutY="74.0" text="Соотношение" />
+      <TextField fx:id="addRate" layoutX="14.0" layoutY="91.0" prefHeight="25.0" prefWidth="77.0" />
+      <Button layoutX="120.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleAddButtonAction" prefHeight="25.0" prefWidth="77.0" text="Добавить" />
+      <Label layoutX="13.0" layoutY="149.0" text="Сконвертировать" />
+      <TextField fx:id="convSrcCode" layoutX="13.0" layoutY="175.0" prefHeight="25.0" prefWidth="77.0" />
+      <Label layoutX="99.0" layoutY="179.0" text="-&gt;" />
+      <TextField fx:id="convTgtCode" layoutX="119.0" layoutY="175.0" prefHeight="25.0" prefWidth="77.0" />
+      <Label layoutX="13.0" layoutY="209.0" text="Количество" />
+      <TextField fx:id="convAmount" layoutX="13.0" layoutY="226.0" prefHeight="25.0" prefWidth="77.0" />
+      <Button layoutX="119.0" layoutY="226.0" mnemonicParsing="false" onAction="#handleConvertButtonAction" prefHeight="25.0" prefWidth="77.0" text="Посчитать" />
+      <Label layoutX="14.0" layoutY="271.0" text="Результат:" />
+      <Label layoutX="14.0" layoutY="290.0" prefHeight="34.0" prefWidth="207.0" text="${viewModel.result}" wrapText="true" />
+      <Label layoutX="231.0" layoutY="14.0" text="Доступные пары:" />
+      <TextArea layoutX="231.0" layoutY="40.0" prefHeight="284.0" prefWidth="120.0" text="${viewModel.currPairs}" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':infix-to-postfix-notation-converter-Model')
+}
+

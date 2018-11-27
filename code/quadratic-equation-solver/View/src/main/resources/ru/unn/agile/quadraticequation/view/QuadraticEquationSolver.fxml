@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import ru.unn.agile.quadraticequation.viewmodel.*?>
+
+<AnchorPane prefHeight="152.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.quadraticequation.view.QuadraticEquation">
+    <fx:define>
+        <ViewModel fx:id="viewModel" />
+    </fx:define>
+    <children>
+      <Pane layoutX="2.0" layoutY="139.0" prefHeight="67.0" prefWidth="441.0">
+         <children>
+            <Button fx:id="btnSolve" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Solve">
+                <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <TextField fx:id="roots" alignment="CENTER" layoutX="106.0" layoutY="14.0" prefHeight="39.0" prefWidth="319.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <Label layoutX="126.0" layoutY="64.0" text="X^2">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="a" alignment="CENTER" layoutX="50.0" layoutY="67.0" prefHeight="30.0" prefWidth="70.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="170.0" layoutY="64.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="257.0" layoutY="63.0" text="X">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="b" alignment="CENTER" layoutX="187.0" layoutY="66.0" prefHeight="30.0" prefWidth="70.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="275.0" layoutY="63.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="c" alignment="CENTER" layoutX="292.0" layoutY="65.0" prefHeight="30.0" prefWidth="70.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Label layoutX="362.0" layoutY="62.0" text="=">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="379.0" layoutY="62.0" text="0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -39,7 +39,10 @@ public class ViewModelTests {
 
     @Test
     public void statusIsReadyWhenFieldsAreFill() {
-        setInputData();
+        viewModel.re1Property().set("1");
+        viewModel.im1Property().set("2");
+        viewModel.re2Property().set("3");
+        viewModel.im2Property().set("4");
 
         assertEquals(Status.READY.toString(), viewModel.statusProperty().get());
     }

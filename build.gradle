@@ -96,6 +96,9 @@ subprojects {
 
     dependencies {
         testCompile 'junit:junit:4.11'
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.4.1'
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.4.1'
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.4.1'
     }
 
     tasks.withType(JavaCompile) {

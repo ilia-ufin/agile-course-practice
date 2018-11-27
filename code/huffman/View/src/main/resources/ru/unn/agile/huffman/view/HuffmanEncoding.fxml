@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.*?>
+
+<?import ru.unn.agile.huffman.viewmodel.*?>
+
+<AnchorPane maxHeight="360.0" maxWidth="640.0" minHeight="360.0" minWidth="640.0" prefHeight="360.0" prefWidth="640.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.unn.agile.huffman.view.HuffmanEncoding">
+   <fx:define>
+      <ViewModel fx:id="viewModel"/>
+   </fx:define>
+   <children>
+      <AnchorPane layoutY="312.0" prefHeight="49.0" prefWidth="640.0" style="-fx-background-color: #2e3348;">
+         <children>
+            <Button fx:id="btnEncode" defaultButton="true" disable="${viewModel.encodingDisabled}" layoutX="535.0"
+                    layoutY="13.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="85.0"
+                    style="-fx-background-color: #f39c63;" text="Encode" textFill="#fcf9f9">
+               <font>
+                  <Font name="Verdana" size="12.0"/>
+               </font>
+            </Button>
+            <Label fx:id="lbStatus" layoutX="75.0" layoutY="16.0" prefHeight="17.0" prefWidth="448.0" textFill="WHITE"/>
+         </children>
+      </AnchorPane>
+      <TextArea fx:id="txtInput" layoutX="76.0" layoutY="34.0" prefHeight="95.0" prefWidth="515.0"/>
+      <ImageView fitHeight="58.0" fitWidth="76.0" layoutX="14.0" layoutY="53.0" pickOnBounds="true"
+                 preserveRatio="true">
+         <image>
+            <Image url="@text.png"/>
+         </image>
+      </ImageView>
+      <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="14.0" layoutY="204.0" pickOnBounds="true"
+                 preserveRatio="true">
+         <image>
+            <Image url="@code.png"/>
+         </image>
+      </ImageView>
+      <TextArea fx:id="txtOutput" editable="false" layoutX="76.0"
+                layoutY="186.0" prefHeight="95.0" prefWidth="515.0"/>
+   </children>
+</AnchorPane>
