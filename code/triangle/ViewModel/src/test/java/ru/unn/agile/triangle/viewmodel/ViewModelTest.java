@@ -10,9 +10,16 @@ public class ViewModelTest {
     private final double delta = 0.001;
     private ViewModel viewModel;
 
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        if (viewModel == null) {
+            viewModel = new ViewModel();
+            viewModel.setLogger(new FakeLogger());
+        }
     }
 
     @After

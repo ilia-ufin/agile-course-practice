@@ -21,11 +21,24 @@ public class ViewModel {
     private StringProperty cY = new SimpleStringProperty();
     private StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+    private ILogger logger;
 
     private final BooleanProperty btnDisabled = new SimpleBooleanProperty();
 
     public ViewModel() {
         initDefaultFields();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        initDefaultFields();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
     }
 
     public String getAx() {
@@ -106,10 +119,12 @@ public class ViewModel {
             {
                 super.bind(aX, aY, bX, bY, cX, cY);
             }
+
             @Override
             protected boolean computeValue() {
                 return getInputStatus() == Status.READY;
-            };
+            }
+
         };
         btnDisabled.bind(couldCalculate.not());
     }
