@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import ru.unn.agile.Triangle;
 import ru.unn.agile.primitives.Point;
 
@@ -21,7 +23,9 @@ public class ViewModel {
     private StringProperty cY = new SimpleStringProperty();
     private StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+    private final StringProperty logs = new SimpleStringProperty();
     private ILogger logger;
+    private List<ValueCachingChangeListener> valueChangedListeners;
 
     private final BooleanProperty btnDisabled = new SimpleBooleanProperty();
 
@@ -97,6 +101,18 @@ public class ViewModel {
         return status.get();
     }
 
+    public String getLogs() {
+        return logs.get();
+    }
+
+    public StringProperty logsProperty() {
+        return logs;
+    }
+
+    public void setLogs(final String logs) {
+        this.logs.set(logs);
+    }
+
     public BooleanProperty btnDisabledProperty() {
         return btnDisabled;
     }
@@ -127,6 +143,21 @@ public class ViewModel {
 
         };
         btnDisabled.bind(couldCalculate.not());
+        final List<StringProperty> values = new ArrayList<StringProperty>() { {
+            add(aX);
+            add(aY);
+            add(bX);
+            add(bY);
+            add(cX);
+            add(cY);
+        } };
+        valueChangedListeners = new ArrayList<>();
+        for (StringProperty val : values) {
+            final ValueCachingChangeListener listener = new ValueCachingChangeListener();
+            val.addListener(listener);
+            valueChangedListeners.add(listener);
+        }
+
     }
 
     public Point getPointA() {
@@ -237,6 +268,39 @@ public class ViewModel {
         }
     }
 
+    public void onFocusChanged(final Boolean oldValue, final Boolean newValue) {
+        if (!oldValue && newValue) {
+            return;
+        }
+
+        for (ValueCachingChangeListener listener : valueChangedListeners) {
+            if (listener.isChanged()) {
+                StringBuilder message = new StringBuilder(LogMessages.EDITING_FINISHED);
+                message.append("Input arguments are: [")
+                        .append(aX.get()).append("; ")
+                        .append(aY.get()).append("; ")
+                        .append(bX.get()).append("; ")
+                        .append(bY.get()).append("; ")
+                        .append(cX.get()).append("; ")
+                        .append(cY.get()).append("]");
+                logger.log(message.toString());
+                updateLogs();
+
+                listener.cache();
+                break;
+            }
+        }
+    }
+
+    private void updateLogs() {
+        List<String> fullLog = logger.getLog();
+        String record = new String("");
+        for (String log : fullLog) {
+            record += log + "\n";
+        }
+        logs.set(record);
+    }
+
     private Status getInputStatus() {
         Status inputStatus = Status.READY;
         List<StringProperty> pointArray = new ArrayList<>();
@@ -260,10 +324,31 @@ public class ViewModel {
 
         return inputStatus;
     }
+
+    private class ValueCachingChangeListener implements ChangeListener<String> {
+        private String prevValue = new String("");
+        private String curValue = new String("");
+        @Override
+        public void changed(final ObservableValue<? extends String> observable,
+                            final String oldValue, final String newValue) {
+            if (oldValue.equals(newValue)) {
+                return;
+            }
+            status.set(getInputStatus().toString());
+            curValue = newValue;
+        }
+        public boolean isChanged() {
+            return !prevValue.equals(curValue);
+        }
+        public void cache() {
+            prevValue = curValue;
+        }
+    }
 }
 
 enum Status {
     READY("Press 'Calculate' or Enter");
+
 
     private final String name;
 
@@ -274,4 +359,13 @@ enum Status {
     public String toString() {
         return name;
     }
+}
+
+final class LogMessages {
+    public static final String CALCULATE_WAS_PRESSED = "Calculate. ";
+    public static final String VERTEX_WAS_CHANGED = "Vertex was changed to ";
+    public static final String EDITING_FINISHED = "Updated input. ";
+    public static final String OPERATION_WAS_CHANGED = "Operation was changed to ";
+
+    private LogMessages() { }
 }
