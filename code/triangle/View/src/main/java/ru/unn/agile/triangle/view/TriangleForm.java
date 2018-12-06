@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import ru.unn.agile.triangle.viewmodel.ViewModel;
 
+
 public class TriangleForm {
     @FXML
     private ViewModel viewModel;
