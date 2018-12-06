@@ -42,7 +42,7 @@ public class TxtLoggerTests {
 
         txtLogger.log(message);
 
-        int logMessage = txtLogger.getLog().size();
+        int logMessage = txtLogger.getLogger().size();
         assertEquals(1, logMessage);
 
     }
@@ -55,7 +55,7 @@ public class TxtLoggerTests {
             txtLogger.log(message);
         }
 
-        int logMessage = txtLogger.getLog().size();
+        int logMessage = txtLogger.getLogger().size();
         assertEquals(2, logMessage);
     }
 
@@ -63,7 +63,7 @@ public class TxtLoggerTests {
     public void canCreateLoggerWithIncorrectName() {
         TxtLogger emptyLogger = new TxtLogger("");
 
-        assertEquals(0, emptyLogger.getLog().size());
+        assertEquals(0, emptyLogger.getLogger().size());
     }
 
     @Test
@@ -72,14 +72,14 @@ public class TxtLoggerTests {
 
         emptyLogger.log("Message");
 
-        assertEquals(0, emptyLogger.getLog().size());
+        assertEquals(0, emptyLogger.getLogger().size());
     }
 
     @Test
     public void canReadIfLFileNameIsInCorrect() {
         TxtLogger emptyLogger = new TxtLogger("");
 
-        List<String> log = emptyLogger.getLog();
+        List<String> log = emptyLogger.getLogger();
 
         assertEquals(0, log.size());
     }

@@ -48,7 +48,7 @@ public class TxtLogger implements ILogger {
     }
 
     @Override
-    public List<String> getLog() {
+    public List<String> getLogger() {
         BufferedReader reader;
         ArrayList<String> log = new ArrayList<String>();
         try {

@@ -18,7 +18,7 @@ public class ViewModelTest {
     public void setUp() {
         if (viewModel == null) {
             viewModel = new ViewModel();
-            viewModel.setLogger(new FakeLogger());
+            viewModel.setLogger(new FakeLog());
         }
     }
 

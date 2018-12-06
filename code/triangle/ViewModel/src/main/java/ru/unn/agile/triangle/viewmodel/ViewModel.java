@@ -293,7 +293,7 @@ public class ViewModel {
     }
 
     private void updateLogs() {
-        List<String> fullLog = logger.getLog();
+        List<String> fullLog = logger.getLogger();
         String record = new String("");
         for (String log : fullLog) {
             record += log + "\n";
