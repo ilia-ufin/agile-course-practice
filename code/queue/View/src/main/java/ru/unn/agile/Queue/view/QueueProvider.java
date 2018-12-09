@@ -1,11 +1,13 @@
 package ru.unn.agile.Queue.view;
 
+import ru.unn.agile.queue.infrastructure.FileLogger;
 import ru.unn.agile.queue.viewmodel.ViewModel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public final class QueueProvider {
     private ViewModel viewModel;
@@ -18,6 +20,7 @@ public final class QueueProvider {
     private JTextField inputNewElemField;
     private JTextArea queueTextArea;
     private JLabel outputStateLabel;
+    private JList<String> logList;
 
     private QueueProvider(final ViewModel viewModel) {
         this.viewModel = viewModel;
@@ -27,7 +30,7 @@ public final class QueueProvider {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 bind();
-                QueueProvider.this.viewModel.addProcess();
+                QueueProvider.this.viewModel.pushProcess();
                 backBind();
             }
         });
@@ -36,7 +39,7 @@ public final class QueueProvider {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 bind();
-                QueueProvider.this.viewModel.removeProcess();
+                QueueProvider.this.viewModel.popProcess();
                 backBind();
             }
         });
@@ -64,7 +67,8 @@ public final class QueueProvider {
 
     public static void main(final String[] args) {
         JFrame frame = new JFrame("QueueProvider");
-        frame.setContentPane(new QueueProvider(new ViewModel()).mainPanel);
+        FileLogger logger = new FileLogger("Queue.log");
+        frame.setContentPane(new QueueProvider(new ViewModel(logger)).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -81,5 +85,9 @@ public final class QueueProvider {
 
         queueTextArea.setText(viewModel.getQueueStringRepresentation());
         outputStateLabel.setText(viewModel.getCurrentState());
+
+        List<String> log = viewModel.getLog();
+        String[] items = log.toArray(new String[log.size()]);
+        logList.setListData(items);
     }
 }

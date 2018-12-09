@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import ru.unn.agile.vector3d.infrastructure.TxtLogger;
 import ru.unn.agile.vector3d.viewmodel.Operation;
 import ru.unn.agile.vector3d.viewmodel.ViewModel;
 
@@ -31,6 +32,8 @@ public class Vector3DCalculator {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./Vector3DCalculator.log"));
+
         bindVectorFields();
         bindOtherVectorFields();
         bindMultiplicationCoeff();

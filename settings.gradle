@@ -2,9 +2,13 @@
 include "code/bevzuk-anton"
 project(":code/bevzuk-anton").name = "bevzuk-anton-Model"
 
-//Oleneva Maria
-include "code/oleneva-intersect-line-and-plane"
-project(":code/oleneva-intersect-line-and-plane").name = "code/oleneva-intersect-line-and-plane"
+// Intersect line and plane
+include "code/intersect-line-and-plane/View"
+project(":code/intersect-line-and-plane/View").name = "intersect-line-and-plane-View"
+include "code/intersect-line-and-plane/Model"
+project(":code/intersect-line-and-plane/Model").name = "intersect-line-and-plane-Model"
+include "code/intersect-line-and-plane/ViewModel"
+project(":code/intersect-line-and-plane/ViewModel").name = "intersect-line-and-plane-ViewModel"
 
 // Currency Converter
 include "code/currency-converter/Model"
@@ -45,7 +49,6 @@ include "code/prime-number/view"
 project(":code/prime-number/view").name = "prime-number-View"
 include "code/prime-number/ViewModel"
 project(":code/prime-number/ViewModel").name = "prime-number-ViewModel"
-
 
 // Marchenko Andrey
 include "code/marchenko-andrey-complex-number"
@@ -114,6 +117,8 @@ include "code/infix-to-postfix-notation-converter/View"
 project(":code/infix-to-postfix-notation-converter/View").name = "infix-to-postfix-notation-converter-View"
 include "code/infix-to-postfix-notation-converter/ViewModel"
 project(":code/infix-to-postfix-notation-converter/ViewModel").name = "infix-to-postfix-notation-converter-ViewModel"
+include "code/infix-to-postfix-notation-converter/Infrastructure"
+project(":code/infix-to-postfix-notation-converter/Infrastructure").name = "infix-to-postfix-notation-converter-Infrastructure"
 
 // Huffman
 include "code/huffman/Model"
@@ -138,6 +143,8 @@ include "code/vector3d/ViewModel"
 project(":code/vector3d/ViewModel").name = "vector3d-ViewModel"
 include "code/vector3d/View"
 project(":code/vector3d/View").name = "vector3d-View"
+include "code/vector3d/Infrastructure"
+project(":code/vector3d/Infrastructure").name = "vector3d-Infrastructure"
 
 // string-calculator
 include "code/string-calculator/Model"
@@ -146,6 +153,8 @@ include "code/string-calculator/ViewModel"
 project(":code/string-calculator/ViewModel").name = "string-calculator-ViewModel"
 include "code/string-calculator/View"
 project(":code/string-calculator/View").name = "string-calculator-View"
+include "code/string-calculator/Infrastructure"
+project(":code/string-calculator/Infrastructure").name = "string-calculator-Infrastructure"
 
 // Stack
 include "code/stack"
@@ -206,6 +215,8 @@ include "code/queue/ViewModel"
 project(":code/queue/ViewModel").name = "queue-ViewModel"
 include "code/queue/View"
 project(":code/queue/View").name = "queue-View"
+include "code/queue/Infrastructure"
+project(":code/queue/Infrastructure").name = "queue-Infrastructure"
 
 // Flegontov Alexander and Polyakov Igor, math-statistics
 include "code/math-statistics/Model"
@@ -224,8 +235,12 @@ include "code/frac-calc/View"
 project(":code/frac-calc/View").name = "frac-calc-View"
 
 // 3D shapes volume
-include "code/shape-volume-calculator"
-project(":code/shape-volume-calculator").name = "shape-volume-calculator"
+include "code/shape-volume-calculator/Model"
+project(":code/shape-volume-calculator/Model").name = "shape-volume-calculator-Model"
+include "code/shape-volume-calculator/ViewModel"
+project(":code/shape-volume-calculator/ViewModel").name = "shape-volume-calculator-ViewModel"
+include "code/shape-volume-calculator/View"
+project(":code/shape-volume-calculator/View").name = "shape-volume-calculator-View"
 
 // Rumiantseva Maria, Quadratic Equation Solver
 include "code/quadratic-equation-solver/Model"
@@ -302,4 +317,3 @@ include "code/numbers-in-words/ViewModel"
 project(":code/numbers-in-words/ViewModel").name = "numbers-in-words-ViewModel"
 include "code/numbers-in-words/View"
 project(":code/numbers-in-words/View").name = "numbers-in-words-View"
-

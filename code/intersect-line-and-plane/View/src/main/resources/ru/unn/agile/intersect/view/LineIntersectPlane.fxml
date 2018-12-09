@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import ru.unn.agile.intersect.viewmodel.*?>
+
+<AnchorPane prefHeight="377.0" prefWidth="573.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2" fx:controller="ru.unn.agile.intersect.view.LineIntersectPlane">
+    <fx:define>
+        <ViewModel fx:id="viewModel"/>
+    </fx:define>
+    <children>
+        <Button fx:id="checkIntersectionButton" alignment="CENTER" layoutX="234.0" layoutY="271.0" minHeight="22.0"
+                mnemonicParsing="false" prefHeight="31.0" prefWidth="166.0" text="Check" textAlignment="CENTER">
+            <font>
+                <Font size="16.0" fx:id="x2"/>
+            </font>
+        </Button>
+        <Label layoutX="234.0" layoutY="53.0" minWidth="8.0" prefWidth="22.0" text="A:">
+            <font>
+                <Font size="18.0" fx:id="x1"/>
+            </font>
+        </Label>
+        <Label font="$x1" layoutX="234.0" layoutY="80.0" prefWidth="22.0" text="B:"/>
+        <Label font="$x1" layoutX="234.0" layoutY="108.0" prefWidth="22.0" text="C:"/>
+        <TextField fx:id="coordXFirstPlanePoint" layoutX="260.0" layoutY="50.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordYFirstPlanePoint" layoutX="311.0" layoutY="50.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordZFirstPlanePoint" layoutX="363.0" layoutY="50.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordXSecondPlanePoint" layoutX="260.0" layoutY="79.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordYSecondPlanePoint" layoutX="311.0" layoutY="79.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordZSecondPlanePoint" layoutX="363.0" layoutY="78.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordXThirdPlanePoint" layoutX="260.0" layoutY="106.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordYThirdPlanePoint" layoutX="311.0" layoutY="106.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordZThirdPlanePoint" layoutX="363.0" layoutY="107.0" prefHeight="25.0" prefWidth="37.0"/>
+        <Label font="$x2" layoutX="353.0" layoutY="57.0" text=","/>
+        <Label font="$x2" layoutX="302.0" layoutY="86.0" text=","/>
+        <Label font="$x2" layoutX="353.0" layoutY="86.0" text=","/>
+        <Label font="$x2" layoutX="302.0" layoutY="114.0" text=","/>
+        <Label font="$x2" layoutX="353.0" layoutY="114.0" text=","/>
+        <Label font="$x2" layoutX="302.0" layoutY="204.0" text=","/>
+        <Label font="$x1" layoutX="234.0" layoutY="200.0" minWidth="8.0" prefWidth="22.0" text="x:"/>
+        <Label font="$x1" layoutX="234.0" layoutY="226.0" prefWidth="22.0" text="y:"/>
+        <TextField fx:id="coordXFirstLinePoint" layoutX="260.0" layoutY="197.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordYFirstLinePoint" layoutX="311.0" layoutY="197.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordZFirstLinePoint" layoutX="363.0" layoutY="197.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordXSecondLinePoint" layoutX="260.0" layoutY="226.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordYSecondLinePoint" layoutX="311.0" layoutY="226.0" prefHeight="25.0" prefWidth="37.0"/>
+        <TextField fx:id="coordZSecondLinePoint" layoutX="363.0" layoutY="226.0" prefHeight="25.0" prefWidth="37.0"/>
+        <Label font="$x2" layoutX="353.0" layoutY="204.0" text=","/>
+        <Label font="$x2" layoutX="302.0" layoutY="233.0" text=","/>
+        <Label font="$x2" layoutX="353.0" layoutY="233.0" text=","/>
+        <Label font="$x2" layoutX="302.0" layoutY="57.0" text=","/>
+        <Label fx:id="resultLabel" alignment="BOTTOM_CENTER" font="$x2" layoutX="141.0" layoutY="332.0"
+               prefWidth="341.0" text="${viewModel.result}"/>
+        <Label layoutX="14.0" layoutY="16.0" prefWidth="126.0" text="Plane equation">
+            <font>
+                <Font name="System Bold" size="16.0" fx:id="x3"/>
+            </font>
+        </Label>
+        <Label font="$x3" layoutX="14.0" layoutY="161.0" text="Line equation" textAlignment="LEFT"/>
+        <Label font="$x3" layoutX="14.0" layoutY="332.0" text="Result"/>
+        <Label layoutX="181.0" layoutY="16.0" prefWidth="385.0"
+               text="Enter the coordinates of the points to define the plane">
+            <font>
+                <Font name="System Italic" size="16.0" fx:id="x5"/>
+            </font>
+        </Label>
+        <Label font="$x5" layoutX="181.0" layoutY="161.0" prefWidth="385.0"
+               text="Enter the coordinates of the points to define the line" textAlignment="LEFT"/>
+        <Label id="planeStatus" layoutX="14.0" layoutY="50.0" maxWidth="200.0" prefHeight="25.0" prefWidth="193.0"
+               text="${viewModel.planeStatus}" textOverrun="ELLIPSIS" wrapText="true">
+            <font>
+                <Font name="System Italic" size="14.0" fx:id="x4"/>
+            </font>
+        </Label>
+        <Label id="lineStatus" font="$x4" layoutX="14.0" layoutY="195.0" maxWidth="200.0" prefHeight="24.0"
+               prefWidth="193.0" text="${viewModel.lineStatus}" textOverrun="ELLIPSIS" wrapText="true"/>
+    </children>
+</AnchorPane>

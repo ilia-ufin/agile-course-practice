@@ -37,7 +37,11 @@ public class ViewModel {
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
+    private final StringProperty log = new SimpleStringProperty();
+
     private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
+
+    private ILogger logger;
 
     public final ObservableList<Operation> getOperations() {
         return operations.get();
@@ -131,11 +135,40 @@ public class ViewModel {
         return calculationDisabled;
     }
 
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
+    public String getLog() {
+        return log.get();
+    }
+
+    public StringProperty logProperty() {
+        return log;
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger can't be null");
+        }
+        this.logger = logger;
+    }
+
     public ViewModel() {
+        init();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        init();
+    }
+
+    private void init() {
         setDefaultVector();
         setDefaultOtherVector();
         setDefaultMultCoeffAndResult();
         setDefaultOperationAndStatus();
+        setDefaultLog();
 
         initCalculateStateListener();
         initFieldsListeners();
@@ -149,6 +182,11 @@ public class ViewModel {
         IAction action = ActionFactory.getAction(getOperation());
         if (action != null) {
             action.execute(this);
+            appendLog(String.format(LogMessages.CALCULATE_WAS_PRESSED,
+                    vectorX.get(), vectorY.get(), vectorZ.get(),
+                    otherVectorX.get(), otherVectorY.get(), otherVectorZ.get(),
+                    multiplicationCoeff.get(),
+                    operation.get()));
         }
     }
 
@@ -222,11 +260,35 @@ public class ViewModel {
         status.set(Status.WAITING.toString());
     }
 
+    private void setDefaultLog() {
+        log.set(EMPTY_STRING);
+    }
+
+    private void appendLog(final String s) {
+        logger.log(s);
+
+        StringBuilder logMsg = new StringBuilder();
+        for (String line : logger.getLog()) {
+            logMsg.append(line).append("\n");
+        }
+        log.set(logMsg.toString());
+    }
+
     private class ValueChangeListener implements ChangeListener<Object> {
         @Override
         public void changed(final ObservableValue<?> observable,
                             final Object oldValue, final Object newValue) {
             status.set(getInputStatus().toString());
+
+            if (observable == operation) {
+                appendLog(String.format(LogMessages.OPERATION_WAS_CHANGED, newValue));
+            } else if (observable == multiplicationCoeff) {
+                appendLog(String.format(LogMessages.MULT_COEF_WAS_CHANGED, newValue));
+            } else {
+                appendLog(String.format(LogMessages.VECTORS_WERE_CHANGED,
+                        vectorX.get(), vectorY.get(), vectorZ.get(),
+                        otherVectorX.get(), otherVectorY.get(), otherVectorZ.get()));
+            }
         }
     }
 
@@ -254,5 +316,15 @@ public class ViewModel {
             }
             return null;
         }
+    }
+
+    public static final class LogMessages {
+        public static final String VECTORS_WERE_CHANGED =
+                "Vectors were changed: (%s, %s, %s) - (%s, %s, %s)";
+        public static final String MULT_COEF_WAS_CHANGED =
+                "Multiplication coefficient was changed to %s";
+        public static final String OPERATION_WAS_CHANGED = "Operation was changed to %s";
+        public static final String CALCULATE_WAS_PRESSED =
+                "Calculate. Arguments: (%s, %s, %s) - (%s, %s, %s), coef = %s, op = %s";
     }
 }
