@@ -1,5 +1,7 @@
 package ru.unn.agile.intersect.infrastructure;
 
+import ru.unn.agile.intersect.viewmodel.ILogger;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -10,7 +12,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class Logger implements ILogger{
+public class Logger implements ILogger {
     private static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
     private final BufferedWriter logWriter;

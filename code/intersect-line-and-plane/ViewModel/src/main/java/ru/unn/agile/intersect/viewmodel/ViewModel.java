@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import ru.unn.agile.intersect.infrastructure.ILogger;
 import ru.unn.agile.intersect.model.LineIntersectPlane;
 import ru.unn.agile.intersect.model.objects.*;
 
@@ -15,6 +14,9 @@ public class ViewModel {
     private static final String WAITING = "Waiting for input";
     private static final String OK = "Correct input";
     private static final String ERROR = "Input error";
+
+    private static final String LINE_PREFIX = "Line ";
+    private static final String PLANE_PREFIX = "Plane ";
 
     private static final String INTERSECT = "Intersect";
     private static final String NOT_INTERSECT = "Do not intersect";
@@ -45,12 +47,21 @@ public class ViewModel {
 
     private ILogger logger;
 
-    public ViewModel(final ILogger logger) {
+    public final void setLogger(final ILogger logger) {
         if (logger == null) {
             throw new IllegalArgumentException("Logger parameter can't be null");
         }
-
         this.logger = logger;
+    }
+
+    public ViewModel() {
+        initCoordinatesAndResult();
+        initStatuses();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+
         initCoordinatesAndResult();
         initStatuses();
     }
@@ -336,10 +347,16 @@ public class ViewModel {
             List<Point> coordinates = formPlaneCoordinateList();
             Plane plane = new Plane(coordinates.get(0), coordinates.get(1), coordinates.get(2));
             planeStatus.set(OK);
+
+            logger.log(PLANE_PREFIX + planeStatus.get());
+
             return plane;
         } catch (NumberFormatException | ArithmeticException ex) {
             planeStatus.set(ERROR + ": " + ex.getMessage().toLowerCase(Locale.ENGLISH));
             result.set(ERROR);
+
+            logger.log(PLANE_PREFIX + planeStatus.get());
+
             return null;
         }
     }
@@ -349,10 +366,16 @@ public class ViewModel {
             List<Point> coordinates = formLineCoordinateList();
             Line line = new Line(coordinates.get(0), coordinates.get(1));
             lineStatus.set(OK);
+
+            logger.log(LINE_PREFIX + lineStatus.get());
+
             return line;
         } catch (NumberFormatException | ArithmeticException ex) {
             lineStatus.set(ERROR + ": " + ex.getMessage().toLowerCase(Locale.ENGLISH));
             result.set(ERROR);
+
+            logger.log(LINE_PREFIX + lineStatus.get());
+
             return null;
         }
     }
@@ -367,6 +390,12 @@ public class ViewModel {
             } else {
                 result.set(NOT_INTERSECT);
             }
+
+            logger.log(result.get());
         }
+    }
+
+    public final List<String> getLog() {
+        return logger.getLog();
     }
 }

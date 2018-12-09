@@ -1,7 +1,5 @@
 package ru.unn.agile.intersect.viewmodel;
 
-import ru.unn.agile.intersect.infrastructure.ILogger;
-
 import java.util.ArrayList;
 import java.util.List;
 

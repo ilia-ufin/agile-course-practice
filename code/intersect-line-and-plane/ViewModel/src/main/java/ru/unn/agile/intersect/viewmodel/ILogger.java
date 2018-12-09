@@ -1,4 +1,4 @@
-package ru.unn.agile.intersect.infrastructure;
+package ru.unn.agile.intersect.viewmodel;
 
 import java.util.List;
 
