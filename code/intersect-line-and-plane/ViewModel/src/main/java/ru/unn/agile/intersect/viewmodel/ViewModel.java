@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import ru.unn.agile.intersect.infrastructure.ILogger;
 import ru.unn.agile.intersect.model.LineIntersectPlane;
 import ru.unn.agile.intersect.model.objects.*;
 
@@ -42,7 +43,14 @@ public class ViewModel {
     private StringProperty lineStatus = new SimpleStringProperty();
     private StringProperty result = new SimpleStringProperty();
 
-    public ViewModel() {
+    private ILogger logger;
+
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+
+        this.logger = logger;
         initCoordinatesAndResult();
         initStatuses();
     }
