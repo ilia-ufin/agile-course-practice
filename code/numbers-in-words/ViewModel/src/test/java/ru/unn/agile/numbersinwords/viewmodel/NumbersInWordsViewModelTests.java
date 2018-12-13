@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class NumbersInWordsViewModelTests {
     private final FakeLogger logger = new FakeLogger();
+
     @Test
     public void isConvertButtonDisabledByDefault() {
         NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
@@ -102,24 +103,4 @@ public class NumbersInWordsViewModelTests {
         assertEquals("You can enter up to 12 digits", viewModel.getErrorMessage());
     }
 
-    @Test
-    public void canLogInput() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
-
-        viewModel.setNumber("123456");
-        String log = viewModel.getLogMessages().toString();
-
-        assertTrue(log.contains(NumbersInWordsViewModel.LOG_MESSAGE_INPUT));
-    }
-
-    @Test
-    public void canLogConvert() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
-
-        viewModel.setNumber("11");
-        viewModel.convert();
-        String log = viewModel.getLogMessages().toString();
-
-        assertTrue(log.contains(NumbersInWordsViewModel.LOG_MESSAGE_CONVERT));
-    }
 }
