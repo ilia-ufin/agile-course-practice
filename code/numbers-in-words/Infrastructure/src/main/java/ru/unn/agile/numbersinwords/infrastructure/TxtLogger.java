@@ -14,7 +14,7 @@ import java.util.List;
 public class TxtLogger implements ILogger {
     private BufferedWriter writeBuffer;
     private List<String> log = new ArrayList<>();
-    private static final String ISO_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final String ISO_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss ";
 
     public TxtLogger(final String logPath) throws IOException {
         writeBuffer = Files.newBufferedWriter(
@@ -29,7 +29,7 @@ public class TxtLogger implements ILogger {
     public void log(final String message) {
         try {
             log.add(message);
-            writeBuffer.append(getTimestamp() + message + "\n");
+            writeBuffer.append(getTimestamp() + message + "\r\n");
             writeBuffer.flush();
         } catch (IOException e) {
             e.printStackTrace();
