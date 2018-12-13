@@ -1,13 +1,15 @@
 package ru.unn.agile.numbersinwords.view;
 
 import ru.unn.agile.numbersinwords.viewmodel.NumbersInWordsViewModel;
+import ru.unn.agile.numbersinwords.viewmodel.FakeLogger;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class Converter {
-    private NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+    private FakeLogger logger = new FakeLogger();
+    private NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
     private JPanel mainPanel;
     private JButton convertButton;
     private JTextField number;
