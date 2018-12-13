@@ -1,80 +1,152 @@
 package ru.unn.agile.depositconverter.view;
 
 import ru.unn.agile.depositconverter.viewmodel.DepositCalculatorViewModel;
-
+import ru.unn.agile.depositconverter.infrastructure.FileLogger;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
 
 
-public class DepositCalculatorForm extends JFrame {
-    private DepositCalculatorViewModel calculatorViewModel = new DepositCalculatorViewModel();
-    private JPanel panel1;
-    private JComboBox frequencyOfCapitalizationComboBox;
-    private JTextField revenueTextField;
+public class DepositCalculatorForm {
+    private DepositCalculatorViewModel calculatorViewModel;
+    private JPanel mainPanel;
+
     private JLabel frequencyOfCapitalizationLabel;
-    private JPanel resultPanel;
-    private JLabel revenueLabel;
     private JLabel incomeLabel;
     private JLabel depositAmountLabel;
     private JLabel accruedInterestLabel;
     private JLabel termPlacementLabel;
     private JLabel interestRateLabel;
+
     private JTextField depositAmountTextField;
-    private JTextField termPlacemantTextField;
+    private JTextField termPlacementTextField;
     private JTextField interestRateTextField;
-    private JTextField incomeTextField;
+
     private JButton calculateButton;
-    private JComboBox accruedInterestCombobox;
+    private JComboBox accruedInterestComboBox;
+    private JComboBox frequencyOfCapitalizationComboBox;
+    private JList<String> logList;
+    private JLabel statusText;
+    private JLabel statusNow;
+    private JLabel incomeResult;
+    private JLabel revenueLabel;
+    private JLabel revenueResult;
 
     public static void main(final String[] args) {
         JFrame frame = new JFrame("DepositCalculatorForm");
-        frame.setContentPane(new DepositCalculatorForm().panel1);
+        FileLogger logger = new FileLogger("./DepositCalculatorLog.log");
+        frame.setContentPane(new DepositCalculatorForm(
+                new DepositCalculatorViewModel(logger)).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
-    DepositCalculatorForm() {
-        super();
+
+    private DepositCalculatorForm() {
+
+    }
+
+    DepositCalculatorForm(final DepositCalculatorViewModel viewModel) {
+        calculatorViewModel = viewModel;
+
+        backBind();
+        depositCalculateButtonActionListener();
+        depositAccruedInterestActionListener();
+        depositFrequencyOfCapitalizationActionListener();
+        depositCalculatorKeyAdapter();
+        depositCalculatorFocusAdapter();
         depositCalculatorFormDefaultValues();
-        calculateButton.addActionListener(e -> {
-            backBind();
-            calculatorViewModel.calculate();
-            revenueTextField.setText(calculatorViewModel.getRevenueWhenAddToDeposit());
-            incomeTextField.setText(calculatorViewModel.getIncomeViewModel());
-            bind();
-        });
+
         bind();
     }
 
-    private void bind() { //кладём во вью
-        calculateButton.setEnabled(calculatorViewModel.isCalculatorButtonEnabled());
-    }
-
-    private void backBind() { //берём из view
+    private void bind() {
         calculatorViewModel.setDepositAmount(depositAmountTextField.getText());
-        calculatorViewModel.setTermPlacement(termPlacemantTextField.getText());
+        calculatorViewModel.setTermPlacement(termPlacementTextField.getText());
         calculatorViewModel.setInterestRate(interestRateTextField.getText());
         calculatorViewModel.setAccruedInterest(
-                accruedInterestCombobox.getSelectedItem().toString());
+                accruedInterestComboBox.getSelectedItem().toString());
         calculatorViewModel.setFrequencyOfCapitalization(
                 frequencyOfCapitalizationComboBox.getSelectedItem().toString());
     }
 
+    private void backBind() {
+        calculateButton.setEnabled(calculatorViewModel.isCalculateButtonEnabled());
+        revenueResult.setText(calculatorViewModel.getRevenueWhenAddToDeposit());
+        incomeResult.setText(calculatorViewModel.getIncomeViewModel());
+        statusNow.setText(calculatorViewModel.getStatus());
+
+        List<String> log = calculatorViewModel.getLog();
+        String[] items = log.toArray(new String[log.size()]);
+        logList.setListData(items);
+    }
+
     private void depositCalculatorFormDefaultValues() {
         depositCalculatorSetLabels();
-        resultPanel.setBackground(Color.GREEN);
-        depositAmountTextField.setText(String.valueOf(calculatorViewModel.getDepositAmountView()));
-        termPlacemantTextField.setText(String.valueOf(calculatorViewModel.getTermPlacementView()));
-        interestRateTextField.setText(String.valueOf(calculatorViewModel.getInterestRateView()));
+        depositAmountTextField.setText(String.valueOf(calculatorViewModel.getDepositAmount()));
+        termPlacementTextField.setText(String.valueOf(calculatorViewModel.getTermPlacement()));
+        interestRateTextField.setText(String.valueOf(calculatorViewModel.getInterestRate()));
     }
 
     private void depositCalculatorSetLabels() {
-        frequencyOfCapitalizationLabel.setText("FrequencyOfCapitalization");
+        frequencyOfCapitalizationLabel.setText("Frequency Of Capitalization");
         revenueLabel.setText("Revenue");
         incomeLabel.setText("Income");
-        depositAmountLabel.setText("depositAmount");
-        accruedInterestLabel.setText("AccruedInterest");
-        termPlacementLabel.setText("TermPlacement");
-        interestRateLabel.setText("InterestRate");
+        depositAmountLabel.setText("Deposit Amount");
+        accruedInterestLabel.setText("Accrued Interest");
+        termPlacementLabel.setText("Term Placement");
+        interestRateLabel.setText("Interest Rate");
+        statusText.setText("Status");
+    }
+
+    private void depositCalculateButtonActionListener() {
+        calculateButton.addActionListener(actionEvent -> {
+            bind();
+            calculatorViewModel.calculate();
+            backBind();
+        });
+    }
+
+    private void depositCalculatorKeyAdapter() {
+        KeyAdapter whenInCountType = new KeyAdapter() {
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                bind();
+                calculatorViewModel.checkCountFields();
+                backBind();
+            }
+        };
+
+        depositAmountTextField.addKeyListener(whenInCountType);
+        termPlacementTextField.addKeyListener(whenInCountType);
+        interestRateTextField.addKeyListener(whenInCountType);
+    }
+
+    private void depositFrequencyOfCapitalizationActionListener() {
+        frequencyOfCapitalizationComboBox.addActionListener(actionEvent -> {
+            bind();
+            backBind();
+        });
+    }
+
+    private void depositAccruedInterestActionListener() {
+        accruedInterestComboBox.addActionListener(actionEvent -> {
+            bind();
+            backBind();
+        });
+    }
+
+    private void depositCalculatorFocusAdapter() {
+        FocusAdapter focusLostListener = new FocusAdapter() {
+            public void focusLost(final FocusEvent e) {
+                bind();
+                calculatorViewModel.focusLost();
+                backBind();
+            }
+        };
+
+        depositAmountTextField.addFocusListener(focusLostListener);
+        termPlacementTextField.addFocusListener(focusLostListener);
+        interestRateTextField.addFocusListener(focusLostListener);
     }
 }
