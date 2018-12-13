@@ -73,6 +73,6 @@ public class Converter {
         convertButton.setEnabled(viewModel.isConvertButtonEnabled());
         numbersInWords.setText(viewModel.getNumberInWords());
         errorStatus.setText(viewModel.getErrorMessage());
-        logArea.setText(String.join("\r\n",viewModel.getLogMessages()));
+        logArea.setText(String.join("\r\n", viewModel.getLogMessages()));
     }
 }
