@@ -7,16 +7,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class NumbersInWordsViewModelTests {
+    private final FakeLogger logger = new FakeLogger();
     @Test
     public void isConvertButtonDisabledByDefault() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         assertFalse(viewModel.isConvertButtonEnabled());
     }
 
     @Test
     public void isConvertButtonEnabledWhenEnterNumber() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("1");
 
@@ -25,7 +26,7 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void isConvertButtonDisabledAfterNumberIsCleared() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("1");
         viewModel.setNumber("");
@@ -35,7 +36,7 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void isOneDisplayedWhenConverting1() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("1");
         viewModel.convert();
@@ -45,7 +46,7 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void isTextDeletedWhenChangingNumbers() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("1");
         viewModel.convert();
@@ -56,7 +57,7 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void isConvertButtonDisabledWhenInvalidNumberWasEntered() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("a");
 
@@ -65,7 +66,7 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void canShowErrorMessageWhenInvalidNumberWasEntered() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("a");
 
@@ -74,7 +75,7 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void canHideErrorMessageWhenInvalidNumberWasCorrected() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("a");
         viewModel.setNumber("1");
@@ -84,7 +85,7 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void canHideErrorMessageWhenInvalidNumberWaCleaned() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("a");
         viewModel.setNumber("");
@@ -94,10 +95,31 @@ public class NumbersInWordsViewModelTests {
 
     @Test
     public void isInputDigitsCountIsLimited() {
-        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
 
         viewModel.setNumber("1111111111111");
 
         assertEquals("You can enter up to 12 digits", viewModel.getErrorMessage());
+    }
+
+    @Test
+    public void canLogInput() {
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
+
+        viewModel.setNumber("123456");
+        String log = viewModel.getLogMessages().toString();
+
+        assertTrue(log.contains(NumbersInWordsViewModel.LOG_MESSAGE_INPUT));
+    }
+
+    @Test
+    public void canLogConvert() {
+        NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel(logger);
+
+        viewModel.setNumber("11");
+        viewModel.convert();
+        String log = viewModel.getLogMessages().toString();
+
+        assertTrue(log.contains(NumbersInWordsViewModel.LOG_MESSAGE_CONVERT));
     }
 }
