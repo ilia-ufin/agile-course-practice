@@ -10,6 +10,8 @@ import ru.unn.agile.shape3darea.model.ShapeType;
 import ru.unn.agile.shape3darea.model.Sphere;
 import ru.unn.agile.shape3darea.model.SquarePyramid;
 
+import java.util.List;
+
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static javafx.collections.FXCollections.observableArrayList;
@@ -30,10 +32,34 @@ public final class ViewModel {
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
-    public ViewModel() {
-        selectedShape.addListener((observable, oldValue, newValue) -> updateParameters(newValue));
+    private ILogger logger;
 
+    public void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        init();
+    }
+
+    public ViewModel() {
+        init();
+    }
+
+    private void init() {
         selectedShape.set(ShapeType.SQUARE_PYRAMID);
+        updateParameters();
+        selectedShape.addListener((observable, oldValue, newValue) -> {
+            if (!oldValue.equals(newValue)) {
+                logger.log(LogMessages.SHAPE_WAS_CHANGED + newValue);
+                updateParameters();
+            }
+        });
+
         result.set("");
         status.set(Status.OK.toString());
     }
@@ -58,6 +84,14 @@ public final class ViewModel {
         return status;
     }
 
+    public String getResult() {
+        return result.get();
+    }
+
+    public String getStatus() {
+        return status.get();
+    }
+
     public void calculate() {
         try {
             final Class<? extends Shape> shapeClass;
@@ -78,21 +112,35 @@ public final class ViewModel {
             result.set("");
             status.set(Status.INVALID_INPUT.toString());
         }
+        logger.log(LogMessages.CALCULATE_WAS_PRESSED);
     }
 
-    private void updateParameters(final ShapeType shapeType) {
-        switch (shapeType) {
+    private void updateParameters() {
+        final ShapeType shape = selectedShape.get();
+        switch (shape) {
             case SQUARE_PYRAMID:
                 parameters.setAll(asList(
-                        new ShapeParameter(double.class, SQUARE_SIDE),
-                        new ShapeParameter(double.class, TRIANGLE_SIDE)
+                        new ShapeParameter(double.class, SQUARE_SIDE, logger),
+                        new ShapeParameter(double.class, TRIANGLE_SIDE, logger)
                 ));
                 break;
             case SPHERE:
-                parameters.setAll(singletonList(new ShapeParameter(double.class, RADIUS)));
+                parameters.setAll(singletonList(new ShapeParameter(double.class, RADIUS, logger)));
                 break;
             default:
-                throw new IllegalStateException("Invalid shape type: " + selectedShape.get());
+                throw new IllegalStateException("Invalid shape type: " + shape);
         }
     }
+
+    public List<String> getLog() {
+        return logger.getLog();
+    }
+}
+
+final class LogMessages {
+    public static final String CALCULATE_WAS_PRESSED = "Calculate. ";
+    public static final String SHAPE_WAS_CHANGED = "Shape was changed to ";
+    public static final String PARAMETER_WAS_CHANGED = "Parameter was changed. ";
+
+    private LogMessages() { }
 }

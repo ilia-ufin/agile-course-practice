@@ -6,13 +6,16 @@ import org.junit.Test;
 import ru.unn.agile.shape3darea.model.ShapeType;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ViewModelTest {
     private ViewModel viewModel;
 
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        if (viewModel == null) {
+            viewModel = new ViewModel(new FakeLogger());
+        }
     }
 
     @After
@@ -87,5 +90,78 @@ public class ViewModelTest {
 
         assertEquals(Status.OK.toString(), viewModel.statusProperty().get());
         assertEquals("12.566370614359172", viewModel.resultProperty().get());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canNotSetNullLogger() {
+        viewModel.setLogger(null);
+    }
+
+    @Test
+    public void checkLogIsEmptyAfterViewModelCreation() {
+        assertTrue(viewModel.getLog().isEmpty());
+    }
+
+    @Test
+    public void checkLogSizeWhenCallCalculate() {
+        viewModel.calculate();
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void checkLogValueWhenCallCalculate() {
+        viewModel.calculate();
+        String log = viewModel.getLog().get(0);
+        assertTrue(log.matches(LogMessages.CALCULATE_WAS_PRESSED + "*"));
+    }
+
+    @Test
+    public void checkLogSizeWhenSwitchToSphere() {
+        viewModel.selectedShapeProperty().set(ShapeType.SPHERE);
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void checkLogValueWhenSwitchToSphere() {
+        viewModel.selectedShapeProperty().set(ShapeType.SPHERE);
+        String log = viewModel.getLog().get(0);
+        assertEquals(log, LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE);
+    }
+
+    @Test
+    public void checkLogIsEmptyWhenSwitchToSquarePyramid() {
+        viewModel.selectedShapeProperty().set(ShapeType.SQUARE_PYRAMID);
+        assertTrue(viewModel.getLog().isEmpty());
+    }
+
+    @Test
+    public void checkLogSizeWhenSwitchToSphereAndBack() {
+        viewModel.selectedShapeProperty().set(ShapeType.SPHERE);
+        viewModel.selectedShapeProperty().set(ShapeType.SQUARE_PYRAMID);
+        assertEquals(2, viewModel.getLog().size());
+    }
+
+    @Test
+    public void checkLogValuesWhenSwitchToSphereAndBack() {
+        viewModel.selectedShapeProperty().set(ShapeType.SPHERE);
+        viewModel.selectedShapeProperty().set(ShapeType.SQUARE_PYRAMID);
+        String logSphere = viewModel.getLog().get(0);
+        String logSquarePyramid = viewModel.getLog().get(1);
+        assertEquals(logSphere, LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE);
+        assertEquals(logSquarePyramid, LogMessages.SHAPE_WAS_CHANGED + ShapeType.SQUARE_PYRAMID);
+    }
+
+    @Test
+    public void checkLogSizeWhenChangeParameter() {
+        viewModel.getParameters().get(0).valueProperty().set("1");
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void checkLogValueWhenChangeParameter() {
+        String newValue = "2.345";
+        viewModel.getParameters().get(0).valueProperty().set(newValue);
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(LogMessages.PARAMETER_WAS_CHANGED + "(.*)" + newValue));
     }
 }
