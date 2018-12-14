@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import ru.unn.agile.shape3darea.model.Shape;
 import ru.unn.agile.shape3darea.model.ShapeType;
@@ -31,37 +32,44 @@ public final class ViewModel {
 
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+    private final StringProperty logs = new SimpleStringProperty();
 
     private ILogger logger;
+    private ListChangeListener<String> listener;
 
     public void setLogger(final ILogger logger) {
         if (logger == null) {
             throw new IllegalArgumentException("Logger parameter can't be null");
         }
+        if (this.logger != null) {
+            this.logger.logProperty().removeListener(listener);
+        }
         this.logger = logger;
+        this.logger.logProperty().addListener(listener);
+        for (ShapeParameter parameter : parameters) {
+            parameter.setLogger(this.logger);
+        }
     }
 
     public ViewModel(final ILogger logger) {
+        listener = c -> updateLogs();
         setLogger(logger);
-        init();
-    }
 
-    public ViewModel() {
-        init();
-    }
-
-    private void init() {
         selectedShape.set(ShapeType.SQUARE_PYRAMID);
         updateParameters();
         selectedShape.addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue)) {
-                logger.log(LogMessages.SHAPE_WAS_CHANGED + newValue);
                 updateParameters();
+                this.logger.log(LogMessages.SHAPE_WAS_CHANGED + newValue);
             }
         });
 
         result.set("");
         status.set(Status.OK.toString());
+    }
+
+    public ViewModel() {
+        this(new DummyLogger());
     }
 
     public ObservableList<ShapeType> getShapes() {
@@ -135,12 +143,26 @@ public final class ViewModel {
     public List<String> getLog() {
         return logger.getLog();
     }
+    public StringProperty logsProperty() {
+        return logs;
+    }
+    public String getLogs() {
+        return logs.get();
+    }
+
+    private void updateLogs() {
+        StringBuilder result = new StringBuilder();
+        for (String logRecord : logger.getLog()) {
+            result.append(logRecord).append("\n");
+        }
+        logs.set(result.toString());
+    }
 }
 
 final class LogMessages {
-    public static final String CALCULATE_WAS_PRESSED = "Calculate. ";
-    public static final String SHAPE_WAS_CHANGED = "Shape was changed to ";
-    public static final String PARAMETER_WAS_CHANGED = "Parameter was changed. ";
+    static final String CALCULATE_WAS_PRESSED = "Calculate was pressed.";
+    static final String SHAPE_WAS_CHANGED = "Shape was changed to ";
+    static final String PARAMETER_WAS_CHANGED = "Parameter was changed. ";
 
     private LogMessages() { }
 }

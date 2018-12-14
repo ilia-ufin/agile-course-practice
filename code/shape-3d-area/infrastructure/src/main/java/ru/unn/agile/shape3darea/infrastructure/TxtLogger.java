@@ -1,5 +1,6 @@
 package ru.unn.agile.shape3darea.infrastructure;
 
+import javafx.collections.ObservableList;
 import ru.unn.agile.shape3darea.viewmodel.ILogger;
 
 import java.io.*;
@@ -9,10 +10,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static javafx.collections.FXCollections.observableArrayList;
+
 public class TxtLogger implements ILogger {
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private BufferedWriter writer = null;
     private String fileName;
+    private ObservableList<String> log = observableArrayList();
 
     public TxtLogger(final String fileName) {
         this.fileName = fileName;
@@ -30,13 +34,13 @@ public class TxtLogger implements ILogger {
             writer.write(getCurrentTime() + " > " + message);
             writer.newLine();
             writer.flush();
+            updateLogs();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public List<String> getLog() {
+    private void updateLogs() {
         ArrayList<String> result = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -46,7 +50,17 @@ public class TxtLogger implements ILogger {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+        log.setAll(result);
+    }
+
+    @Override
+    public ObservableList<String> logProperty() {
+        return log;
+    }
+
+    @Override
+    public List<String> getLog() {
+        return new ArrayList<>(log);
     }
 
     private static String getCurrentTime() {

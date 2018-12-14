@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.control.cell.TextFieldTableCell?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import ru.unn.agile.shape3darea.viewmodel.ViewModel?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/8.0.121"
-            fx:controller="ru.unn.agile.shape3darea.view.AreaCalculator"
-            prefWidth="400"
-            prefHeight="400">
+
+<BorderPane prefHeight="400" prefWidth="545.0" xmlns="http://javafx.com/javafx/8" fx:controller="ru.unn.agile.shape3darea.view.AreaCalculator" xmlns:fx="http://javafx.com/fxml/1">
     <fx:define>
         <ViewModel fx:id="viewModel"/>
     </fx:define>
-    <center>
-        <VBox spacing="10.0">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-            </padding>
-            <HBox alignment="BASELINE_LEFT" spacing="10">
-                <Label text="Shape:"/>
-                <ComboBox fx:id="cbSelectedShape"
-                          maxWidth="Infinity"
-                          HBox.hgrow="ALWAYS"
-                          items="${viewModel.shapes}"/>
-            </HBox>
-            <TableView editable="true" items="${viewModel.parameters}">
-                <columns>
-                    <TableColumn text="Name">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="name"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Type">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="type"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Value">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="value"/>
-                        </cellValueFactory>
-                        <cellFactory>
-                            <TextFieldTableCell fx:factory="forTableColumn"/>
-                        </cellFactory>
-                    </TableColumn>
-                </columns>
-            </TableView>
-            <Button fx:id="btnCalc" maxWidth="Infinity" text="Calculate"/>
-            <Label text="${viewModel.result}"/>
-            <Label text="${viewModel.status}"/>
-        </VBox>
-    </center>
+   <left>
+      <HBox prefHeight="400.0" prefWidth="282.0" BorderPane.alignment="CENTER">
+         <children>
+              <VBox spacing="10.0">
+                  <padding>
+                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </padding>
+                 <children>
+                     <HBox alignment="BASELINE_LEFT" spacing="10">
+                        <children>
+                            <Label text="Shape:" />
+                            <ComboBox fx:id="cbSelectedShape" maxWidth="Infinity" HBox.hgrow="ALWAYS" items="${viewModel.shapes}"/>
+                        </children>
+                     </HBox>
+                     <TableView editable="true" prefHeight="256.0" prefWidth="259.0" items="${viewModel.parameters}">
+                         <columns>
+                             <TableColumn text="Name">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="name" />
+                                 </cellValueFactory>
+                             </TableColumn>
+                             <TableColumn text="Type">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="type" />
+                                 </cellValueFactory>
+                             </TableColumn>
+                             <TableColumn text="Value">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="value" />
+                                 </cellValueFactory>
+                                 <cellFactory>
+                                     <TextFieldTableCell fx:factory="forTableColumn" />
+                                 </cellFactory>
+                             </TableColumn>
+                         </columns>
+                     </TableView>
+                     <Button fx:id="btnCalc" maxWidth="Infinity" text="Calculate" />
+                     <Label text="${viewModel.result}"/>
+                     <Label text="${viewModel.status}"/>
+                 </children>
+              </VBox>
+         </children>
+      </HBox>
+   </left>
+   <right>
+      <TextArea id="logArea" prefHeight="400.0" prefWidth="500.0" wrapText="true"  text="${viewModel.logs}"/>
+   </right>
 </BorderPane>

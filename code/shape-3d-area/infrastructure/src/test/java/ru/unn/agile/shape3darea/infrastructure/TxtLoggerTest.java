@@ -44,7 +44,7 @@ public class TxtLoggerTest {
 
     @Test
     public void checkLogEmptyWhenCreated() {
-        assertTrue(logger.getLog().isEmpty());
+        assertTrue(logger.logProperty().isEmpty());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class TxtLoggerTest {
 
         logger.log(message);
 
-        String receivedMessage = logger.getLog().get(0);
+        String receivedMessage = logger.logProperty().get(0);
         assertTrue(receivedMessage.matches("(.*)" + message + "(.*)"));
     }
 
@@ -94,7 +94,7 @@ public class TxtLoggerTest {
         logger.log(firstMessage);
         logger.log(secondMessage);
 
-        List<String> messages = logger.getLog();
+        List<String> messages = logger.logProperty();
         assertEquals(2, messages.size());
         assertTrue(messages.get(0).matches(".*" + firstMessage + "(.*)"));
         assertTrue(messages.get(1).matches(".*" + secondMessage + "(.*)"));
@@ -106,7 +106,7 @@ public class TxtLoggerTest {
 
         logger.log(message);
 
-        String receivedMessage = logger.getLog().get(0);
+        String receivedMessage = logger.logProperty().get(0);
         assertTrue(receivedMessage.matches(("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*")));
     }
 }

@@ -24,7 +24,7 @@ public class ShapeParameter {
         this.logger = logger;
         value.addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue)) {
-                logger.log(LogMessages.PARAMETER_WAS_CHANGED + name
+                this.logger.log(LogMessages.PARAMETER_WAS_CHANGED + name
                         + ": from " + oldValue + " to " + newValue);
             }
         });
@@ -44,5 +44,12 @@ public class ShapeParameter {
 
     public List<String> getLog() {
         return logger.getLog();
+    }
+
+    public void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
     }
 }
