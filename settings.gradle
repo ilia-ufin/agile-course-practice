@@ -203,6 +203,8 @@ include "code/shape-3d-area/view-model"
 project(":code/shape-3d-area/view-model").name = "shape-3d-area-view-model"
 include "code/shape-3d-area/view"
 project(":code/shape-3d-area/view").name = "shape-3d-area-view"
+include "code/shape-3d-area/infrastructure"
+project(":code/shape-3d-area/infrastructure").name = "shape-3d-area-infrastructure"
 
 //Stepanov Nikolay, Salary calculator
 include "code/salary-calculator/Model"

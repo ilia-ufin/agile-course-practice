@@ -11,6 +11,10 @@ import static org.junit.Assert.assertTrue;
 public class ViewModelTest {
     private ViewModel viewModel;
 
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
         if (viewModel == null) {
@@ -112,7 +116,7 @@ public class ViewModelTest {
     public void checkLogValueWhenCallCalculate() {
         viewModel.calculate();
         String log = viewModel.getLog().get(0);
-        assertTrue(log.matches(LogMessages.CALCULATE_WAS_PRESSED + "*"));
+        assertTrue(log.matches("(.*)" + LogMessages.CALCULATE_WAS_PRESSED + "*"));
     }
 
     @Test
@@ -125,7 +129,7 @@ public class ViewModelTest {
     public void checkLogValueWhenSwitchToSphere() {
         viewModel.selectedShapeProperty().set(ShapeType.SPHERE);
         String log = viewModel.getLog().get(0);
-        assertEquals(log, LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE);
+        assertTrue(log.matches("(.*)" + LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE));
     }
 
     @Test
@@ -147,8 +151,9 @@ public class ViewModelTest {
         viewModel.selectedShapeProperty().set(ShapeType.SQUARE_PYRAMID);
         String logSphere = viewModel.getLog().get(0);
         String logSquarePyramid = viewModel.getLog().get(1);
-        assertEquals(logSphere, LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE);
-        assertEquals(logSquarePyramid, LogMessages.SHAPE_WAS_CHANGED + ShapeType.SQUARE_PYRAMID);
+        assertTrue(logSphere.matches("(.*)" + LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE));
+        assertTrue(logSquarePyramid.matches(
+                "(.*)" + LogMessages.SHAPE_WAS_CHANGED + ShapeType.SQUARE_PYRAMID));
     }
 
     @Test
@@ -162,6 +167,6 @@ public class ViewModelTest {
         String newValue = "2.345";
         viewModel.getParameters().get(0).valueProperty().set(newValue);
         String message = viewModel.getLog().get(0);
-        assertTrue(message.matches(LogMessages.PARAMETER_WAS_CHANGED + "(.*)" + newValue));
+        assertTrue(message.matches("(.*)" + LogMessages.PARAMETER_WAS_CHANGED + "(.*)" + newValue));
     }
 }
