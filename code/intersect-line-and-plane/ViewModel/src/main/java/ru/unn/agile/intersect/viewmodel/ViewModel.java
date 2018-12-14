@@ -348,14 +348,14 @@ public class ViewModel {
             Plane plane = new Plane(coordinates.get(0), coordinates.get(1), coordinates.get(2));
             planeStatus.set(OK);
 
-            logger.log(PLANE_PREFIX + planeStatus.get());
+            logger.writeLog(PLANE_PREFIX + planeStatus.get());
 
             return plane;
         } catch (NumberFormatException | ArithmeticException ex) {
             planeStatus.set(ERROR + ": " + ex.getMessage().toLowerCase(Locale.ENGLISH));
             result.set(ERROR);
 
-            logger.log(PLANE_PREFIX + planeStatus.get());
+            logger.writeLog(PLANE_PREFIX + planeStatus.get());
 
             return null;
         }
@@ -367,14 +367,14 @@ public class ViewModel {
             Line line = new Line(coordinates.get(0), coordinates.get(1));
             lineStatus.set(OK);
 
-            logger.log(LINE_PREFIX + lineStatus.get());
+            logger.writeLog(LINE_PREFIX + lineStatus.get());
 
             return line;
         } catch (NumberFormatException | ArithmeticException ex) {
             lineStatus.set(ERROR + ": " + ex.getMessage().toLowerCase(Locale.ENGLISH));
             result.set(ERROR);
 
-            logger.log(LINE_PREFIX + lineStatus.get());
+            logger.writeLog(LINE_PREFIX + lineStatus.get());
 
             return null;
         }
@@ -391,11 +391,11 @@ public class ViewModel {
                 result.set(NOT_INTERSECT);
             }
 
-            logger.log(result.get());
+            logger.writeLog(result.get());
         }
     }
 
     public final List<String> getLog() {
-        return logger.getLog();
+        return logger.showLog();
     }
 }

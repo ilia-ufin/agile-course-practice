@@ -37,7 +37,7 @@ public class Logger implements ILogger {
     }
 
     @Override
-    public void log(final String s) {
+    public void writeLog(final String s) {
         try {
             logWriter.write(now() + ": " + s);
             logWriter.newLine();
@@ -48,7 +48,7 @@ public class Logger implements ILogger {
     }
 
     @Override
-    public List<String> getLog() {
+    public List<String> showLog() {
         BufferedReader reader;
         ArrayList<String> log = new ArrayList<String>();
         try {

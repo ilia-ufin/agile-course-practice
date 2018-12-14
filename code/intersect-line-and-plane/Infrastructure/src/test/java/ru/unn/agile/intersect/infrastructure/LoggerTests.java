@@ -41,9 +41,9 @@ public class LoggerTests {
     public void canWriteLogMessage() {
         String testMessage = "Test message";
 
-        logger.log(testMessage);
+        logger.writeLog(testMessage);
 
-        String message = logger.getLog().get(0);
+        String message = logger.showLog().get(0);
         assertThat(message, matchesPattern(".*" + testMessage + "$"));
     }
 
@@ -51,10 +51,10 @@ public class LoggerTests {
     public void canWriteSeveralLogMessage() {
         String[] messages = {"Test message 1", "Test message 2"};
 
-        logger.log(messages[0]);
-        logger.log(messages[1]);
+        logger.writeLog(messages[0]);
+        logger.writeLog(messages[1]);
 
-        List<String> actualMessages = logger.getLog();
+        List<String> actualMessages = logger.showLog();
         for (int i = 0; i < actualMessages.size(); i++) {
             assertThat(actualMessages.get(i), matchesPattern(".*" + messages[i] + "$"));
         }
@@ -64,9 +64,9 @@ public class LoggerTests {
     public void doesLogContainDateAndTime() {
         String testMessage = "Test message";
 
-        logger.log(testMessage);
+        logger.writeLog(testMessage);
 
-        String message = logger.getLog().get(0);
+        String message = logger.showLog().get(0);
         assertThat(message, matchesPattern("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}: .*"));
     }
 }

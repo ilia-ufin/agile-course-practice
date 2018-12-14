@@ -19,7 +19,7 @@ public class ViewModelTest {
 
     @Before
     public void createViewModel() {
-        FakeLogger logger = new FakeLogger();
+        FakeTextLogger logger = new FakeTextLogger();
         viewModel = new ViewModel(logger);
     }
 
