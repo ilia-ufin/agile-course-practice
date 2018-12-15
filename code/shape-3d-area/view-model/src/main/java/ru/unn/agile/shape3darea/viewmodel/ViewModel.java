@@ -65,6 +65,7 @@ public final class ViewModel {
         });
 
         result.set("");
+        logRepresentation.set("");
         status.set(Status.OK.toString());
     }
 

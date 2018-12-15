@@ -61,4 +61,21 @@ public class ShapeParameterTest {
         String message = parameter.getLog().get(1);
         assertTrue(message.matches("(.*)from " + oldValue + " to " + newValue));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwExceptionWhenSetNullLogger() {
+        parameter.setLogger(null);
+    }
+
+    @Test
+    public void checkSwitchToNewLogger() {
+        ILogger logger = new FakeLogger();
+        logger.log("Message");
+
+        parameter.setLogger(logger);
+        assertEquals(1, parameter.getLog().size());
+
+        parameter.setLogger(new FakeLogger());
+        assertEquals(0, parameter.getLog().size());
+    }
 }

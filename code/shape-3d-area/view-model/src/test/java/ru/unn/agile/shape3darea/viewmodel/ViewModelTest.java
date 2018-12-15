@@ -169,4 +169,40 @@ public class ViewModelTest {
         String message = viewModel.getLog().get(0);
         assertTrue(message.matches("(.*)" + LogMessages.PARAMETER_WAS_CHANGED + "(.*)" + newValue));
     }
+
+    @Test
+    public void canSwitchToNewLogger() {
+        ILogger newLogger = new FakeLogger();
+        newLogger.log("First message");
+        newLogger.log("Second message");
+
+        viewModel.setLogger(newLogger);
+        assertEquals(2, viewModel.getLog().size());
+    }
+
+    @Test
+    public void canGetDefaultLogger() {
+        ViewModel defaultViewModel = new ViewModel();
+        assertEquals(0, defaultViewModel.getLog().size());
+    }
+
+    @Test
+    public void checkInitialStatus() {
+        assertEquals(Status.OK.toString(), viewModel.getStatus());
+    }
+
+    @Test
+    public void checkInitialResult() {
+        assertEquals("", viewModel.getResult());
+    }
+
+    @Test
+    public void checkInitialLogRepresentationProperty() {
+        assertEquals("", viewModel.logRepresentationProperty().get());
+    }
+
+    @Test
+    public void checkInitialLogRepresentation() {
+        assertEquals("", viewModel.getLogRepresentation());
+    }
 }

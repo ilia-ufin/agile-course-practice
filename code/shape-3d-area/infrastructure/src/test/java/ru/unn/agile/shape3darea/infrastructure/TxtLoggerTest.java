@@ -109,4 +109,11 @@ public class TxtLoggerTest {
         String receivedMessage = logger.logProperty().get(0);
         assertTrue(receivedMessage.matches(("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*")));
     }
+
+    @Test
+    public void canNotLogWithInvalidLogger() {
+        ILogger invalidLogger = new TxtLogger("\ninvalidName\n");
+        invalidLogger.log("Message");
+        assertEquals(0, invalidLogger.getLog().size());
+    }
 }
