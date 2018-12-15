@@ -32,7 +32,7 @@ public final class ViewModel {
 
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
-    private final StringProperty logs = new SimpleStringProperty();
+    private final StringProperty logRepresentation = new SimpleStringProperty();
 
     private ILogger logger;
     private ListChangeListener<String> listener;
@@ -52,7 +52,7 @@ public final class ViewModel {
     }
 
     public ViewModel(final ILogger logger) {
-        listener = c -> updateLogs();
+        listener = c -> updateLogRepresentation();
         setLogger(logger);
 
         selectedShape.set(ShapeType.SQUARE_PYRAMID);
@@ -143,19 +143,19 @@ public final class ViewModel {
     public List<String> getLog() {
         return logger.getLog();
     }
-    public StringProperty logsProperty() {
-        return logs;
+    public StringProperty logRepresentationProperty() {
+        return logRepresentation;
     }
-    public String getLogs() {
-        return logs.get();
+    public String getLogRepresentation() {
+        return logRepresentation.get();
     }
 
-    private void updateLogs() {
+    private void updateLogRepresentation() {
         StringBuilder result = new StringBuilder();
         for (String logRecord : logger.getLog()) {
             result.append(logRecord).append("\n");
         }
-        logs.set(result.toString());
+        logRepresentation.set(result.toString());
     }
 }
 

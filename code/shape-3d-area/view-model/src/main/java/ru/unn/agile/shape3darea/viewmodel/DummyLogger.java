@@ -8,12 +8,8 @@ import java.util.List;
 import static javafx.collections.FXCollections.observableArrayList;
 
 public class DummyLogger implements ILogger {
-    private static final List<String> DUMMY_LOG = new ArrayList<>();
-
     @Override
-    public void log(final String message) {
-
-    }
+    public void log(final String message) { }
 
     @Override
     public ObservableList<String> logProperty() {
@@ -22,6 +18,6 @@ public class DummyLogger implements ILogger {
 
     @Override
     public List<String> getLog() {
-        return DUMMY_LOG;
+        return new ArrayList<>();
     }
 }

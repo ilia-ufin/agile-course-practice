@@ -101,7 +101,7 @@ public class TxtLoggerTest {
     }
 
     @Test
-    public void checkLogContaisDate() {
+    public void checkLogContainsDate() {
         String message = "Test message";
 
         logger.log(message);
