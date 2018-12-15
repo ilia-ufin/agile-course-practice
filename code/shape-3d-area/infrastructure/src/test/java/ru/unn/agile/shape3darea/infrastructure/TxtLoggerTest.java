@@ -112,7 +112,7 @@ public class TxtLoggerTest {
 
     @Test
     public void canNotLogWithInvalidLogger() {
-        ILogger invalidLogger = new TxtLogger("...\ninvalid\nname\n...");
+        ILogger invalidLogger = new TxtLogger("");
         invalidLogger.log("Message");
         assertEquals(0, invalidLogger.getLog().size());
     }
