@@ -30,22 +30,7 @@ public class ViewModelTest {
 
     @Test
     public void initViewModelWithDefaultValues() {
-        assertEquals("", viewModel.getCoordXFirstPlanePoint());
-        assertEquals("", viewModel.getCoordYFirstPlanePoint());
-        assertEquals("", viewModel.getCoordZFirstPlanePoint());
-        assertEquals("", viewModel.getCoordXSecondPlanePoint());
-        assertEquals("", viewModel.getCoordYSecondPlanePoint());
-        assertEquals("", viewModel.getCoordZSecondPlanePoint());
-        assertEquals("", viewModel.getCoordXThirdPlanePoint());
-        assertEquals("", viewModel.getCoordYThirdPlanePoint());
-        assertEquals("", viewModel.getCoordZThirdPlanePoint());
-        assertEquals("", viewModel.getCoordXFirstLinePoint());
-        assertEquals("", viewModel.getCoordYFirstLinePoint());
-        assertEquals("", viewModel.getCoordZFirstLinePoint());
-        assertEquals("", viewModel.getCoordXSecondLinePoint());
-        assertEquals("", viewModel.getCoordYSecondLinePoint());
-        assertEquals("", viewModel.getCoordZSecondLinePoint());
-        assertEquals("", viewModel.getResult());
+        assertTrue(isCoordinatesEmpty());
     }
 
     @Test
@@ -354,6 +339,37 @@ public class ViewModelTest {
         assertTrue(message.matches(".*" + LogMessages.LINE_PREFIX + LogMessages.ERROR + ".*"));
     }
 
+    @Test
+    public void canCreateEmptyViewModel() {
+        viewModel = new ViewModel();
+
+        assertTrue(isCoordinatesEmpty());
+
+        assertEquals(LogMessages.WAITING, viewModel.getLineStatus());
+        assertEquals(LogMessages.WAITING, viewModel.getPlaneStatus());
+    }
+
+    private boolean isCoordinatesEmpty() {
+        assertEquals("", viewModel.getCoordXFirstPlanePoint());
+        assertEquals("", viewModel.getCoordYFirstPlanePoint());
+        assertEquals("", viewModel.getCoordZFirstPlanePoint());
+        assertEquals("", viewModel.getCoordXSecondPlanePoint());
+        assertEquals("", viewModel.getCoordYSecondPlanePoint());
+        assertEquals("", viewModel.getCoordZSecondPlanePoint());
+        assertEquals("", viewModel.getCoordXThirdPlanePoint());
+        assertEquals("", viewModel.getCoordYThirdPlanePoint());
+        assertEquals("", viewModel.getCoordZThirdPlanePoint());
+        assertEquals("", viewModel.getCoordXFirstLinePoint());
+        assertEquals("", viewModel.getCoordYFirstLinePoint());
+        assertEquals("", viewModel.getCoordZFirstLinePoint());
+        assertEquals("", viewModel.getCoordXSecondLinePoint());
+        assertEquals("", viewModel.getCoordYSecondLinePoint());
+        assertEquals("", viewModel.getCoordZSecondLinePoint());
+        assertEquals("", viewModel.getResult());
+
+        return true;
+    }
+
     private void makeIntersection() {
         viewModel.setCoordXFirstPlanePoint("0.0");
         viewModel.setCoordYFirstPlanePoint("1.0");
@@ -424,6 +440,8 @@ public class ViewModelTest {
 
         public static final String OK = "Correct input";
         private static final String ERROR = "Input error";
+
+        private static final String WAITING = "Waiting for input";
 
         private LogMessages() { }
     }
