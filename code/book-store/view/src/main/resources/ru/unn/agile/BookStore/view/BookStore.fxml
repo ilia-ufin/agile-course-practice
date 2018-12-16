@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
-<?import ru.unn.agile.BookStore.ViewModel.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="430.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.BookStore.View.BookStore">
+<AnchorPane prefHeight="485.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.BookStore.View.BookStore">
    <fx:define>
       <ViewModel fx:id="viewModel" />
    </fx:define>
@@ -27,5 +27,6 @@
       <Label layoutX="83.0" layoutY="377.0" prefHeight="14.0" prefWidth="66.0" text="Result" />
       <Label layoutX="173.0" layoutY="34.0" prefHeight="14.0" prefWidth="66.0" text="Book Store" />
       <Label fx:id="result" layoutX="257.0" layoutY="377.0" prefHeight="14.0" prefWidth="66.0" text="${viewModel.result}" />
+      <TextArea fx:id="areaLog" text="${viewModel.areaLog}" editable="false" layoutX="38.0" layoutY="394.0" prefHeight="69.0" prefWidth="336.0" />
    </children>
 </AnchorPane>
