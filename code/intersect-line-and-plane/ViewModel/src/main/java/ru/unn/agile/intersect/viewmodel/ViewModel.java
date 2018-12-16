@@ -396,6 +396,6 @@ public class ViewModel {
     }
 
     public final List<String> getLog() {
-        return logger.showLog();
+        return logger.readLog();
     }
 }

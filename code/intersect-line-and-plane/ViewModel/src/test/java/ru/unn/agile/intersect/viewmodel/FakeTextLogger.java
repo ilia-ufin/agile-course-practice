@@ -12,7 +12,7 @@ public class FakeTextLogger implements ILogger {
     }
 
     @Override
-    public List<String> showLog() {
+    public List<String> readLog() {
         return log;
     }
 }

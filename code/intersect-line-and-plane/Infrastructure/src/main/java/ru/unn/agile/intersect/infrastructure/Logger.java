@@ -48,7 +48,7 @@ public class Logger implements ILogger {
     }
 
     @Override
-    public List<String> showLog() {
+    public List<String> readLog() {
         BufferedReader reader;
         ArrayList<String> log = new ArrayList<String>();
         try {

@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
@@ -16,6 +17,8 @@ import static ru.unn.agile.intersect.infrastructure.RegexMatcher.matchesPattern;
 
 public class LoggerTests {
     private static final String FILENAME = "./Logger_Tests.log";
+    private static final String TEST_MESSAGE = "./Logger_Tests.log";
+
     private Logger logger;
 
     @Before
@@ -43,7 +46,7 @@ public class LoggerTests {
 
         logger.writeLog(testMessage);
 
-        String message = logger.showLog().get(0);
+        String message = logger.readLog().get(0);
         assertThat(message, matchesPattern(".*" + testMessage + "$"));
     }
 
@@ -54,7 +57,7 @@ public class LoggerTests {
         logger.writeLog(messages[0]);
         logger.writeLog(messages[1]);
 
-        List<String> actualMessages = logger.showLog();
+        List<String> actualMessages = logger.readLog();
         for (int i = 0; i < actualMessages.size(); i++) {
             assertThat(actualMessages.get(i), matchesPattern(".*" + messages[i] + "$"));
         }
@@ -66,7 +69,32 @@ public class LoggerTests {
 
         logger.writeLog(testMessage);
 
-        String message = logger.showLog().get(0);
+        String message = logger.readLog().get(0);
         assertThat(message, matchesPattern("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}: .*"));
+    }
+
+    @Test(expected = Test.None.class)
+    public void noThrowWhenCreateTxtLoggerWithIncorrectFileNameAndCreatedEmptyLogger() {
+        logger = new Logger("");
+
+        assertEquals(0, logger.readLog().size());
+    }
+
+    @Test(expected = Test.None.class)
+    public void noThrowWhenWriteToTxtLoggerWithIncorrectFileName() {
+        logger = new Logger("");
+
+        logger.writeLog(TEST_MESSAGE);
+
+        assertEquals(0, logger.readLog().size());
+    }
+
+    @Test(expected = Test.None.class)
+    public void noThrowWhenReadFromTxtLoggerWithIncorrectFileName() {
+        logger = new Logger("");
+
+        List<String> logList = logger.readLog();
+
+        assertEquals(0, logList.size());
     }
 }

@@ -5,5 +5,5 @@ import java.util.List;
 public interface ILogger {
     void writeLog(String s);
 
-    List<String> showLog();
+    List<String> readLog();
 }
