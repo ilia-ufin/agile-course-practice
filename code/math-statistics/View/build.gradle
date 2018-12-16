@@ -1,3 +1,4 @@
 dependencies {
     compile project(':math-statistics-ViewModel')
+	compile project(':math-statistics-Infrastructure')
 }

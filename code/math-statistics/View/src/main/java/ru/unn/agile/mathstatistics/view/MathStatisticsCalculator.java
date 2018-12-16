@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import ru.unn.agile.mathstatistics.infrastructure.TxtLogger;
 
 public final class MathStatisticsCalculator {
     private JTextField valueText;
@@ -23,13 +24,14 @@ public final class MathStatisticsCalculator {
     private JComboBox<Operation> operationComboBox;
     private JPanel mainPanel;
     private JLabel statusMessageLabel;
+    private JTextArea textLog;
 
     private ViewModel viewModel;
 
     public static void main(final String[] args) {
         JFrame frame = new JFrame("MathStatisticsCalculator");
-        frame.setContentPane(
-                new MathStatisticsCalculator(new ViewModel()).mainPanel);
+        frame.setContentPane(new MathStatisticsCalculator(
+                new ViewModel(new TxtLogger("MathStatistics.log"))).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -168,5 +170,13 @@ public final class MathStatisticsCalculator {
             distributionUnitsString += distributionUnit + "\n";
         }
         sampleTextArea.setText(distributionUnitsString);
+
+        List<String> log = viewModel.getLog();
+        String[] items = log.toArray(new String[log.size()]);
+        String str = "";
+        for (String logLine : items) {
+            str += logLine + "\n";
+        }
+        textLog.setText(str);
     }
 }
