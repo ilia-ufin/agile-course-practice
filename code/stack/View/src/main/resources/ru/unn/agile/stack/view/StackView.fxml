@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import ru.unn.agile.stack.viewmodel.*?>
+
+<AnchorPane prefHeight="350.0" prefWidth="445.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2" fx:controller="ru.unn.agile.stack.view.StackView">
+    <fx:define>
+        <ViewModel fx:id="viewModel"/>
+    </fx:define>
+    <children>
+        <Pane layoutX="3.0" layoutY="3.0" prefHeight="111.0" prefWidth="450.0">
+            <children>
+                <Label layoutX="11.0" layoutY="15.0" text="Stack:">
+                    <font>
+                        <Font size="25.0" fx:id="x2"/>
+                    </font>
+                </Label>
+                <Label fx:id="stackStatus" layoutX="11.0" layoutY="45.0" text="${viewModel.stackIsEmptyStatus}">
+                    <font>
+                        <Font size="20.0" fx:id="x1"/>
+                    </font>
+                </Label>
+                <Label font="$x1" layoutX="255.0" layoutY="45.0" text="Size:"/>
+                <Label fx:id="stackSize" layoutX="311.0" layoutY="47.0" prefHeight="26.951171875" prefWidth="37.0"
+                       text="${viewModel.stackSize}"/>
+                <Label font="$x1" layoutX="255.0" layoutY="75.0" text="Top element:"/>
+                <Label fx:id="stackTopElement" layoutX="383.0" layoutY="81.0" text="${viewModel.stackTopElement}"/>
+                <Pane layoutX="-5.0" layoutY="111.0" prefHeight="95.0" prefWidth="450.0">
+                    <children>
+                        <Button fx:id="addElementButton" layoutX="334.0" layoutY="46.0" mnemonicParsing="false"
+                                prefWidth="81.0" text="Add"/>
+                        <Label font="$x2" layoutX="11.0" layoutY="39.0" text="Add element"/>
+                        <TextField fx:id="inputNewElemField" layoutX="187.0" layoutY="47.0" prefWidth="81.0"/>
+                        <Pane layoutX="0.0" layoutY="95.0" prefHeight="86.0" prefWidth="455.0">
+                            <children>
+                                <Label font="$x2" layoutX="11.0" layoutY="21.0" text="Pop element" visible="true"/>
+                                <Label fx:id="stackPopElement" layoutX="209.0" layoutY="32.0"
+                                       text="${viewModel.stackPopElement}" visible="true"/>
+                                <Button fx:id="popElementButton" layoutX="334.0" layoutY="25.0" mnemonicParsing="false"
+                                        prefWidth="81.0" text="Pop" visible="${viewModel.popButtonVisible}"/>
+                                <Label font="$x2" layoutX="11.0" layoutY="80.0" text="Status" visible="true"/>
+                                <Label fx:id="" layoutX="209.0" layoutY="93.0"
+                                       text="${viewModel.statusMessage}" visible="true"/>
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import ru.unn.agile.BookStore.ViewModel.*?>
+
+<AnchorPane prefHeight="430.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.BookStore.View.BookStore">
+   <fx:define>
+      <ViewModel fx:id="viewModel" />
+   </fx:define>
+   <children>
+      <Button fx:id="btnCalculate" defaultButton="true" disable="${viewModel.calculationDisabled}" layoutX="173.0" layoutY="325.0" mnemonicParsing="false" text="Calculate" />
+      <Label layoutX="83.0" layoutY="82.0" prefHeight="14.0" prefWidth="66.0" text="Book #1" />
+      <Label layoutX="77.0" layoutY="365.0" prefHeight="14.0" prefWidth="66.0" />
+      <Label layoutX="83.0" layoutY="111.0" prefHeight="14.0" prefWidth="66.0" text="Book #2" />
+      <Label layoutX="83.0" layoutY="138.0" prefHeight="14.0" prefWidth="66.0" text="Book #3" />
+      <Label layoutX="83.0" layoutY="164.0" prefHeight="14.0" prefWidth="66.0" text="Book #4" />
+      <Label layoutX="83.0" layoutY="189.0" prefHeight="14.0" prefWidth="66.0" text="Book #5" />
+      <Label fx:id="lbStatus" layoutX="85.0" layoutY="253.0" prefHeight="25.0" prefWidth="241.0" text="${viewModel.status}" />
+      <TextField fx:id="books1" layoutX="173.0" layoutY="78.0" />
+      <TextField fx:id="books2" layoutX="173.0" layoutY="107.0" />
+      <TextField fx:id="books3" layoutX="173.0" layoutY="134.0" />
+      <TextField fx:id="books4" layoutX="173.0" layoutY="160.0" />
+      <TextField fx:id="books5" layoutX="173.0" layoutY="185.0" />
+      <Label layoutX="83.0" layoutY="377.0" prefHeight="14.0" prefWidth="66.0" text="Result" />
+      <Label layoutX="173.0" layoutY="34.0" prefHeight="14.0" prefWidth="66.0" text="Book Store" />
+      <Label fx:id="result" layoutX="257.0" layoutY="377.0" prefHeight="14.0" prefWidth="66.0" text="${viewModel.result}" />
+   </children>
+</AnchorPane>

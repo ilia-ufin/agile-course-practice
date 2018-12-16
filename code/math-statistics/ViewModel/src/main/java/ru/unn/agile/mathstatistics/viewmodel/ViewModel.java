@@ -24,7 +24,17 @@ public class ViewModel {
 
     private boolean isCalculateButtonEnabled;
 
-    public ViewModel() {
+    private ILogger logger;
+
+    public static final String SUCCESSFULL_CALCULAION = "Calculated selected operation: ";
+
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger's parameter can not be null");
+        }
+
+        this.logger = logger;
+
         values = new ArrayList<Number>();
         probabilities = new ArrayList<Double>();
         distributionUnits = new ArrayList<String>();
@@ -32,15 +42,22 @@ public class ViewModel {
         reset();
     }
 
+    public List<String> getLog() {
+        return logger.getLog();
+    }
+
     public boolean checkDistributionUnit() {
         InputDistributionUnitValidator validator = new InputDistributionUnitValidator();
         if (!validator.validate(valueText, probabilityText)) {
             statusMessageText = Status.BAD_DISTRIBUTION_UNIT_FORMAT;
 
+            logger.log(statusMessageText);
+
             return false;
         }
 
         statusMessageText = Status.ADD_TO_DISTRIBUTION_READY;
+        logger.log(statusMessageText);
         return true;
     }
 
@@ -48,6 +65,8 @@ public class ViewModel {
         InputMomentOrderValidator validator = new InputMomentOrderValidator();
         if (!validator.validate(momentOrderText)) {
             statusMessageText = Status.BAD_MOMENT_ORDER_FORMAT;
+
+            logger.log(statusMessageText);
 
             return false;
         }
@@ -57,6 +76,8 @@ public class ViewModel {
             MomentOrderValidator.validate(order);
         } catch (IllegalArgumentException e) {
             statusMessageText = Status.BAD_MOMENT_ORDER_VALUE;
+
+            logger.log(statusMessageText);
 
             return false;
         }
@@ -68,7 +89,7 @@ public class ViewModel {
         InputMomentOffsetValidator validator = new InputMomentOffsetValidator();
         if (!validator.validate(momentOffsetText)) {
             statusMessageText = Status.BAD_MOMENT_OFFSET_FORMAT;
-
+            logger.log(statusMessageText);
             return false;
         }
 
@@ -125,6 +146,7 @@ public class ViewModel {
 
         resultText = calculatedValue.toString();
         statusMessageText = Status.SUCCESS;
+        logger.log(SUCCESSFULL_CALCULAION + resultText);
     }
 
     public void resetProcess() {
@@ -213,6 +235,7 @@ public class ViewModel {
             ProbabilityValidator.validate(probability);
         } catch (IllegalArgumentException e) {
             statusMessageText = Status.BAD_PROBABILITY_VALUE;
+            logger.log(statusMessageText);
             return;
         }
 
@@ -228,11 +251,15 @@ public class ViewModel {
             applyDistributionUnit(value, probability);
             isCalculateButtonEnabled = true;
 
+            logger.log(statusMessageText);
+
             return;
         }
         if (status == NormalizationConditionChecker.Status.BETWEEN_ZERO_AND_ONE) {
             statusMessageText = Status.ADD_TO_DISTRIBUTION_SUCCESS;
             applyDistributionUnit(value, probability);
+
+            logger.log(statusMessageText);
 
             return;
         }
@@ -240,6 +267,8 @@ public class ViewModel {
         statusMessageText = Status.INCORRECT_PROBABILITIES_SUM;
         values.remove(values.size() - 1);
         probabilities.remove(probabilities.size() - 1);
+
+        logger.log(statusMessageText);
     }
 
     private void applyDistributionUnit(final Double value, final Double probability) {
@@ -270,5 +299,7 @@ public class ViewModel {
         isOffsetTextEnabled = false;
 
         isCalculateButtonEnabled = false;
+
+        logger.log(statusMessageText);
     }
 }

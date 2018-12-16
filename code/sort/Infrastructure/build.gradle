@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':sort-ViewModel')
+    testCompile project(':sort-ViewModel').sourceSets.test.output
+}

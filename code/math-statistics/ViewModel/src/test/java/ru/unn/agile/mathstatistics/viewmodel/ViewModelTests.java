@@ -9,16 +9,22 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 public class ViewModelTests {
-    private ViewModel viewModel;
-
-    @Before
-    public void setUp() {
-        viewModel = new ViewModel();
-    }
 
     @After
     public void tearDown() {
         viewModel = null;
+    }
+
+    @Before
+    public void setUp() {
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
+    }
+
+    private ViewModel viewModel;
+
+    public void setViewModel(final ViewModel vModel) {
+        this.viewModel = vModel;
     }
 
     @Test
@@ -423,13 +429,13 @@ public class ViewModelTests {
 
     @Test
     public void canDetectIncorrectOffsetInCentralMomentCalculating() {
-        viewModel.setValueText("1");
+        viewModel.setValueText("3");
         viewModel.setProbabilityText("1.0");
         viewModel.setMomentOrderText("1");
-        viewModel.setMomentOffsetText("abc");
-        viewModel.addToDistributionProcess();
+        viewModel.setMomentOffsetText("gds");
         viewModel.setOperation(Operation.CENTRAL_MOMENT);
 
+        viewModel.addToDistributionProcess();
         viewModel.calculateProcess();
 
         String resultText = viewModel.getResultText();
@@ -439,7 +445,7 @@ public class ViewModelTests {
 
     @Test
     public void canDetectEmptyOffsetInCentralMomentCalculating() {
-        viewModel.setValueText("1");
+        viewModel.setValueText("7");
         viewModel.setProbabilityText("1.0");
         viewModel.setMomentOrderText("1");
         viewModel.setMomentOffsetText("");
@@ -451,5 +457,157 @@ public class ViewModelTests {
         String resultText = viewModel.getResultText();
         assertTrue(resultText.isEmpty());
         assertEquals(Status.BAD_MOMENT_OFFSET_FORMAT, viewModel.getStatusMessageText());
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsWhenLoggerIsNull() {
+        FakeLogger log = null;
+
+        new ViewModel(log);
+    }
+
+
+    @Test
+    public void isStatusWaitingWhenLaunch() {
+        String mes = viewModel.getLog().get(0);
+        assertTrue(mes.matches(".*" + Status.WAITING_INPUT_DATA + ".*"));
+    }
+
+    @Test
+    public void canCreateWhenLoggerIsNotNull() {
+        FakeLogger log = new FakeLogger();
+
+        new ViewModel(log);
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenBadMomentOffsetFormat() {
+        viewModel.setValueText("1");
+        viewModel.setProbabilityText("1.0");
+        viewModel.setMomentOrderText("1");
+        viewModel.setMomentOffsetText("");
+        viewModel.addToDistributionProcess();
+        viewModel.setOperation(Operation.CENTRAL_MOMENT);
+
+        viewModel.calculateProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(
+                mes.matches(".*" + Status.BAD_MOMENT_OFFSET_FORMAT + ".*"));
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenBadDistributionUnitFormat() {
+        viewModel.setValueText("abc");
+        viewModel.setProbabilityText("1");
+
+        viewModel.addToDistributionProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(
+                mes.matches(".*" + Status.BAD_DISTRIBUTION_UNIT_FORMAT + ".*"));
+    }
+
+
+    @Test
+    public void canLoggerUpdatedWhenBadProbabilityValue() {
+        viewModel.setValueText("1");
+        viewModel.setProbabilityText("-1");
+
+        viewModel.addToDistributionProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(
+                mes.matches(".*" + Status.BAD_PROBABILITY_VALUE + ".*"));
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenIncorrectProbabilitiesSum() {
+        viewModel.setValueText("1");
+        viewModel.setProbabilityText("0.5");
+        viewModel.addToDistributionProcess();
+        viewModel.setValueText("2");
+        viewModel.setProbabilityText("0.7");
+
+        viewModel.addToDistributionProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(
+                mes.matches(".*" + Status.INCORRECT_PROBABILITIES_SUM + ".*"));
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenAddedValueAndProbability() {
+        viewModel.setValueText("4");
+        viewModel.setProbabilityText("0.5");
+
+        viewModel.addToDistributionProcess();
+
+        List<String> log = viewModel.getLog();
+        String prevLastMes = log.get(log.size() - 2);
+        assertTrue(prevLastMes.matches(
+                ".*" + Status.ADD_TO_DISTRIBUTION_READY + ".*"));
+        String lastMes = log.get(log.size() - 1);
+        assertTrue(lastMes.matches(
+                ".*" + Status.ADD_TO_DISTRIBUTION_SUCCESS + ".*"));
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenBadMomentOrderValue() {
+        viewModel.setMomentOrderText("0");
+        viewModel.addToDistributionProcess();
+        viewModel.setOperation(Operation.INITIAL_MOMENT);
+        viewModel.calculateProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(mes.matches(".*" + Status.BAD_MOMENT_ORDER_VALUE + ".*"));
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenBadMomentOrderFormat() {
+        viewModel.setMomentOrderText("cas");
+        viewModel.setOperation(Operation.CENTRAL_MOMENT);
+        viewModel.addToDistributionProcess();
+        viewModel.calculateProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(mes.matches(".*" + Status.BAD_MOMENT_ORDER_FORMAT + ".*"));
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenCalculateReady() {
+        viewModel.setValueText("2");
+        viewModel.setProbabilityText("0.5");
+        viewModel.addToDistributionProcess();
+        viewModel.setValueText("1");
+        viewModel.setProbabilityText("0.5");
+
+        viewModel.addToDistributionProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(mes.matches(".*" + Status.CALCULATE_READY + ".*"));
+    }
+
+    @Test
+    public void canLoggerUpdatedWhenCalculationSuccessfull() {
+        viewModel.setValueText("3");
+        viewModel.setProbabilityText("1.0");
+        viewModel.addToDistributionProcess();
+        viewModel.setOperation(Operation.DISPERSION);
+
+        viewModel.calculateProcess();
+
+        final int lastIndex = viewModel.getLog().size() - 1;
+        String mes = viewModel.getLog().get(lastIndex);
+        assertTrue(mes.matches(
+                ".*" + viewModel.SUCCESSFULL_CALCULAION + viewModel.getResultText() + ".*"));
     }
 }

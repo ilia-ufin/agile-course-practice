@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':vector-distance-ViewModel')
+    testCompile project(':vector-distance-ViewModel').sourceSets.test.output
+}

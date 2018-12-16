@@ -1,4 +1,4 @@
-package ru.unn.agile.numerical_integration.Model;
+package ru.unn.agile.numerical_integration.model;
 
 public final class BaseDefinition {
     private BaseDefinition() {

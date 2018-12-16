@@ -1,3 +1,4 @@
 dependencies {
     compile project(':numerical-integration-ViewModel-legacy')
+    compile project(':numerical-integration-Infrastructure-legacy')
 }
