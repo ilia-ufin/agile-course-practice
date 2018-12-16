@@ -68,9 +68,13 @@ project(":code/triangle/ViewModel").name = "triangle-ViewModel"
 include "code/triangle/View"
 project(":code/triangle/View").name = "triangle-View"
 
-// Moiseev Nikita, lab 1
-include "code/abstract-set"
-project(":code/abstract-set").name = "abstract-set-Model"
+// abstract-set
+include "code/abstract-set/Model"
+project(":code/abstract-set/Model").name = "abstract-set-Model"
+include "code/abstract-set/ViewModel"
+project(":code/abstract-set/ViewModel").name = "abstract-set-ViewModel"
+include "code/abstract-set/View"
+project(":code/abstract-set/View").name = "abstract-set-View"
 
 // Vector distance
 include "code/vector-distance/Model"
@@ -236,13 +240,15 @@ project(":code/queue/View").name = "queue-View"
 include "code/queue/Infrastructure"
 project(":code/queue/Infrastructure").name = "queue-Infrastructure"
 
-// Flegontov Alexander and Polyakov Igor, math-statistics
+// Flegontov Alexander & Polyakov Igor & Podolov Kirill, math-statistics
 include "code/math-statistics/Model"
 project(":code/math-statistics/Model").name = "math-statistics-Model"
 include "code/math-statistics/ViewModel"
 project(":code/math-statistics/ViewModel").name = "math-statistics-ViewModel"
 include "code/math-statistics/View"
 project(":code/math-statistics/View").name = "math-statistics-View"
+include "code/math-statistics/Infrastructure"
+project(":code/math-statistics/Infrastructure").name = "math-statistics-Infrastructure"
 
 // Fraction calculator
 include "code/frac-calc/Model"
@@ -290,9 +296,15 @@ project(":code/polynomial-calculator/View").name = "polynomial-calculator-View"
 include "code/binary-search-tree"
 project(":code/binary-search-tree").name = "binary-search-tree"
 
-//Pipikin Oleg, Matrix
-include "code/pipikin-oleg-matrix"
-project(":code/pipikin-oleg-matrix").name = "pipikin-oleg-matrix"
+// Matrix
+include "code/matrix/Model"
+project(":code/matrix/Model").name = "matrix-Model"
+include "code/matrix/View"
+project(":code/matrix/View").name = "matrix-View"
+include "code/matrix/ViewModel"
+project(":code/matrix/ViewModel").name = "matrix-ViewModel"
+include "code/matrix/Infrastructure"
+project(":code/matrix/Infrastructure").name = "matrix-Infrastructure"
 
 // Segments2D Intersection
 include "code/segments2d-intersection/Model"
@@ -343,3 +355,7 @@ include "code/numbers-in-words/View"
 project(":code/numbers-in-words/View").name = "numbers-in-words-View"
 include "code/numbers-in-words/Infrastructure"
 project(":code/numbers-in-words/Infrastructure").name = "numbers-in-words-Infrastructure"
+
+// Ryabov Vladislav, AVLTree
+include "code/ryabov-avl-tree"
+project(":code/ryabov-avl-tree").name = "ryabov-avl-tree"
