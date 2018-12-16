@@ -21,8 +21,6 @@ public class ViewModel {
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
-//    private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
-
     private ILogger logger;
     private boolean isInputChanged;
     private List<ValueCachingChangeListener> valueChangedListeners;
@@ -158,10 +156,6 @@ public class ViewModel {
         return books1.get();
     }
     public void setBooks1(final String books) {
-        if (books.equals(this.books1)) {
-            return;
-        }
-
         books1.set(books);
         isInputChanged = true;
     }
@@ -173,10 +167,6 @@ public class ViewModel {
         return books2.get();
     }
     public void setBooks2(final String books) {
-        if (books.equals(this.books2)) {
-            return;
-        }
-
         books2.set(books);
         isInputChanged = true;
     }
@@ -188,10 +178,6 @@ public class ViewModel {
         return books3.get();
     }
     public void setBooks3(final String books) {
-        if (books.equals(this.books3)) {
-            return;
-        }
-
         books3.set(books);
         isInputChanged = true;
     }
@@ -203,10 +189,6 @@ public class ViewModel {
         return books4.get();
     }
     public void setBooks4(final String books) {
-        if (books.equals(this.books4)) {
-            return;
-        }
-
         books4.set(books);
         isInputChanged = true;
     }
@@ -218,10 +200,6 @@ public class ViewModel {
         return books5.get();
     }
     public void setBooks5(final String books) {
-        if (books.equals(this.books5)) {
-            return;
-        }
-
         books5.set(books);
         isInputChanged = true;
     }
