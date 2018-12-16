@@ -17,20 +17,26 @@ public class ViewModel {
     private final StringProperty books5 = new SimpleStringProperty();
 
     private final BooleanProperty calculationDisabled = new SimpleBooleanProperty();
+    private final StringProperty logs = new SimpleStringProperty();
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
-    private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
+//    private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
 
     private ILogger logger;
     private boolean isInputChanged;
+    private List<ValueCachingChangeListener> valueChangedListeners;
 
-    // FXML needs default c-tor for binding
-    public ViewModel(final ILogger logger) {
+    public final void setLogger(final ILogger logger) {
         if (logger == null) {
             throw new IllegalArgumentException("Logger parameter can't be null");
         }
         this.logger = logger;
+    }
+
+    // FXML needs default c-tor for binding
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
 
         books1.set("");
         books2.set("");
@@ -60,9 +66,9 @@ public class ViewModel {
             add(books4);
             add(books5);
         } };
-
+        valueChangedListeners = new ArrayList<>();
         for (StringProperty field : fields) {
-            final ValueChangeListener listener = new ValueChangeListener();
+            final ValueCachingChangeListener listener = new ValueCachingChangeListener();
             field.addListener(listener);
             valueChangedListeners.add(listener);
         }
@@ -97,6 +103,30 @@ public class ViewModel {
                 + "; #4 = " + books4.get()
                 + "; #5 = " + books5.get() + ".";
     }
+
+    public void onFocusChanged(final Boolean oldValue, final Boolean newValue) {
+        if (!oldValue && newValue) {
+            return;
+        }
+
+        for (ValueCachingChangeListener listener : valueChangedListeners) {
+            if (listener.isChanged()) {
+                StringBuilder message = new StringBuilder(LogMessages.EDITING_FINISHED.toString());
+                message.append("Books: [")
+                        .append(books1.get()).append("; ")
+                        .append(books2.get()).append("; ")
+                        .append(books3.get()).append("; ")
+                        .append(books4.get()).append("; ")
+                        .append(books5.get()).append("]");
+                logger.log(message.toString());
+                updateLogs();
+
+                listener.cache();
+                break;
+            }
+        }
+    }
+
 
     private void logInputParams() {
         if (!isInputChanged) {
@@ -236,12 +266,32 @@ public class ViewModel {
         return inputStatus;
     }
 
-    private class ValueChangeListener implements ChangeListener<String> {
+    private void updateLogs() {
+        List<String> wholeLog = logger.getLog();
+        String line = new String("");
+        for (String log : wholeLog) {
+            line += log + "\n";
+        }
+        logs.set(line);
+    }
+
+    private class ValueCachingChangeListener implements ChangeListener<String> {
+        private String prevValue = new String("");
+        private String curValue = new String("");
         @Override
         public void changed(final ObservableValue<? extends String> observable,
-                            final String oldValue,
-                            final String newValue) {
+                            final String oldValue, final String newValue) {
+            if (oldValue.equals(newValue)) {
+                return;
+            }
             status.set(getStatusForInput().toString());
+            curValue = newValue;
+        }
+        public boolean isChanged() {
+            return !prevValue.equals(curValue);
+        }
+        public void cache() {
+            prevValue = curValue;
         }
     }
 }
