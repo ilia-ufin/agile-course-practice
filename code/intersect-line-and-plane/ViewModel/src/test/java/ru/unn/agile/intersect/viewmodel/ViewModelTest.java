@@ -349,6 +349,11 @@ public class ViewModelTest {
         assertEquals(LogMessages.WAITING, viewModel.getPlaneStatus());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void canCreateWithBrokenLogger() {
+        viewModel = new ViewModel(null);
+    }
+
     private boolean isCoordinatesEmpty() {
         assertEquals("", viewModel.getCoordXFirstPlanePoint());
         assertEquals("", viewModel.getCoordYFirstPlanePoint());
