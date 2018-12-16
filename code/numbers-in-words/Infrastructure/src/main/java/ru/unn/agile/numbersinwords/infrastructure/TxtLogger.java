@@ -3,22 +3,22 @@ package ru.unn.agile.numbersinwords.infrastructure;
 import ru.unn.agile.numbersinwords.viewmodel.ILogger;
 
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class TxtLogger implements ILogger {
+    private FileWriter fileWriter;
     private BufferedWriter writeBuffer;
     private List<String> log = new ArrayList<>();
     private static final String ISO_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss ";
 
     public TxtLogger(final String logPath) throws IOException {
-        writeBuffer = Files.newBufferedWriter(
-                FileSystems.getDefault().getPath(logPath));
+        fileWriter = new FileWriter(logPath);
+        writeBuffer = new BufferedWriter(fileWriter);
     }
 
     private String getTimestamp() {
@@ -46,5 +46,9 @@ public class TxtLogger implements ILogger {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public FileWriter getFileWriter() {
+        return fileWriter;
     }
 }
