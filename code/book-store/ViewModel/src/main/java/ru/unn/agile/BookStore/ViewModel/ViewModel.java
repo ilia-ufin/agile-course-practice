@@ -22,8 +22,16 @@ public class ViewModel {
 
     private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
 
+    private ILogger logger;
+    private boolean isInputChanged;
+
     // FXML needs default c-tor for binding
-    public ViewModel() {
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+
         books1.set("");
         books2.set("");
         books3.set("");
@@ -31,6 +39,7 @@ public class ViewModel {
         books5.set("");
         result.set("");
         status.set(Status.WAITING.toString());
+        isInputChanged = true;
 
         BooleanBinding couldCalculate = new BooleanBinding() {
             {
@@ -57,9 +66,16 @@ public class ViewModel {
             field.addListener(listener);
             valueChangedListeners.add(listener);
         }
+
+    }
+
+    public List<String> getLog() {
+        return logger.getLog();
     }
 
     public void calculate() {
+        logger.log(createLogMessage());
+
         if (calculationDisabled.get()) {
             return;
         }
@@ -73,35 +89,111 @@ public class ViewModel {
         status.set(Status.SUCCESS.toString());
     }
 
+    private String createLogMessage() {
+        return LogMessages.CALCULATE_WAS_PRESSED + "Books"
+                + ": #1 = " + books1.get()
+                + "; #2 = " + books2.get()
+                + "; #3 = " + books3.get()
+                + "; #4 = " + books4.get()
+                + "; #5 = " + books5.get() + ".";
+    }
+
+    private void logInputParams() {
+        if (!isInputChanged) {
+            return;
+        }
+
+        logger.log(editingFinishedLogMessage());
+        isInputChanged = false;
+    }
+
+    private String editingFinishedLogMessage() {
+        return LogMessages.EDITING_FINISHED
+                + "Input arguments are: ["
+                + books1.get() + "; "
+                + books2.get() + "; "
+                + books3.get() + "; "
+                + books4.get() + "; "
+                + books5.get() + "]";
+    }
+
+    public void focusLost() {
+        logInputParams();
+    }
+
     public StringProperty books1Property() {
         return books1;
     }
     public final String getBooks1() {
         return books1.get();
     }
+    public void setBooks1(final String books) {
+        if (books.equals(this.books1)) {
+            return;
+        }
+
+        books1.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books2Property() {
         return books2;
     }
     public final String getBooks2() {
         return books2.get();
     }
+    public void setBooks2(final String books) {
+        if (books.equals(this.books2)) {
+            return;
+        }
+
+        books2.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books3Property() {
         return books3;
     }
     public final String getBooks3() {
         return books3.get();
     }
+    public void setBooks3(final String books) {
+        if (books.equals(this.books3)) {
+            return;
+        }
+
+        books3.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books4Property() {
         return books4;
     }
     public final String getBooks4() {
         return books4.get();
     }
+    public void setBooks4(final String books) {
+        if (books.equals(this.books4)) {
+            return;
+        }
+
+        books4.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books5Property() {
         return books5;
     }
     public final String getBooks5() {
         return books5.get();
+    }
+    public void setBooks5(final String books) {
+        if (books.equals(this.books5)) {
+            return;
+        }
+
+        books5.set(books);
+        isInputChanged = true;
     }
 
     public final String getResult() {
@@ -166,5 +258,18 @@ enum Status {
     }
     public String toString() {
         return name;
+    }
+}
+
+enum LogMessages {
+    CALCULATE_WAS_PRESSED("Calculate "),
+    EDITING_FINISHED("Updated input ");
+
+    private final String message;
+    LogMessages(final String message) {
+        this.message = message;
+    }
+    public String toString() {
+        return message;
     }
 }
