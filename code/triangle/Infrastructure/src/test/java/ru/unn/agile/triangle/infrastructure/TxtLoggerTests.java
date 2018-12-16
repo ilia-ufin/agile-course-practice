@@ -76,7 +76,7 @@ public class TxtLoggerTests {
     }
 
     @Test
-    public void canReadIfLFileNameIsInCorrect() {
+    public void canReadIFileNameWhenInCorrect() {
         TxtLogger emptyLogger = new TxtLogger("");
 
         List<String> log = emptyLogger.getLogger();

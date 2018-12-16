@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewModel {
+    public static final String EDITING_FINISHED = "Updated input. ";
     private StringProperty aX = new SimpleStringProperty();
     private StringProperty bX = new SimpleStringProperty();
     private StringProperty cX = new SimpleStringProperty();
@@ -103,10 +104,6 @@ public class ViewModel {
 
     public String getLogs() {
         return logs.get();
-    }
-
-    public StringProperty logsProperty() {
-        return logs;
     }
 
     public void setLogs(final String logs) {
@@ -275,7 +272,7 @@ public class ViewModel {
 
         for (ValueCachingChangeListener listener : valueChangedListeners) {
             if (listener.isChanged()) {
-                StringBuilder message = new StringBuilder(LogMessages.EDITING_FINISHED);
+                StringBuilder message = new StringBuilder(EDITING_FINISHED);
                 message.append("Input arguments are: [")
                         .append(aX.get()).append("; ")
                         .append(aY.get()).append("; ")
@@ -325,7 +322,7 @@ public class ViewModel {
         return inputStatus;
     }
 
-    private class ValueCachingChangeListener implements ChangeListener<String> {
+    public class ValueCachingChangeListener implements ChangeListener<String> {
         private String prevValue = new String("");
         private String curValue = new String("");
         @Override
@@ -359,13 +356,4 @@ enum Status {
     public String toString() {
         return name;
     }
-}
-
-final class LogMessages {
-    public static final String CALCULATE_WAS_PRESSED = "Calculate. ";
-    public static final String VERTEX_WAS_CHANGED = "Vertex was changed to ";
-    public static final String EDITING_FINISHED = "Updated input. ";
-    public static final String OPERATION_WAS_CHANGED = "Operation was changed to ";
-
-    private LogMessages() { }
 }

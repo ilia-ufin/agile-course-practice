@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 public class ViewModelTest {
@@ -272,4 +273,27 @@ public class ViewModelTest {
 
         assertEquals(Status.READY.toString(), viewModel.getStatus());
     }
+
+    @Test
+    public void statusIsButtonDisableInit() {
+        assertFalse(viewModel.isBtnDisabled());
+    }
+
+    @Test
+    public void canChangeFocus() {
+        viewModel.onFocusChanged(false, false);
+    }
+
+    @Test
+    public void canNotChangeFocus() {
+        viewModel.onFocusChanged(false, true);
+    }
+
+    @Test
+    public void canSetXProperty() {
+        viewModel.aXProperty().set("");
+
+        assertFalse(viewModel.isBtnDisabled());
+    }
+
 }
