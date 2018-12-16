@@ -24,16 +24,16 @@ public class TxtLoggerTest {
     }
 
     @Test
-    public void canCreateLogFileOnDisk() {
+    public void canWriteLogFileOnDisk() {
         try {
             new BufferedReader(new FileReader(FILENAME));
         } catch (FileNotFoundException e) {
-            fail("File " + FILENAME + " wasn't found!");
+            fail("Can not find " + FILENAME + "file!");
         }
     }
 
     @Test
-    public void canWriteLogMessage() {
+    public void canWriteDownLogMessage() {
         String testMessage = "Test message";
 
         txtLogger.log(testMessage);
@@ -43,21 +43,21 @@ public class TxtLoggerTest {
     }
 
     @Test
-    public void canWriteSeveralLogMessage() {
-        String[] messages = {"Test message 1", "Test message 2"};
+    public void canWriteDownSomeLogMessage() {
+        String[] testMessages = {"Message #1", "Message 2"};
 
-        txtLogger.log(messages[0]);
-        txtLogger.log(messages[1]);
+        txtLogger.log(testMessages[0]);
+        txtLogger.log(testMessages[1]);
 
-        List<String> actualMessages = txtLogger.getLog();
-        for (int i = 0; i < actualMessages.size(); i++) {
-            assertTrue(actualMessages.get(i).matches(".*" + messages[i] + "$"));
+        List<String> newMessages = txtLogger.getLog();
+        for (int i = 0; i < newMessages.size(); i++) {
+            assertTrue(newMessages.get(i).matches(".*" + testMessages[i] + "$"));
         }
     }
 
     @Test
-    public void doesLogContainDateAndTime() {
-        String testMessage = "Test message";
+    public void doesLogIncludeDateAndTime() {
+        String testMessage = "Message";
 
         txtLogger.log(testMessage);
 
