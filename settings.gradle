@@ -296,7 +296,6 @@ project(":code/polynomial-calculator/View").name = "polynomial-calculator-View"
 include "code/binary-search-tree"
 project(":code/binary-search-tree").name = "binary-search-tree"
 
-<<<<<<< HEAD
 // Matrix
 include "code/matrix/Model"
 project(":code/matrix/Model").name = "matrix-Model"
