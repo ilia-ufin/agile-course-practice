@@ -38,7 +38,7 @@ public class TestViewModelWithLogger {
     @Test
     public void canChangeFocusXProperty() {
         viewModel.aXProperty().set("1");
-        viewModel.onFocusChanged(false, false);
+        viewModel.checkOnFocusChanged(false, false);
 
         assertEquals("Updated input. Input arguments are: [1; ; ; ; ; ]\n", viewModel.getLogs());
     }

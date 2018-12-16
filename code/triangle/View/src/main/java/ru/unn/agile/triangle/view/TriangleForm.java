@@ -47,26 +47,26 @@ public class TriangleForm {
     void initialize() {
         viewModel.setLogger(new TxtLogger("./TxtLogger-lab3.log"));
 
-        final ChangeListener<Boolean> focusChangeListener = new ChangeListener<Boolean>() {
+        final ChangeListener<Boolean> booleanChangeListener = new ChangeListener<Boolean>() {
             @Override
             public void changed(final ObservableValue<? extends Boolean> observable,
-                                final Boolean oldValue, final Boolean newValue) {
-                viewModel.onFocusChanged(oldValue, newValue);
+                                final Boolean oldValueAttribute, final Boolean newValueAttribute) {
+                viewModel.checkOnFocusChanged(oldValueAttribute, newValueAttribute);
             }
         };
 
         aX.textProperty().bindBidirectional(viewModel.aXProperty());
-        aX.focusedProperty().addListener(focusChangeListener);
+        aX.focusedProperty().addListener(booleanChangeListener);
         aY.textProperty().bindBidirectional(viewModel.aYProperty());
-        aY.focusedProperty().addListener(focusChangeListener);
+        aY.focusedProperty().addListener(booleanChangeListener);
         bX.textProperty().bindBidirectional(viewModel.bXProperty());
-        bX.focusedProperty().addListener(focusChangeListener);
+        bX.focusedProperty().addListener(booleanChangeListener);
         bY.textProperty().bindBidirectional(viewModel.bYProperty());
-        bY.focusedProperty().addListener(focusChangeListener);
+        bY.focusedProperty().addListener(booleanChangeListener);
         cX.textProperty().bindBidirectional(viewModel.cXProperty());
-        cX.focusedProperty().addListener(focusChangeListener);
+        cX.focusedProperty().addListener(booleanChangeListener);
         cY.textProperty().bindBidirectional(viewModel.cYProperty());
-        cY.focusedProperty().addListener(focusChangeListener);
+        cY.focusedProperty().addListener(booleanChangeListener);
 
 
         btnCalcPerimeter.setOnAction(new EventHandler<ActionEvent>() {

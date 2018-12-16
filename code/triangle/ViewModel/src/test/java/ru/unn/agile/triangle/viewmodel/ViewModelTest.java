@@ -281,12 +281,12 @@ public class ViewModelTest {
 
     @Test
     public void canChangeFocus() {
-        viewModel.onFocusChanged(false, false);
+        viewModel.checkOnFocusChanged(false, false);
     }
 
     @Test
     public void canNotChangeFocus() {
-        viewModel.onFocusChanged(false, true);
+        viewModel.checkOnFocusChanged(false, true);
     }
 
     @Test
