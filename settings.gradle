@@ -75,6 +75,8 @@ include "code/abstract-set/ViewModel"
 project(":code/abstract-set/ViewModel").name = "abstract-set-ViewModel"
 include "code/abstract-set/View"
 project(":code/abstract-set/View").name = "abstract-set-View"
+include "code/abstract-set/Infrastructure"
+project(":code/abstract-set/Infrastructure").name = "abstract-set-Infrastructure"
 
 // Vector distance
 include "code/vector-distance/Model"
