@@ -22,9 +22,16 @@ public class NumbersInWordsViewModelLogTests {
         FakeLogger newLogger = new FakeLogger();
         this.setLogger(newLogger);
     }
+
     @After
     public void tearDown() {
         logger.close();
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsErrorOnNullLogger() throws IllegalArgumentException {
+        NumbersInWordsViewModel viewModel1 = new NumbersInWordsViewModel(null);
     }
 
     @Test
