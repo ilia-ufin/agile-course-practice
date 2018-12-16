@@ -226,10 +226,6 @@ project(":code/binary-search/View").name = "binary-search-View"
 include "code/binary-search/ViewModel"
 project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
 
-// Kryukova Polina, caesar-cipher
-include "code/caesar-cipher"
-project(":code/caesar-cipher").name = "caesar-cipher"
-
 // Podolov Kirill & Flegontov Alexander, Queue
 include "code/queue/Model"
 project(":code/queue/Model").name = "queue-Model"
@@ -359,6 +355,14 @@ include "code/numbers-in-words/ViewModel"
 project(":code/numbers-in-words/ViewModel").name = "numbers-in-words-ViewModel"
 include "code/numbers-in-words/View"
 project(":code/numbers-in-words/View").name = "numbers-in-words-View"
+
+// Kryukova Polina, caesar-cipher 
+include "code/caesar-cipher/Model" 
+project(":code/caesar-cipher/Model").name = "caesar-cipher-Model" 
+include "code/caesar-cipher/ViewModel" 
+project(":code/caesar-cipher/ViewModel").name = "caesar-cipher-ViewModel" 
+include "code/caesar-cipher/View" 
+project(":code/caesar-cipher/View").name = "caesar-cipher-View" 
 
 // Ryabov Vladislav, AVLTree
 include "code/ryabov-avl-tree"
