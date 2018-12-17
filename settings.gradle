@@ -177,6 +177,8 @@ include "code/stack/ViewModel"
 project(":code/stack/ViewModel").name = "stack-ViewModel"
 include "code/stack/View"
 project(":code/stack/View").name = "stack-View"
+include "code/stack/Infrastructure"
+project(":code/stack/Infrastructure").name = "stack-Infrastructure"
 
 // Roman number converter
 include "code/roman-number-converter/model"
@@ -186,9 +188,14 @@ project(":code/roman-number-converter/viewModel").name = "roman-number-converter
 include "code/roman-number-converter/view"
 project(":code/roman-number-converter/view").name = "roman-number-converter-View"
 
-// Metelev Evgenii
-include "code/metelev-evgenii-mortgage-calculator"
-project(":code/metelev-evgenii-mortgage-calculator").name = "metelev-evgenii-Model"
+// Metelev Evgenii, Mortgage-calculator
+include "code/mortgage-calculator/Model"
+project(":code/mortgage-calculator/Model").name = "mortgage-calculator-Model"
+include "code/mortgage-calculator/View"
+project(":code/mortgage-calculator/View").name = "mortgage-calculator-View"
+include "code/mortgage-calculator/ViewModel"
+project(":code/mortgage-calculator/ViewModel").name = "mortgage-calculator-ViewModel"
+
 
 // Kochuev Andrey, Length Converter
 include "code/kochuev-andrey-length-converter"

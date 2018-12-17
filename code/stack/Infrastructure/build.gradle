@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':stack-ViewModel')
+    testCompile project(':stack-ViewModel').sourceSets.test.output
+}

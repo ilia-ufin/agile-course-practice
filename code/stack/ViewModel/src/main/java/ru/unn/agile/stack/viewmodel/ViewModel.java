@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ru.unn.agile.stack.model.Stack;
 
+import java.util.List;
+
 public class ViewModel {
     public static final String WAITING_FOR_INPUT = "Waiting for new element";
     public static final String READY_TO_ADD = "Ready to add new element";
@@ -15,6 +17,9 @@ public class ViewModel {
     public static final String STACK_IS_NOT_EMPTY = "Stack is not empty.";
     public static final String NONE = "None";
 
+    private static final String LOGGER_IS_NULL = "Logger can not be null";
+    private static final String EMPTY_ELEMENT = "Adding element is empty";
+
     private Stack<Double> doubleStack;
 
     private StringProperty stackIsEmptyStatus = new SimpleStringProperty();
@@ -23,20 +28,33 @@ public class ViewModel {
     private StringProperty stackPopElement = new SimpleStringProperty();
     private StringProperty addingElement = new SimpleStringProperty();
     private StringProperty statusMessage = new SimpleStringProperty();
+    private StringProperty textLog = new SimpleStringProperty();
 
     private BooleanProperty popButtonVisible = new SimpleBooleanProperty();
 
+    private ILogger logger;
+
     public ViewModel() {
+        initDefaultValues();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        initDefaultValues();
+    }
+
+    private void initDefaultValues() {
         doubleStack = new Stack<Double>();
+
         stackIsEmptyStatus.set(STACK_IS_EMPTY);
         stackSize.set("0");
         stackTopElement.set(NONE);
         stackPopElement.set(NONE);
         addingElement.set("");
+        statusMessage.set(WAITING_FOR_INPUT);
+        textLog.set("");
 
         popButtonVisible.set(false);
-
-        statusMessage.set(WAITING_FOR_INPUT);
     }
 
     public StringProperty stackIsEmptyStatusProperty() {
@@ -87,6 +105,14 @@ public class ViewModel {
         return statusMessage.get();
     }
 
+    public StringProperty textLogProperty() {
+        return textLog;
+    }
+
+    public String getTextLog() {
+        return textLog.get();
+    }
+
     public boolean isPopButtonVisible() {
         return popButtonVisible.get();
     }
@@ -99,18 +125,43 @@ public class ViewModel {
         addingElement.set(addElem);
     }
 
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException(LOGGER_IS_NULL);
+        }
+        this.logger = logger;
+    }
+
+    private void writeLog(final String message) {
+        logger.log(message);
+        StringBuilder logMessages = new StringBuilder();
+        List<String> logList = getLogList();
+        for (String log : logList) {
+            logMessages.append(log).append("\n");
+        }
+        textLog.set(logMessages.toString());
+    }
+
     public void addElement() {
+        String addingElement = getAddingElement();
         try {
-            String addingElement = getAddingElement();
             if (addingElement.isEmpty()) {
                 statusMessage.set(WAITING_FOR_INPUT);
+                writeLog(EMPTY_ELEMENT);
             } else {
-                doubleStack.push(Double.parseDouble(addingElement));
+                Double doubleElement = Double.parseDouble(addingElement);
+                doubleStack.push(doubleElement);
                 statusMessage.set(READY_TO_ADD);
                 changeStackProperties();
+                writeLog("Add " + doubleElement + " element into stack");
             }
         } catch (NumberFormatException e) {
             statusMessage.set(INVALID_FORMAT);
+            writeLog("Adding element " + addingElement + " has invalid format");
         }
     }
 
@@ -132,6 +183,7 @@ public class ViewModel {
         if (!doubleStack.empty()) {
             stackPopElement.set(Double.toString(doubleStack.pop()));
             changeStackProperties();
+            writeLog("Pop " + getStackPopElement() + " element from stack");
         }
     }
 }
