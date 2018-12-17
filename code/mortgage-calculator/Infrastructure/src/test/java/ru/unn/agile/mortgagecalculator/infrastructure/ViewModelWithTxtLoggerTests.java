@@ -9,7 +9,9 @@ public class ViewModelWithTxtLoggerTests extends ViewModelTests {
     public void setUpEmptyExample() {
         TxtLogger realLogger = new TxtLogger("./ViewModelIncludingTestsTextLogger.txt");
 
-        super.setViewModel(new ViewModel(realLogger));
+        setViewModel(new ViewModel(realLogger));
+
+        setDefaultSettings();
     }
 
 }

@@ -1,4 +1,5 @@
 package ru.unn.agile.mortgagecalculator.viewmodel.legacy;
+
 import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ViewModel.Status;
 import org.junit.After;
 import org.junit.Before;
@@ -36,6 +37,10 @@ public class ViewModelTests {
     public void setUpEmptyExample() {
         FakeLogger logger = new FakeLogger();
         viewModel = new ViewModel(logger);
+        setDefaultSettings();
+    }
+
+    public void setDefaultSettings() {
         viewModel.setApartmentPrice(APARTMENT_PRICE_EXAMPLE);
         viewModel.setInitialPayment(INITIAL_PAYMENT_EXAMPLE);
         viewModel.setInterestRate(INTEREST_RATE_EXAMPLE);
@@ -125,7 +130,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void  checkResultWithNegativeInitialRate() {
+    public void checkResultWithNegativeInitialRate() {
         viewModel.setInterestRate(NEGATIVE_VALUE_FOR_TESTS);
         viewModel.checkCountFields();
 
@@ -133,7 +138,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void  checkResultWithNegativeTermMortgage() {
+    public void checkResultWithNegativeTermMortgage() {
         viewModel.setTermMortgage(NEGATIVE_VALUE_FOR_TESTS);
         viewModel.checkCountFields();
 
