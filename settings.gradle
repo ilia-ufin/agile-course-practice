@@ -193,6 +193,8 @@ include "code/mortgage-calculator/View"
 project(":code/mortgage-calculator/View").name = "mortgage-calculator-View"
 include "code/mortgage-calculator/ViewModel"
 project(":code/mortgage-calculator/ViewModel").name = "mortgage-calculator-ViewModel"
+include "code/mortgage-calculator/Infrastructure"
+project(":code/mortgage-calculator/Infrastructure").name = "mortgage-calculator-Infrastructure"
 
 
 // Kochuev Andrey, Length Converter
@@ -222,6 +224,7 @@ include "code/salary-calculator/View"
 project(":code/salary-calculator/View").name = "salary-calculator-View"
 include "code/salary-calculator/ViewModel"
 project(":code/salary-calculator/ViewModel").name = "salary-calculator-ViewModel"
+
 
 // Gladkova Tatiana, Binary Search
 include "code/binary-search/Model"

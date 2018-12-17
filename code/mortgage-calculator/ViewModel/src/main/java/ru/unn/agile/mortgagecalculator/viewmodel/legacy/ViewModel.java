@@ -26,7 +26,11 @@ public class ViewModel {
     private  Object[] namesColumns =
             new String[] {"Month", "Interest charges", "Amount of payment"};
 
-    public ViewModel() {
+    private ILogger logger;
+
+    public ViewModel(final ILogger logger) {
+
+        this.logger = logger;
         apartmentPrice = "";
         initialPayment = "";
         interestRate = "";
