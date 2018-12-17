@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 
 public class TxtLoggerTests {
     private static final String FILENAME = "./TxtLogger_Tests-lab3.log";
- //   private static final String RE_LOG_LINE = "^\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} - ";
+    private static final String RE_LOG_LINE = "^\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} - ";
     private TxtLogger txtLogger;
 
     @Before
@@ -61,23 +61,23 @@ public class TxtLoggerTests {
 
     @Test
     public void canCreateLoggerWithIncorrectName() {
-        TxtLogger emptyLogger = new TxtLogger("");
+        TxtLogger emptyLogger = new TxtLogger("FakeName");
 
         assertEquals(0, emptyLogger.getLogger().size());
     }
 
     @Test
-    public void canWriteIfFileNameIsInCorrect() {
-        TxtLogger emptyLogger = new TxtLogger("");
+    public void canWriteWhenFileNameIsInCorrect() {
+        TxtLogger emptyLogger = new TxtLogger("FakeName");
 
         emptyLogger.log("Message");
 
-        assertEquals(0, emptyLogger.getLogger().size());
+        assertEquals(1, emptyLogger.getLogger().size());
     }
 
     @Test
-    public void canReadIFileNameWhenInCorrect() {
-        TxtLogger emptyLogger = new TxtLogger("");
+    public void canReadFileNameWhenInCorrect() {
+        TxtLogger emptyLogger = new TxtLogger("FakeName");
 
         List<String> log = emptyLogger.getLogger();
 

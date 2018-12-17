@@ -2,7 +2,10 @@ package ru.unn.agile.triangle.infrastructure;
 
 import ru.unn.agile.triangle.viewmodel.ILogger;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,8 +30,8 @@ public class TxtLogger implements ILogger {
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(filename));
-        } catch (IOException e) {
-            System.out.println("Can't create log writer");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         writer = logWriter;
     }
@@ -39,8 +42,8 @@ public class TxtLogger implements ILogger {
             writer.write(now() + " > " + s);
             writer.newLine();
             writer.flush();
-        } catch (IOException e) {
-            System.out.println("Can't write to log");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -56,8 +59,8 @@ public class TxtLogger implements ILogger {
                 logger.add(message);
                 message = reader.readLine();
             }
-        } catch (IOException e) {
-            System.out.println("Can't get logger");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         return logger;
