@@ -2,15 +2,12 @@ package ru.unn.agile.mortgagecalculator.infrastructure;
 
 import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ILogger;
 
-import java.io.FileWriter;
+import java.io.*;
 import java.util.Locale;
-import java.io.BufferedWriter;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.io.BufferedReader;
 import java.util.List;
-import java.io.FileReader;
 
 
 public class TxtLogger implements ILogger {
@@ -37,12 +34,12 @@ public class TxtLogger implements ILogger {
         }
     }
 
-    public TxtLogger(final String fileName) {
-        this.logFile = fileName;
+    public TxtLogger(final String logFile) {
+        this.logFile = logFile;
 
         BufferedWriter logWriter = null;
         try {
-            logWriter = new BufferedWriter(new FileWriter(fileName));
+            logWriter = new BufferedWriter(new FileWriter(logFile));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,9 +50,12 @@ public class TxtLogger implements ILogger {
     @Override
     public List<String> getLog() {
         BufferedReader bufferedReader;
-        ArrayList<String> logList = new ArrayList<String>();
+        ArrayList<String> logList = new ArrayList<>();
         try {
-            bufferedReader = new BufferedReader(new FileReader(logFile));
+
+            FileReader reader = new FileReader(logFile);
+
+            bufferedReader = new BufferedReader(reader);
 
             String logLine = bufferedReader.readLine();
 
