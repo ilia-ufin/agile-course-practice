@@ -25,7 +25,7 @@ public class TxtLoggerTest {
     }
 
     @Test
-    public void canCreateLogFileOnDisk() {
+    public void canCreateLogFile() {
         try {
             new BufferedReader(new FileReader(FILENAME));
         } catch (FileNotFoundException ex) {
@@ -55,7 +55,7 @@ public class TxtLoggerTest {
     }
 
     @Test
-    public void doesLogContainDateAndTime() {
+    public void doesLogContainDateTime() {
         txtLogger.log(TEST_MESSAGE);
 
         String message = txtLogger.getLog().get(0);
