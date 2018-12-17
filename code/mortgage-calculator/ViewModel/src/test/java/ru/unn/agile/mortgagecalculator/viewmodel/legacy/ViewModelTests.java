@@ -28,9 +28,14 @@ public class ViewModelTests {
 
     private ViewModel viewModel;
 
+    public void setViewModel(final ViewModel modelView) {
+        viewModel = modelView;
+    }
+
     @Before
     public void setUpEmptyExample() {
-        viewModel = new ViewModel();
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
         viewModel.setApartmentPrice(APARTMENT_PRICE_EXAMPLE);
         viewModel.setInitialPayment(INITIAL_PAYMENT_EXAMPLE);
         viewModel.setInterestRate(INTEREST_RATE_EXAMPLE);
@@ -44,7 +49,8 @@ public class ViewModelTests {
 
     @Test
     public void checkStatusInBegin() {
-        viewModel = new ViewModel();
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
         assertEquals(Status.COUNT_WAITING, viewModel.getStatus());
     }
 

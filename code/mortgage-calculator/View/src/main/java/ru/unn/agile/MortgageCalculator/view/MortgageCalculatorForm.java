@@ -2,6 +2,8 @@ package ru.unn.agile.mortgagecalculator.view;
 
 import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ViewModel;
 
+import ru.unn.agile.mortgagecalculator.infrastructure.TxtLogger;
+
 import javax.swing.*;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
@@ -45,7 +47,9 @@ public final class MortgageCalculatorForm {
 
     public static void main(final String[] args) {
         JFrame frame = new JFrame("MortgageCalculatorForm");
-        frame.setContentPane(new MortgageCalculatorForm(new ViewModel()).mainPanel);
+        frame.setContentPane(new MortgageCalculatorForm(new ViewModel(
+                new TxtLogger("MortgageCalculator.log")
+        )).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(WIDTH_WINDOWS, HEIGHT_WINDOWS);

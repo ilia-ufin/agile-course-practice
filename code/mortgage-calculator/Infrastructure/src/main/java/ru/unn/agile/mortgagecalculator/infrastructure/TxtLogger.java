@@ -1,6 +1,7 @@
 package ru.unn.agile.mortgagecalculator.infrastructure;
 
 import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ILogger;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -16,7 +17,7 @@ public class TxtLogger implements ILogger {
     private final String fileName;
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    private static String getActualTime() {
+    private static String getTime() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
         return dateFormat.format(cal.getTime());
@@ -59,7 +60,7 @@ public class TxtLogger implements ILogger {
     @Override
     public void log(final String str) {
         try {
-            writer.write(getActualTime() + " >> " + str);
+            writer.write(getTime() + ": INFO " + str);
             writer.newLine();
 
             writer.flush();

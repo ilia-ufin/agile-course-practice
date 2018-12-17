@@ -6,7 +6,7 @@ import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ViewModel;
 public class ViewModelWithTxtLoggerTests extends ViewModelTests {
 
     @Override
-    public void setUp() {
+    public void setUpEmptyExample() {
         TxtLogger realLogger = new TxtLogger("./ViewModelIncludingTestsTextLogger.txt");
 
         super.setViewModel(new ViewModel(realLogger));

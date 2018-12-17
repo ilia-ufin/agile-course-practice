@@ -23,13 +23,12 @@ public class ViewModel {
     private boolean isCalculateButtonEnabled;
 
     private DefaultTableModel tableModel;
-    private  Object[] namesColumns =
-            new String[] {"Month", "Interest charges", "Amount of payment"};
+    private Object[] namesColumns =
+            new String[]{"Month", "Interest charges", "Amount of payment"};
 
     private ILogger logger;
 
     public ViewModel(final ILogger logger) {
-
         this.logger = logger;
         apartmentPrice = "";
         initialPayment = "";
@@ -115,7 +114,7 @@ public class ViewModel {
 
         String[] monthsNumbersAsArray = new String[numberOfMonths];
 
-        for (int indexMonth = 0; indexMonth  < numberOfMonths; indexMonth++) {
+        for (int indexMonth = 0; indexMonth < numberOfMonths; indexMonth++) {
             monthsNumbersAsArray[indexMonth] = String.valueOf(indexMonth + 1);
         }
 
@@ -223,19 +222,19 @@ public class ViewModel {
         return isCalculateButtonEnabled;
     }
 
-    public void  setApartmentPrice(final String isApartmentPrice) {
+    public void setApartmentPrice(final String isApartmentPrice) {
         this.apartmentPrice = isApartmentPrice;
     }
 
-    public void setInitialPayment(final  String isInitialPayment) {
+    public void setInitialPayment(final String isInitialPayment) {
         this.initialPayment = isInitialPayment;
     }
 
-    public void setInterestRate(final  String isInterestRate) {
+    public void setInterestRate(final String isInterestRate) {
         this.interestRate = isInterestRate;
     }
 
-    public void setTermMortgage(final  String isTermMortgage) {
+    public void setTermMortgage(final String isTermMortgage) {
         this.termMortgage = isTermMortgage;
     }
 
@@ -247,18 +246,19 @@ public class ViewModel {
         return initialPayment;
     }
 
-    public  String getInterestRate() {
+    public String getInterestRate() {
         return interestRate;
     }
 
     public String getTermMortgage() {
         return termMortgage;
     }
-    public  String getStatus() {
+
+    public String getStatus() {
         return status;
     }
 
-    public  String getFullPriceMortgage() {
+    public String getFullPriceMortgage() {
         return fullPriceMortgage;
     }
 
