@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FakeLogger implements ILogger {
-    private ArrayList<String> log = new ArrayList<String>();
+    private ArrayList<String> log = new ArrayList<>();
 
     @Override
-    public void log(final String s) {
-        log.add(s);
+    public void log(final String str) {
+        log.add(str);
     }
 
     @Override
