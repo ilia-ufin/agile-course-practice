@@ -49,26 +49,26 @@ public class TxtLogger implements ILogger {
 
     @Override
     public List<String> getLog() {
-        BufferedReader bufferedReader;
-        ArrayList<String> logList = new ArrayList<>();
+        BufferedReader buffer;
+        ArrayList<String> logs = new ArrayList<>();
         try {
 
-            FileReader reader = new FileReader(logFile);
+            FileReader fileReader = new FileReader(logFile);
 
-            bufferedReader = new BufferedReader(reader);
+            buffer = new BufferedReader(fileReader);
 
-            String logLine = bufferedReader.readLine();
+            String record = buffer.readLine();
 
-            while (logLine != null) {
-                logList.add(logLine);
-                logLine = bufferedReader.readLine();
+            while (record != null) {
+                logs.add(record);
+                record = buffer.readLine();
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        return logList;
+        return logs;
     }
 
 }
