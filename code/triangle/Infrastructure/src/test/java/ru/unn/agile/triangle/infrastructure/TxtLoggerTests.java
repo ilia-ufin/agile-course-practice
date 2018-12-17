@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 
 public class TxtLoggerTests {
     private static final String FILENAME = "./TxtLogger_Tests-lab3.log";
-    private static final String RE_LOG_LINE = "^\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} - ";
+ //   private static final String RE_LOG_LINE = "^\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} - ";
     private TxtLogger txtLogger;
 
     @Before
