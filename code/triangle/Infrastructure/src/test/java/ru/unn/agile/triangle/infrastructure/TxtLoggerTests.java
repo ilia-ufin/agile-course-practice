@@ -1,5 +1,6 @@
 package ru.unn.agile.triangle.infrastructure;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ import static org.junit.Assert.fail;
 
 public class TxtLoggerTests {
     private static final String FILENAME = "./TxtLogger_Tests-lab3.log";
-    private static final String RE_LOG_LINE = "^\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} - ";
+    private static final String MESSAGE = "One log message";
     private TxtLogger txtLogger;
 
     @Before
@@ -22,10 +23,16 @@ public class TxtLoggerTests {
         txtLogger = new TxtLogger(FILENAME);
     }
 
+    @After
+    public void tearDown() {
+        txtLogger = null;
+    }
+
     @Test
     public void canCreateLoggerWithFileName() {
         assertNotNull(txtLogger);
     }
+
 
     @Test
     public void canCreateLogFile() {
@@ -38,9 +45,7 @@ public class TxtLoggerTests {
 
     @Test
     public void canWriteOneLogMessage() {
-        String message = "One log message";
-
-        txtLogger.log(message);
+        txtLogger.log(MESSAGE);
 
         int logMessage = txtLogger.getLogger().size();
         assertEquals(1, logMessage);
@@ -49,7 +54,8 @@ public class TxtLoggerTests {
 
     @Test
     public void canWriteSomeLogMessage() {
-        String[] messages = {"First log message", "Second log message"};
+        String[] messages = {MESSAGE, MESSAGE};
+
 
         for (String message : messages) {
             txtLogger.log(message);
@@ -61,23 +67,23 @@ public class TxtLoggerTests {
 
     @Test
     public void canCreateLoggerWithIncorrectName() {
-        TxtLogger emptyLogger = new TxtLogger("FakeName");
+        TxtLogger emptyLogger = new TxtLogger(FILENAME);
 
         assertEquals(0, emptyLogger.getLogger().size());
     }
 
     @Test
     public void canWriteWhenFileNameIsInCorrect() {
-        TxtLogger emptyLogger = new TxtLogger("FakeName");
+        TxtLogger emptyLogger = new TxtLogger(FILENAME);
 
-        emptyLogger.log("Message");
+        emptyLogger.log(MESSAGE);
 
         assertEquals(1, emptyLogger.getLogger().size());
     }
 
     @Test
     public void canReadFileNameWhenInCorrect() {
-        TxtLogger emptyLogger = new TxtLogger("FakeName");
+        TxtLogger emptyLogger = new TxtLogger(FILENAME);
 
         List<String> log = emptyLogger.getLogger();
 

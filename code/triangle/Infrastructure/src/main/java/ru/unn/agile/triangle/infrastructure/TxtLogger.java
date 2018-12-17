@@ -39,7 +39,7 @@ public class TxtLogger implements ILogger {
             writer.write(now() + " > " + s);
             writer.newLine();
             writer.flush();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -56,7 +56,7 @@ public class TxtLogger implements ILogger {
                 logger.add(message);
                 message = reader.readLine();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 

@@ -140,14 +140,16 @@ public class ViewModel {
 
         };
         btnDisabled.bind(couldCalculate.not());
-        final List<StringProperty> values = new ArrayList<StringProperty>() { {
-            add(aX);
-            add(aY);
-            add(bX);
-            add(bY);
-            add(cX);
-            add(cY);
-        } };
+        final List<StringProperty> values = new ArrayList<StringProperty>() {
+            {
+                add(aX);
+                add(aY);
+                add(bX);
+                add(bY);
+                add(cX);
+                add(cY);
+            }
+        };
         valueChangedListeners = new ArrayList<>();
         for (StringProperty val : values) {
             final ValueCachingChangeListener listener = new ValueCachingChangeListener();
@@ -325,6 +327,7 @@ public class ViewModel {
     public class ValueCachingChangeListener implements ChangeListener<String> {
         private String prevValue = new String("");
         private String curValue = new String("");
+
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
@@ -334,9 +337,11 @@ public class ViewModel {
             status.set(getInputStatus().toString());
             curValue = newValue;
         }
+
         public boolean isChanged() {
             return !prevValue.equals(curValue);
         }
+
         public void cache() {
             prevValue = curValue;
         }
