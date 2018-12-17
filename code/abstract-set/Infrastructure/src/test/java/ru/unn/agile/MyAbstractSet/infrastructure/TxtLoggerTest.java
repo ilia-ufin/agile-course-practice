@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 
 public class TxtLoggerTest {
     private static final String FILENAME = "./AbstractSet-TxtLoggerTest.log";
+    private static final String TEST_MESSAGE = "Test message";
     private TxtLogger txtLogger;
 
     @Before
@@ -34,17 +35,15 @@ public class TxtLoggerTest {
 
     @Test
     public void canWriteLogMessage() {
-        String testMessage = "Test message";
-
-        txtLogger.log(testMessage);
+        txtLogger.log(TEST_MESSAGE);
 
         String message = txtLogger.getLog().get(0);
-        assertTrue(message.matches(".*" + testMessage + "$"));
+        assertTrue(message.matches(".*" + TEST_MESSAGE + "$"));
     }
 
     @Test
     public void canWriteSeveralLogMessage() {
-        String[] messages = {"Test message1", "Test message2"};
+        String[] messages = {TEST_MESSAGE.concat("1"), TEST_MESSAGE.concat("2")};
 
         txtLogger.log(messages[0]);
         txtLogger.log(messages[1]);
@@ -57,9 +56,7 @@ public class TxtLoggerTest {
 
     @Test
     public void doesLogContainDateAndTime() {
-        String testMessage = "test message";
-
-        txtLogger.log(testMessage);
+        txtLogger.log(TEST_MESSAGE);
 
         String message = txtLogger.getLog().get(0);
         assertTrue(message.matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*"));

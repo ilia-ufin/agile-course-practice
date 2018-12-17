@@ -17,7 +17,7 @@ public class TxtLogger implements ILogger {
     private final BufferedWriter writer;
     private static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
 
-    private static String now() {
+    private static String currentDate() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW, Locale.ENGLISH);
         return sdf.format(calendar.getTime());
@@ -32,13 +32,14 @@ public class TxtLogger implements ILogger {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         writer = logWriter;
     }
 
     @Override
     public void log(final String s) {
         try {
-            writer.write(now() + " > " + s);
+            writer.write(currentDate() + " > " + s);
             writer.newLine();
             writer.flush();
         } catch (Exception e) {
