@@ -88,6 +88,13 @@ public class ViewModelTest {
     }
 
     @Test
+    public void canSetUniteOperation() {
+        viewModel.operationProperty().set(Operation.UNITE);
+
+        assertEquals(Operation.UNITE, viewModel.operationProperty().get());
+    }
+
+    @Test
     public void executeButtonIsDisabledInitially() {
         assertTrue(viewModel.executeButtonDisabledProperty().get());
     }
@@ -199,5 +206,15 @@ public class ViewModelTest {
         viewModel.execute();
 
         assertTrue(viewModel.getLog().isEmpty());
+    }
+
+    @Test
+    public void logViewContainsMessagesAfterExecute() {
+        viewModel.firstSetTextAreaProperty().setValue("45,6,8");
+        viewModel.secondSetTextAreaProperty().setValue("3,7,97");
+
+        viewModel.execute();
+
+        assertFalse(viewModel.logProperty().isEmpty());
     }
 }
