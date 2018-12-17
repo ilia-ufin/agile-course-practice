@@ -37,7 +37,7 @@ public class Calculator {
                 viewModel.onFocusChanged(oldValue, newValue);
             }
         };
-
+        // two-way binding hasn't supported by fxml yet, so place it in code-behind
         txtZ1Re.textProperty().bindBidirectional(viewModel.re1Property());
         txtZ1Re.focusedProperty().addListener(focusChangeListener);
 
