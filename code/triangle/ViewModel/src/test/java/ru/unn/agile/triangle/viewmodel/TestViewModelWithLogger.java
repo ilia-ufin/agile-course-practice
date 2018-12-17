@@ -40,7 +40,7 @@ public class TestViewModelWithLogger {
         viewModel.aXProperty().set("1");
         viewModel.checkOnFocusChanged(false, false);
 
-        assertEquals("Updated input. Input arguments are: [1; ; ; ; ; ]\n", viewModel.getLogs());
+        assertEquals("Updated input. Input arguments are: 1, , , , ,  \n", viewModel.getLogs());
     }
 
 }

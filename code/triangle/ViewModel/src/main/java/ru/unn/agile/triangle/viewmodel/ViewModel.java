@@ -275,16 +275,12 @@ public class ViewModel {
         for (ValueCachingChangeListener listener : valueChangedListeners) {
             if (listener.isChanged()) {
                 StringBuilder message = new StringBuilder(EDITING_FINISHED);
-                message.append("Input arguments are: [")
-                        .append(aX.get()).append("; ")
-                        .append(aY.get()).append("; ")
-                        .append(bX.get()).append("; ")
-                        .append(bY.get()).append("; ")
-                        .append(cX.get()).append("; ")
-                        .append(cY.get()).append("]");
+                String messageString = String.format("Input arguments are: %s, %s, %s, %s, %s, %s ",
+                        aX.get(), aY.get(), bX.get(), bY.get(), cX.get(), cY.get());
+                message.append(messageString);
+                System.out.println(messageString);
                 logger.log(message.toString());
                 updateLogs();
-
                 listener.cache();
                 break;
             }
