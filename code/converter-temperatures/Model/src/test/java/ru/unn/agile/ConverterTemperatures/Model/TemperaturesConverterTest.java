@@ -59,7 +59,7 @@ public class TemperaturesConverterTest {
         TemperaturesUnit tempUnit = TemperaturesUnit.FAHRENHEIT;
         double tempBefore = -273.16;
 
-        double calculatingTempAfter = TemperaturesConverter.convert(tempBefore, tempUnit);
+        TemperaturesConverter.convert(tempBefore, tempUnit);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class TemperaturesConverterTest {
         TemperaturesUnit tempUnit = TemperaturesUnit.KELVIN;
         double tempBefore = -273.16;
 
-        double calculatingTempAfter = TemperaturesConverter.convert(tempBefore, tempUnit);
+        TemperaturesConverter.convert(tempBefore, tempUnit);
     }
 
 
@@ -160,7 +160,7 @@ public class TemperaturesConverterTest {
         TemperaturesUnit tempUnit = TemperaturesUnit.NEWTON;
         double tempBefore = -273.16;
 
-        double calculatingTempAfter = TemperaturesConverter.convert(tempBefore, tempUnit);
+        TemperaturesConverter.convert(tempBefore, tempUnit);
     }
 
     @Test

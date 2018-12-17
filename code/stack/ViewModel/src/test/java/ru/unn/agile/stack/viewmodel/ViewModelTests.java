@@ -4,19 +4,42 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    public void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        viewModel = new ViewModel(new FakeLogger());
     }
 
     @After
     public void tearDown() {
         viewModel = null;
+    }
+
+    @Test
+    public void canCreateViewModelWithoutLogger() {
+        ViewModel newViewModel = new ViewModel();
+
+        assertNotNull(newViewModel);
+    }
+
+    @Test
+    public void canCreateViewModelWithNotNullLogger() {
+        ViewModel newViewModel = new ViewModel(new FakeLogger());
+
+        assertNotNull(newViewModel);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canNotCreateViewModelWithNullLogger() {
+        ViewModel newViewModel = new ViewModel(null);
     }
 
     @Test
@@ -26,6 +49,12 @@ public class ViewModelTests {
         assertEquals(viewModel.NONE, viewModel.getStackTopElement());
         assertEquals(viewModel.NONE, viewModel.getStackPopElement());
         assertEquals("", viewModel.getAddingElement());
+        assertEquals("", viewModel.getTextLog());
+    }
+
+    @Test
+    public void canSetDefaultLogValue() {
+        assertEquals(0, viewModel.getLogList().size());
     }
 
     @Test
@@ -289,7 +318,53 @@ public class ViewModelTests {
     }
 
     @Test
+    public void correctDefaultTextLog() {
+        assertEquals("", viewModel.textLogProperty().get());
+    }
+
+    @Test
     public void correctDefaultPopButtonVisible() {
         assertEquals(false, viewModel.popButtonVisibleProperty().get());
+    }
+
+    @Test
+    public void correctAddingElementLog() {
+        Double element = 11.0;
+        viewModel.setAddingElem(Double.toString(element));
+        viewModel.addElement();
+
+        String logMessage = viewModel.getLogList().get(0);
+        assertTrue(logMessage.matches("(.*)" + element + "(.*)"));
+    }
+
+    @Test
+    public void correctAddingEmptyElementLog() {
+        String textLog = "Adding element is empty";
+        viewModel.setAddingElem("");
+        viewModel.addElement();
+
+        String logMessage = viewModel.getLogList().get(0);
+        assertTrue(logMessage.matches("(.*)" + textLog + "(.*)"));
+    }
+
+    @Test
+    public void correctAddingNonValidElementLog() {
+        String element = "A";
+        viewModel.setAddingElem(element);
+        viewModel.addElement();
+
+        String logMessage = viewModel.getLogList().get(0);
+        assertTrue(logMessage.matches("(.*)" + element + "(.*)"));
+    }
+
+    @Test
+    public void correctPoppingElementLog() {
+        Double element = 10.0;
+        viewModel.setAddingElem(Double.toString(element));
+        viewModel.addElement();
+        viewModel.popElement();
+
+        String logMessage = viewModel.getLogList().get(1);
+        assertTrue(logMessage.matches("(.*)" + element + "(.*)"));
     }
 }
