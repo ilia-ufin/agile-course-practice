@@ -22,11 +22,12 @@ public final class MortgageCalculatorForm {
     private JTextField txtInitialPayment;
     private JTable tablePayPerMonth;
     private JPanel panelTableMortgage;
+    private JTextArea textLog;
     private ViewModel viewModel;
     private static final int HEIGHT_TAB_WIDGET = 200;
     private static final int WIDTH_TAB_WIDGET = 400;
     private static final int HEIGHT_WINDOWS = 550;
-    private static final int WIDTH_WINDOWS = 600;
+    private static final int WIDTH_WINDOWS = 900;
 
 
     private MortgageCalculatorForm(final ViewModel viewModel) {
@@ -69,6 +70,13 @@ public final class MortgageCalculatorForm {
         calculateButton.setEnabled(viewModel.isCalculateButtonEnable());
         txtFullPriceMortgage.setText(viewModel.getFullPriceMortgage());
         lbStatus.setText(viewModel.getStatus());
+
+        StringBuilder str = new StringBuilder();
+        for (String record : viewModel.getLog()) {
+            str.append(record + "\n");
+        }
+        ;
+        textLog.setText(str.toString());
     }
 
     private void fullPriceMortgageCalculatorActionListener() {

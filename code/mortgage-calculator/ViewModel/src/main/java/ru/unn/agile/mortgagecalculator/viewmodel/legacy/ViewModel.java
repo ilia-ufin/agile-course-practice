@@ -3,6 +3,7 @@ package ru.unn.agile.mortgagecalculator.viewmodel.legacy;
 import ru.unn.agile.mortgagecalculator.model.MortgageCalculator;
 
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 import java.util.Locale;
 
 public class ViewModel {
@@ -39,6 +40,9 @@ public class ViewModel {
         tableModel = new DefaultTableModel();
     }
 
+    public List<String> getLog() {
+        return logger.getLog();
+    }
 
     public final class Status {
         public static final String COUNT_WAITING =
@@ -90,6 +94,10 @@ public class ViewModel {
                 && isInitialPaymentCorrect()
                 && isInterestRateCorrect()
                 && isTermMortgageCorrect();
+
+        if (isCalculateButtonEnabled) {
+            logger.log("Button is enabled");
+        }
     }
 
     public void calculateFullPriceMortgage() {
@@ -107,6 +115,8 @@ public class ViewModel {
         fullPriceMortgage = getMoneyFormatInFullPriceValue(calculator);
         fillingTableModelWithData(calculator);
         status = Status.FULL_PRICE_MORTGAGE;
+
+        logger.log("calculateFullPriceMortgage");
     }
 
     public void fillingTableModelWithData(final MortgageCalculator isCalculator) {
@@ -131,6 +141,9 @@ public class ViewModel {
     }
 
     private boolean isApartmentPriceCorrect() {
+
+        logger.log("isApartmentPriceCorrect");
+
         if (apartmentPrice.length() > MAX_COUNT_CHAR_APARTMENT_PRICE) {
             status = Status.BAD_APARTMENT_PRICE_FORMAT_NUMBERS;
             return false;
@@ -153,6 +166,9 @@ public class ViewModel {
     }
 
     private boolean isInitialPaymentCorrect() {
+
+        logger.log("isInitialPaymentCorrect");
+
         if (initialPayment.length() > MAX_COUNT_CHAR_APARTMENT_PRICE) {
             status = Status.BAD_INITIAL_PAYMENT_FORMAT_NUMBERS;
             return false;
@@ -175,6 +191,9 @@ public class ViewModel {
     }
 
     private boolean isInterestRateCorrect() {
+
+        logger.log("isInterestRateCorrect");
+
         if (interestRate.length() > MAX_COUNT_CHAR_RATE) {
             status = Status.BAD_INTEREST_RATE_FORMAT_NUMBERS;
             return false;
@@ -197,6 +216,9 @@ public class ViewModel {
     }
 
     private boolean isTermMortgageCorrect() {
+
+        logger.log("isTermMortgageCorrect");
+
         if (termMortgage.length() > MAX_COUNT_CHAR_TERM) {
             status = Status.BAD_TERM_FORMAT_NUMBERS;
             return false;
