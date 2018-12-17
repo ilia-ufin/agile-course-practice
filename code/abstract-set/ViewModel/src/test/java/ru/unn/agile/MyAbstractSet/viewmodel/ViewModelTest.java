@@ -11,14 +11,15 @@ import java.util.List;
 public class ViewModelTest {
     private ViewModel viewModel;
 
-    public void setExternalViewModel(final ViewModel viewModel) {
+    protected void setExternalViewModel(final ViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
     @Before
     public void setUp() {
+        FakeLogger fakeLogger = new FakeLogger();
         if (viewModel == null) {
-            viewModel = new ViewModel(new FakeLogger());
+            viewModel = new ViewModel(fakeLogger);
         }
     }
 
@@ -121,8 +122,8 @@ public class ViewModelTest {
 
     @Test
     public void logContainsProperMessageAfterExecute() {
-        viewModel.firstSetTextAreaProperty().setValue("4,10,6");
-        viewModel.secondSetTextAreaProperty().setValue("3,7,4,9,3");
+        viewModel.firstSetTextAreaProperty().setValue("5,6,3");
+        viewModel.secondSetTextAreaProperty().setValue("5,23,6");
 
         viewModel.execute();
         int sizeLog = viewModel.getLog().size();
