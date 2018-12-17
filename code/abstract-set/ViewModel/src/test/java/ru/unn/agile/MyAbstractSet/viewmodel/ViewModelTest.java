@@ -71,6 +71,9 @@ public class ViewModelTest {
 
     @Test
     public void statusIsSuccessWhenUniteOperationExecute() {
+        viewModel.firstSetTextAreaProperty().setValue("4,10,6");
+        viewModel.secondSetTextAreaProperty().setValue("3,7,4,9,3");
+
         viewModel.execute();
 
         assertEquals(Status.SUCCESS.toString(), viewModel.statusProperty().get());
@@ -122,7 +125,8 @@ public class ViewModelTest {
         viewModel.secondSetTextAreaProperty().setValue("3,7,4,9,3");
 
         viewModel.execute();
-        String message = viewModel.getLog().get(0);
+        int sizeLog = viewModel.getLog().size();
+        String message = viewModel.getLog().get(sizeLog - 1);
 
         assertTrue(message.matches(".*" + LogMessages.EXECUTE_PRESSED + ".*"));
     }
@@ -140,18 +144,13 @@ public class ViewModelTest {
     }
 
     @Test
-    public void argumentsInfoIsProperlyFormatted() {
-
-    }
-
-    @Test
     public void operationTypeIsMentionedInTheLogAfterPressedExecute() {
         viewModel.firstSetTextAreaProperty().setValue("4,10,6");
         viewModel.secondSetTextAreaProperty().setValue("3,7,4,9,3");
 
         viewModel.execute();
-
-        String message = viewModel.getLog().get(0);
+        int sizeLog = viewModel.getLog().size();
+        String message = viewModel.getLog().get(sizeLog - 1);
         assertTrue(message.matches(".*" + Operation.UNITE.toString() + ".*"));
     }
 
@@ -163,7 +162,7 @@ public class ViewModelTest {
         viewModel.execute();
         viewModel.execute();
 
-        assertEquals(2, viewModel.getLog().size());
+        assertEquals(3, viewModel.getLog().size());
     }
 
     @Test
@@ -185,9 +184,19 @@ public class ViewModelTest {
     }
 
     @Test
-    public void argumentsAreCorrectlyLogged() {
-        viewModel.firstSetTextAreaProperty().setValue("4,10,6");
-        viewModel.secondSetTextAreaProperty().setValue("3,7,4,9,3");
+    public void logContainsProperMessageAfterFillSets() {
+        viewModel.firstSetTextAreaProperty().setValue("4,10");
+        viewModel.secondSetTextAreaProperty().setValue("3,7,4");
 
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(".*" + LogMessages.EDITING_FINISHED
+                + ".*"));
+    }
+
+    @Test
+    public void executeIsNotCalledWhenButtonIsDisabled() {
+        viewModel.execute();
+
+        assertTrue(viewModel.getLog().isEmpty());
     }
 }

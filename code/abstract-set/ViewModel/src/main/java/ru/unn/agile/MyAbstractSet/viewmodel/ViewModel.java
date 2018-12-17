@@ -23,6 +23,7 @@ public class ViewModel {
     private static final String VALID_INPUT_PATTERN = "^-?[a-z A-Z0-9,]+";
     private static final String LETTERS_PATTERN = "[a-zA-Z]{2,}";
     private ILogger logger;
+    private final ListProperty<String> logList = new SimpleListProperty<>();
 
     public ViewModel(final ILogger logger) {
         if (logger == null) {
@@ -76,8 +77,19 @@ public class ViewModel {
     public final List<String> getLog() {
         return logger.getLog();
     }
+    public final ListProperty<String> logProperty() {
+        return logList;
+    }
+
+    private void updateLog() {
+        logList.set(FXCollections.observableArrayList(logger.getLog()));
+    }
 
     public void execute() {
+        if (executeButtonDisabled.get()) {
+            return;
+        }
+
         Object[] firstSet = firstSetTextArea.get().replaceAll(WHITESPACE_PATTERN, "").split(",");
         Object[] secondSet = secondSetTextArea.get().replaceAll(WHITESPACE_PATTERN, "").split(",");
 
@@ -93,6 +105,7 @@ public class ViewModel {
                 .append("; SetB : ").append(secondSetTextArea.get())
                 .append("Operation: ").append(operation.get().toString()).append(".");
         logger.log(message.toString());
+        updateLog();
     }
 
     private boolean checkValidInput(final String input) {
@@ -122,10 +135,13 @@ public class ViewModel {
                             final String oldValue, final String newValue) {
             status.set(getInputStatus().toString());
             executeButtonDisabled.set(canNotExecuteOperation());
-            /*if (status.get().equals(Status.READY.toString())) {
-                String message = String.format("");
-                logger.log(message);
-            }*/
+            if (status.get().equals(Status.READY.toString())) {
+                StringBuilder message = new StringBuilder(LogMessages.EDITING_FINISHED);
+                message.append("SetA : {").append(firstSetTextArea.get())
+                        .append("} ; SetB : {").append(secondSetTextArea.get()).append("}");
+                logger.log(message.toString());
+                updateLog();
+            }
         }
     }
 
@@ -135,9 +151,8 @@ public class ViewModel {
                             final Operation oldValue, final Operation newValue) {
             status.set(getInputStatus().toString());
             executeButtonDisabled.set(canNotExecuteOperation());
-            StringBuilder message = new StringBuilder(LogMessages.OPERATION_CHANGED);
-            message.append(operation.get().toString());
             logger.log(LogMessages.OPERATION_CHANGED + operation.get().toString());
+            updateLog();
         }
     }
 
