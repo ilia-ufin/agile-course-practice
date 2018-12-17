@@ -48,9 +48,9 @@ public class TxtLoggerTest {
         txtLogger.log(messages[0]);
         txtLogger.log(messages[1]);
 
-        List<String> actualMessages = txtLogger.getLog();
-        for (int i = 0; i < actualMessages.size(); i++) {
-            assertTrue(actualMessages.get(i).matches(".*" + messages[i] + "$"));
+        List<String> currentMessages = txtLogger.getLog();
+        for (int i = 0; i < currentMessages.size(); i++) {
+            assertTrue(currentMessages.get(i).matches(".*" + messages[i] + "$"));
         }
     }
 
