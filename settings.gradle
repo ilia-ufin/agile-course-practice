@@ -177,6 +177,8 @@ include "code/stack/ViewModel"
 project(":code/stack/ViewModel").name = "stack-ViewModel"
 include "code/stack/View"
 project(":code/stack/View").name = "stack-View"
+include "code/stack/Infrastructure"
+project(":code/stack/Infrastructure").name = "stack-Infrastructure"
 
 // Roman number converter
 include "code/roman-number-converter/model"
@@ -185,10 +187,17 @@ include "code/roman-number-converter/viewModel"
 project(":code/roman-number-converter/viewModel").name = "roman-number-converter-ViewModel"
 include "code/roman-number-converter/view"
 project(":code/roman-number-converter/view").name = "roman-number-converter-View"
+include "code/roman-number-converter/Infrastructure"
+project(":code/roman-number-converter/Infrastructure").name = "roman-number-converter-Infrastructure"
 
-// Metelev Evgenii
-include "code/metelev-evgenii-mortgage-calculator"
-project(":code/metelev-evgenii-mortgage-calculator").name = "metelev-evgenii-Model"
+// Metelev Evgenii, Mortgage-calculator
+include "code/mortgage-calculator/Model"
+project(":code/mortgage-calculator/Model").name = "mortgage-calculator-Model"
+include "code/mortgage-calculator/View"
+project(":code/mortgage-calculator/View").name = "mortgage-calculator-View"
+include "code/mortgage-calculator/ViewModel"
+project(":code/mortgage-calculator/ViewModel").name = "mortgage-calculator-ViewModel"
+
 
 // Kochuev Andrey, Length Converter
 include "code/kochuev-andrey-length-converter"
@@ -225,10 +234,6 @@ include "code/binary-search/View"
 project(":code/binary-search/View").name = "binary-search-View"
 include "code/binary-search/ViewModel"
 project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
-
-// Kryukova Polina, caesar-cipher
-include "code/caesar-cipher"
-project(":code/caesar-cipher").name = "caesar-cipher"
 
 // Podolov Kirill & Flegontov Alexander, Queue
 include "code/queue/Model"
@@ -275,14 +280,22 @@ include "code/quadratic-equation-solver/ViewModel"
 project(":code/quadratic-equation-solver/ViewModel").name = "quadratic-equation-solver-ViewModel"
 include "code/quadratic-equation-solver/View"
 project(":code/quadratic-equation-solver/View").name = "quadratic-equation-solver-View"
+include "code/quadratic-equation-solver/Infrastructure"
+project(":code/quadratic-equation-solver/Infrastructure").name = "quadratic-equation-solver-Infrastructure"
 
 // Podchishchaeva Mariya, RBTree
 include "code/podchishchaeva-rb-tree"
 project(":code/podchishchaeva-rb-tree").name = "podchishchaeva-rb-tree"
 
-// Golovanova Tatyana, Converter From Celsius
-include "code/golovanova-tatyana-converter-temperatures"
-project(":code/golovanova-tatyana-converter-temperatures").name = "golovanova-tatyana-converter-temperatures"
+// Converter From Celsius: Golovanova Tatyana, Shiryaeva Ekaterina, Kochuev Andrey
+include "code/converter-temperatures/Model"
+project(":code/converter-temperatures/Model").name = "converter-temperatures-Model"
+include "code/converter-temperatures/View"
+project(":code/converter-temperatures/View").name = "converter-temperatures-View"
+include "code/converter-temperatures/ViewModel"
+project(":code/converter-temperatures/ViewModel").name = "converter-temperatures-ViewModel"
+include "code/converter-temperatures/Infrastructure"
+project(":code/converter-temperatures/Infrastructure").name = "converter-temperatures-Infrastructure"
 
 // Shiryaeva Ekaterina, Kochuev Andrey Polynomial Calculator
 include "code/polynomial-calculator/Model"
@@ -355,6 +368,14 @@ include "code/numbers-in-words/View"
 project(":code/numbers-in-words/View").name = "numbers-in-words-View"
 include "code/numbers-in-words/Infrastructure"
 project(":code/numbers-in-words/Infrastructure").name = "numbers-in-words-Infrastructure"
+
+// Kryukova Polina, caesar-cipher 
+include "code/caesar-cipher/Model" 
+project(":code/caesar-cipher/Model").name = "caesar-cipher-Model" 
+include "code/caesar-cipher/ViewModel" 
+project(":code/caesar-cipher/ViewModel").name = "caesar-cipher-ViewModel" 
+include "code/caesar-cipher/View" 
+project(":code/caesar-cipher/View").name = "caesar-cipher-View" 
 
 // Ryabov Vladislav, AVLTree
 include "code/ryabov-avl-tree"

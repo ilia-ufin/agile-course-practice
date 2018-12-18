@@ -1,3 +1,4 @@
 dependencies {
     compile project(':roman-number-converter-ViewModel')
+    compile project(':roman-number-converter-Infrastructure')
 }
