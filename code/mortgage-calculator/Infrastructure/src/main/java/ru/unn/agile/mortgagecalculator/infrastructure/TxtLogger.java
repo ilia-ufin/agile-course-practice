@@ -25,6 +25,9 @@ public class TxtLogger implements ILogger {
     @Override
     public void log(final String str) {
         try {
+            if (writer == null) {
+                return;
+            }
             writer.write(getTime() + ": INFO " + str);
             writer.newLine();
 
