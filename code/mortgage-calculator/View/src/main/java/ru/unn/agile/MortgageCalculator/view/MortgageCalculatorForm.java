@@ -73,7 +73,7 @@ public final class MortgageCalculatorForm {
 
         StringBuilder str = new StringBuilder();
         for (String record : viewModel.getLog()) {
-            str.append(record + "\n");
+            str.append(record).append("\n");
         }
         textLog.setText(str.toString());
     }
