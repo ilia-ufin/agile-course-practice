@@ -8,6 +8,7 @@ import org.junit.Test;
 import javax.swing.table.DefaultTableModel;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ViewModelTests {
 
@@ -299,7 +300,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void checkGetStatus() {
-        viewModel.getStatus();
+    public void checkGetLog() {
+        assertNotNull(viewModel.getLog());
     }
 }
