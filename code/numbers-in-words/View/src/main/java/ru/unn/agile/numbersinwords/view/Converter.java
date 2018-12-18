@@ -18,7 +18,7 @@ public class Converter {
     private JLabel numbersInWords;
     private JTextArea logArea;
 
-    private static final String LOG_NAME = "converter.log";
+    private static final String LOG_NAME = "Converter.log";
 
     public static void main(final String[] args) {
         try {

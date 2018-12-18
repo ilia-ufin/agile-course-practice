@@ -4,8 +4,8 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class TxtLoggerTests {
-    private static final String LOG_NAME = "testlog.log";
-    private static final String TEST_STRING = "test";
+    private static final String LOG_NAME = "TxtLoggerTests.log";
+    private static final String TEST_STRING = "This should not ever be written to file";
 
     @Test
     public void catchesClosedWriterWrite() throws IOException {
