@@ -1,17 +1,14 @@
 package ru.unn.agile.shapevolume.viewmodel;
 
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import ru.unn.agile.shapevolume.model.Cuboid;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import ru.unn.agile.shapevolume.model.Cuboid;
 import ru.unn.agile.shapevolume.model.RegularPolygonPrism;
-import sun.rmi.runtime.Log;
 
 import java.util.*;
 
@@ -67,6 +64,7 @@ public class ViewModel {
 
 
     private ILogger logger;
+    private final StringProperty logs = new SimpleStringProperty();
 
     public static final Map<Shape, String[]> SHAPE_TO_PARAMETERS_NAMES =
             Collections.unmodifiableMap(new HashMap<Shape, String[]>() {{
@@ -85,7 +83,7 @@ public class ViewModel {
         init();
     }
 
-    public ViewModel(ILogger logger) {
+    public ViewModel(final ILogger logger) {
         this.logger = logger;
         init();
     }
@@ -101,8 +99,11 @@ public class ViewModel {
 
         currentShape.addListener((ObservableValue<? extends Shape> observable,
                                   Shape oldValue, Shape newValue) -> {
+            logger.log(LogMessages.SHAPE_CHANGED + " " + newValue.toString());
+            updateLogs();
             if (!oldValue.equals(newValue)) {
                 updateArgumentsNames(newValue);
+
             }
         });
 
@@ -117,8 +118,9 @@ public class ViewModel {
 
         for (Map.Entry<String, StringProperty> argument : arguments.entrySet()) {
             argument.getValue().addListener((ObservableValue<? extends String> observable,
-                                  String oldValue, String newValue) -> {
+                                             String oldValue, String newValue) -> {
                 logger.log(argument.getKey() + " " + newValue);
+                updateLogs();
                 if (!oldValue.equals(newValue)) {
                     calculate();
                 }
@@ -173,6 +175,7 @@ public class ViewModel {
             if (volume != null) {
                 String formattedVolume = String.format(Locale.US, "%.3f", volume);
                 logger.log(LogMessages.CALCULATION_PERFORMED + " " + formattedVolume);
+                updateLogs();
                 result.set(formattedVolume);
             } else {
                 result.set(Status.INVALID_ARGUMENTS.toString());
@@ -180,6 +183,15 @@ public class ViewModel {
         } catch (Exception ex) {
             result.set(Status.INVALID_ARGUMENTS.toString());
         }
+    }
+
+    private void updateLogs() {
+        List<String> fullLog = logger.getLog();
+        StringBuilder record = new StringBuilder();
+        for (String log : fullLog) {
+            record.append(log).append("\n");
+        }
+        logs.set(record.toString());
     }
 
     public StringProperty firstArgumentValueProperty() {
@@ -234,11 +246,18 @@ public class ViewModel {
         return logger;
     }
 
-    public void setLogger(ILogger logger) {
+    public void setLogger(final ILogger logger) {
         this.logger = logger;
     }
 
 
+    public String getLogs() {
+        return logs.get();
+    }
+
+    public StringProperty logsProperty() {
+        return logs;
+    }
 }
 
 

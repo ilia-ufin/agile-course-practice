@@ -11,26 +11,26 @@ public class FileLogger implements ILogger {
     private BufferedWriter writer;
     private String fileName;
 
-    public FileLogger(String fileName) {
+    public FileLogger(final String fileName) {
 
         try {
             writer = new BufferedWriter(new FileWriter(fileName));
             this.fileName = fileName;
         } catch (IOException e) {
-            throw new IllegalArgumentException("Something is wrong with file",e);
+            throw new IllegalArgumentException("Something is wrong with file", e);
         }
 
 
     }
 
     @Override
-    public void log(String s) {
+    public void log(final String s) {
         try {
             writer.write(s);
             writer.newLine();
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("Something is wrong with file", e);
         }
 
     }
@@ -42,14 +42,14 @@ public class FileLogger implements ILogger {
             BufferedReader br = new BufferedReader(new FileReader(file));
             List<String> log = new LinkedList<>();
             String currentLine = br.readLine();
-            while(currentLine != null) {
+            while (currentLine != null) {
                 log.add(currentLine);
                 currentLine = br.readLine();
             }
             return log;
 
         } catch (IOException e) {
-            throw new IllegalArgumentException("Something is wrong with file",e);
+            throw new IllegalArgumentException("Something is wrong with file", e);
         }
     }
 }

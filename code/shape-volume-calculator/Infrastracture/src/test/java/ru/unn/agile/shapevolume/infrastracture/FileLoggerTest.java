@@ -17,21 +17,21 @@ public class FileLoggerTest {
 
     @Test
     public void canCreateFileLoggerAndLogSomething() throws IOException {
-        String test_file = "test file";
-        ILogger f = new FileLogger(test_file);
+        String testPath = "test file";
+        ILogger f = new FileLogger(testPath);
 
         String logString = "test";
         f.log(logString);
 
-        File file = new File(test_file);
+        File file = new File(testPath);
         BufferedReader br = new BufferedReader(new FileReader(file));
         assertEquals(logString, br.readLine());
     }
 
     @Test
     public void canGetLog() {
-        String test_file = "test file";
-        ILogger f = new FileLogger(test_file);
+        String testPath = "test file";
+        ILogger f = new FileLogger(testPath);
 
         String logString = "test";
         f.log(logString);

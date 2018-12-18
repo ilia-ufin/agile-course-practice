@@ -183,33 +183,48 @@ public class ViewModelTests {
     }
 
     @Test
-    public void changeOfFirstValueIsLogged()
-    {
+    public void changeOfFirstValueIsLogged() {
         viewModel.currentShapeProperty().set(Shape.CUBE);
         viewModel.firstArgumentValueProperty().set("3");
         List<String> log = viewModel.getLogger().getLog();
-        String s = log.get(log.size() -1) ;
-        assertTrue(s.contains(LogMessages.FIRST_ARGUMENT_INPUTED.toString()) && s.contains("3"));
+        String s = log.get(log.size() - 1);
+        assertTrue(s.contains(LogMessages.FIRST_ARGUMENT_INPUTED.toString())
+                && s.contains("3"));
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.FIRST_ARGUMENT_INPUTED.toString())
+                && s.contains("3"));
     }
 
     @Test
-    public void changeOfSecondValueIsLogged()
-    {
+    public void changeOfSecondValueIsLogged() {
         viewModel.currentShapeProperty().set(Shape.CUBE);
         viewModel.secondArgumentValueProperty().set("3");
         List<String> log = viewModel.getLogger().getLog();
-        String s = log.get(log.size() -1) ;
-        assertTrue(s.contains(LogMessages.SECOND_ARGUMENT_INPUTED.toString()) && s.contains("3"));
+        String s = log.get(log.size() - 1);
+        assertTrue(s.contains(LogMessages.SECOND_ARGUMENT_INPUTED.toString())
+                && s.contains("3"));
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.SECOND_ARGUMENT_INPUTED.toString())
+                && s.contains("3"));
     }
 
     @Test
-    public void changeOfThirdValueIsLogged()
-    {
+    public void changeOfThirdValueIsLogged() {
         viewModel.currentShapeProperty().set(Shape.CUBE);
         viewModel.thirdArgumentValueProperty().set("3");
         List<String> log = viewModel.getLogger().getLog();
-        String s = log.get(log.size() -1) ;
-        assertTrue(s.contains(LogMessages.THIRD_ARGUMENT_INPUTED.toString()) && s.contains("3"));
+        String s = log.get(log.size() - 1);
+        assertTrue(s.contains(LogMessages.THIRD_ARGUMENT_INPUTED.toString())
+                && s.contains("3"));
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.THIRD_ARGUMENT_INPUTED.toString())
+                && s.contains("3"));
     }
 
     @Test
@@ -219,12 +234,33 @@ public class ViewModelTests {
         viewModel.secondArgumentValueProperty().set("1");
         viewModel.thirdArgumentValueProperty().set("2");
         List<String> log = viewModel.getLogger().getLog();
-        String s = log.get(log.size() -1) ;
-        assertTrue(s.contains(LogMessages.CALCULATION_PERFORMED.toString()) && s.contains("5.196"));
-       
+        String s = log.get(log.size() - 1);
+        assertTrue(s.contains(LogMessages.CALCULATION_PERFORMED.toString())
+                && s.contains("5.196"));
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.CALCULATION_PERFORMED.toString())
+                && s.contains("5.196"));
+
+
     }
 
 
+    @Test
+    public void shapeChangeIsLogged() {
+        viewModel.currentShapeProperty().set(Shape.REGULAR_POLYGON_PRISM);
+        List<String> log = viewModel.getLogger().getLog();
+        String s = log.get(log.size() - 1);
+        assertTrue(s.contains(LogMessages.SHAPE_CHANGED.toString())
+                && s.contains(Shape.REGULAR_POLYGON_PRISM.toString()));
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.SHAPE_CHANGED.toString())
+                && s.contains(Shape.REGULAR_POLYGON_PRISM.toString()));
+
+    }
 
 
 }
