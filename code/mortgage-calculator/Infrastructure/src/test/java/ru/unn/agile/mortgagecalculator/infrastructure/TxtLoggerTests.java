@@ -26,12 +26,12 @@ public class TxtLoggerTests {
         txtLogger = new TxtLogger("");
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canCreateLogFile() {
         assertNotNull(txtLogger);
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canWriteToLog() {
         txtLogger.log("I'm superman");
     }
@@ -43,14 +43,14 @@ public class TxtLoggerTests {
         txtLogger.log("I don't be superman");
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canGetLog() {
         ArrayList<String> expected = new ArrayList<>();
 
         assertEquals(expected.getClass(), txtLogger.getLog().getClass());
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canGetNotEmptyLog() {
         txtLogger.log("I'm superman");
 
@@ -66,7 +66,7 @@ public class TxtLoggerTests {
         assertTrue(containsRecord);
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canGetEmptyLog() {
         boolean containsRecord = false;
 
@@ -80,7 +80,7 @@ public class TxtLoggerTests {
         assertFalse(containsRecord);
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canSeveralLogs() {
         txtLogger.log("I'm superman");
         txtLogger.log("I'm batman");
@@ -95,7 +95,7 @@ public class TxtLoggerTests {
         assertTrue(containsRecords);
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canCreateFile() {
         File f = new File(FILENAME);
 
@@ -111,7 +111,7 @@ public class TxtLoggerTests {
         assertTrue(txtLogger.getLog().isEmpty());
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void checkFormatTime() {
         txtLogger.log("I don't be superman");
 
