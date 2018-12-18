@@ -79,7 +79,7 @@ public class TxtLoggerTests {
     }
 
     @Test
-    public void canSeveralLogs(){
+    public void canSeveralLogs() {
         txtLogger.log("I'm superman");
         txtLogger.log("I'm batman");
 
@@ -87,10 +87,10 @@ public class TxtLoggerTests {
         List<String> logs = txtLogger.getLog();
 
         if (logs.get(0).contains("I'm superman") &&
-                logs.get(1).contains("I'm batman")){
+                logs.get(1).contains("I'm batman")) {
             containsRecords = true;
         }
-        
+
         assertTrue(containsRecords);
     }
 
