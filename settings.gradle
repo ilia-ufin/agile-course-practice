@@ -10,6 +10,10 @@ project(":code/intersect-line-and-plane/Model").name = "intersect-line-and-plane
 include "code/intersect-line-and-plane/ViewModel"
 project(":code/intersect-line-and-plane/ViewModel").name = "intersect-line-and-plane-ViewModel"
 
+// Fibonacci Heap
+include "code/fibonacci-heap/Model"
+project(":code/fibonacci-heap/Model").name = "fibonacci-heap-Model"
+
 // Currency Converter
 include "code/currency-converter/Model"
 project(":code/currency-converter/Model").name = "currency-converter-Model"
