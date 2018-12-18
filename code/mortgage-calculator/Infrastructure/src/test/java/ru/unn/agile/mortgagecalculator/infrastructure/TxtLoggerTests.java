@@ -86,8 +86,7 @@ public class TxtLoggerTests {
         boolean containsRecords = false;
         List<String> logs = txtLogger.getLog();
 
-        if (logs.get(0).contains("I'm superman") &&
-                logs.get(1).contains("I'm batman")) {
+        if (logs.get(0).contains("I'm superman") && logs.get(1).contains("I'm batman")) {
             containsRecords = true;
         }
 
