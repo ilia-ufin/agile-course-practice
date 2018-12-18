@@ -111,4 +111,13 @@ public class TxtLoggerTests {
         assertTrue(txtLogger.getLog().isEmpty());
     }
 
+    @Test
+    public void checkFormatTime() {
+        txtLogger.log("I don't be superman");
+
+        String res = txtLogger.getLog().get(0);
+
+        assertTrue(res.matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}: INFO .*"));
+    }
+
 }
