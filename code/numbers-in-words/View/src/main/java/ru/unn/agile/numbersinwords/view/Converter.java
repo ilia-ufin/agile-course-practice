@@ -8,8 +8,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.io.IOException;
 
-import static java.lang.System.exit;
-
 public class Converter {
     private static TxtLogger logger;
     private static NumbersInWordsViewModel viewModel;
@@ -20,13 +18,14 @@ public class Converter {
     private JLabel numbersInWords;
     private JTextArea logArea;
 
+    private static final String LOG_NAME = "converter.log";
+
     public static void main(final String[] args) {
         try {
-            logger = new TxtLogger("converter.log");
+            logger = new TxtLogger(LOG_NAME);
             viewModel = new NumbersInWordsViewModel(logger);
         } catch (IOException e) {
             e.printStackTrace();
-            exit(1);
         }
         JFrame frame = new JFrame("Converter");
         frame.setContentPane(new Converter().mainPanel);
