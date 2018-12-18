@@ -8,7 +8,7 @@ import ru.unn.agile.shapevolume.viewmodel.Shape;
 import ru.unn.agile.shapevolume.viewmodel.ViewModel;
 
 public class VolumeCalculator {
-    private String FILE_NAME = "shapeVolume.log";
+    private static final String FILE_NAME = "shapeVolume.log";
     @FXML
     private ViewModel viewModel;
     @FXML
