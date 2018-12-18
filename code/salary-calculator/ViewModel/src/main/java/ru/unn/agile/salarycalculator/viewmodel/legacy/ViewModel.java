@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 
-public class ViewModel {
+public final class ViewModel {
     private static final int MAX_MONTH = 12;
     private static final int MAX_YEAR = 2019;
     private static final int MIN_YEAR = 2000;
@@ -22,15 +22,21 @@ public class ViewModel {
     private ILogger logger;
     private boolean isInputChanged;
 
-    public ViewModel() {
-        salary = "";
-        workedHours = "";
-        countMonth = "";
-        countYear = "";
-        result = "";
-        status = Status.COUNT_WAITING;
-        isCalculateButtonEnabled = false;
-        isInputChanged = true;
+    public final class Status {
+        private Status() {
+
+        }
+
+        public static final String COUNT_WAITING = "Please provide salary and count period";
+        public static final String READY_CALCULATE = "Press 'Calculate' button";
+        public static final String BAD_SALARY_FORMAT_SIGN = "Salary must be more 0";
+        public static final String BAD_SALARY_FORMAT_NUMBERS = "Salary too much";
+        public static final String BAD_COUNT_FORMAT = "Wrong format of count input";
+        public static final String BAD_MONTH_FORMAT = "Month must be between 1 and 12";
+        public static final String BAD_YEAR_FORMAT = "Year must be between 2000 and 2019";
+        public static final String BAD_WORKED_HOURS_FORMAT =
+                "Worked houses must be between 1 and 500";
+        public static final String CASH = "This your cash";
     }
 
     public ViewModel(final ILogger logger) {
@@ -49,29 +55,11 @@ public class ViewModel {
         isInputChanged = true;
     }
 
-    public final class Status {
-        public static final String COUNT_WAITING = "Please provide salary and count period";
-        public static final String READY_CALCULATE = "Press 'Calculate' button";
-        public static final String BAD_SALARY_FORMAT_SIGN = "Salary must be more 0";
-        public static final String BAD_SALARY_FORMAT_NUMBERS = "Salary too much";
-        public static final String BAD_COUNT_FORMAT = "Wrong format of count input";
-        public static final String BAD_MONTH_FORMAT = "Month must be between 1 and 12";
-        public static final String BAD_YEAR_FORMAT = "Year must be between 2000 and 2019";
-        public static final String BAD_WORKED_HOURS_FORMAT =
-                "Worked houses must be between 1 and 500";
-        public static final String CASH = "This your cash";
-
-        private Status() {
-
-        }
-    }
-
     public final class LogMessages {
-        public static final String CALCULATE_WAS_PRESSED = "Calculate salary. ";
-        public static final String EDITING_FINISHED = "Updated input. ";
-
         private LogMessages() {
         }
+        public static final String CALCULATE_WAS_PRESSED = "Calculate salary. ";
+        public static final String EDITING_FINISHED = "Updated input. ";
     }
 
     public void checkCountFields() {
