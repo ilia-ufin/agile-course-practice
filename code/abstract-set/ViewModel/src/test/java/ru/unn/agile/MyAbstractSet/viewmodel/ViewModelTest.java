@@ -128,15 +128,16 @@ public class ViewModelTest {
     }
 
     @Test
-    public void logContainsProperMessageAfterExecute() {
+    public void logContainsProperMessageAfterOperationUnite() {
         viewModel.firstSetTextAreaProperty().setValue("5,6,3");
         viewModel.secondSetTextAreaProperty().setValue("5,23,6");
 
         viewModel.execute();
         int sizeLog = viewModel.getLog().size();
-        String message = viewModel.getLog().get(sizeLog - 1);
-
-        assertTrue(message.matches(".*" + LogMessages.EXECUTE_PRESSED + ".*"));
+        String message1 = viewModel.getLog().get(sizeLog - 1);
+        String message2 = String.format(LogMessages.EXECUTE_PRESSED, "5,6,3", "5,23,6",
+                Operation.UNITE);
+        assertTrue(message1.contains(message2));
     }
 
     @Test
@@ -196,9 +197,9 @@ public class ViewModelTest {
         viewModel.firstSetTextAreaProperty().setValue("4,10");
         viewModel.secondSetTextAreaProperty().setValue("3,7,4");
 
-        String message = viewModel.getLog().get(0);
-        assertTrue(message.matches(".*" + LogMessages.EDITING_FINISHED
-                + ".*"));
+        String message1 = viewModel.getLog().get(0);
+        String message2 = String.format(LogMessages.EDITING_FINISHED, "4,10", "3,7,4");
+        assertTrue(message1.contains(message2));
     }
 
     @Test

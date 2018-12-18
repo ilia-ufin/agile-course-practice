@@ -100,11 +100,9 @@ public class ViewModel {
         status.set(Status.SUCCESS.toString());
         resultTextArea.setValue(res.toString());
 
-        StringBuilder message = new StringBuilder(LogMessages.EXECUTE_PRESSED);
-        message.append("SetA : ").append(firstSetTextArea.get())
-                .append("; SetB : ").append(secondSetTextArea.get())
-                .append("Operation: ").append(operation.get().toString()).append(".");
-        logger.log(message.toString());
+        String message = String.format(LogMessages.EXECUTE_PRESSED, firstSetTextArea.get(),
+                secondSetTextArea.get(), operation.get());
+        logger.log(message);
         updateLog();
     }
 
@@ -136,10 +134,9 @@ public class ViewModel {
             status.set(getInputStatus().toString());
             executeButtonDisabled.set(canNotExecuteOperation());
             if (status.get().equals(Status.READY.toString())) {
-                StringBuilder message = new StringBuilder(LogMessages.EDITING_FINISHED);
-                message.append("SetA : {").append(firstSetTextArea.get())
-                        .append("} ; SetB : {").append(secondSetTextArea.get()).append("}");
-                logger.log(message.toString());
+                String message = String.format(LogMessages.EDITING_FINISHED, firstSetTextArea.get(),
+                        secondSetTextArea.get());
+                logger.log(message);
                 updateLog();
             }
         }
@@ -198,9 +195,10 @@ enum Status {
 }
 
 final class LogMessages {
-    public static final String EXECUTE_PRESSED = "Execute.";
+    public static final String EXECUTE_PRESSED = "Execute. SetA : { %s } ; SetB : { %s }. "
+            + "Operation : %s .";
     public static final String OPERATION_CHANGED = "Operation was changed to ";
-    public static final String EDITING_FINISHED = "Updated input. ";
+    public static final String EDITING_FINISHED = "Updated input. SetA : { %s }; SetB : { %s }";
 
     private LogMessages() { }
 }

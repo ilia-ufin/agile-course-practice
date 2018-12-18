@@ -2,10 +2,7 @@ package ru.unn.agile.MyAbstractSet.infrastructure;
 
 import ru.unn.agile.MyAbstractSet.viewmodel.ILogger;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +26,7 @@ public class TxtLogger implements ILogger {
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(filename));
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -43,7 +40,7 @@ public class TxtLogger implements ILogger {
             writer.write(message);
             writer.newLine();
             writer.flush();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -60,7 +57,7 @@ public class TxtLogger implements ILogger {
                 logMessage.add(line);
                 line = reader.readLine();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
