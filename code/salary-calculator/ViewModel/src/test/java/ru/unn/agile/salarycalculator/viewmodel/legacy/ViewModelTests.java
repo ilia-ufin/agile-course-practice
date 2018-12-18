@@ -19,7 +19,7 @@ public class ViewModelTests {
     @Before
     public void setUpEmptyExample() {
         //viewModel = new ViewModel();
-        FakeLogger logger = new FakeLogger();
+        myFakeLogger logger = new myFakeLogger();
         viewModel = new ViewModel(logger);
         viewModel.setSalary("10000");
         viewModel.setWorkedHours("154");
@@ -168,7 +168,7 @@ public class ViewModelTests {
 
     @Test
     public void canCreateViewModelWithLogger() {
-        FakeLogger logger = new FakeLogger();
+        myFakeLogger logger = new myFakeLogger();
         ViewModel viewModelLogged = new ViewModel(logger);
 
         assertNotNull(viewModelLogged);
