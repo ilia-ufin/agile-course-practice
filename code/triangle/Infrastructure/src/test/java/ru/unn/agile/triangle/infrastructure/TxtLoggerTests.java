@@ -89,4 +89,24 @@ public class TxtLoggerTests {
 
         assertEquals(0, log.size());
     }
+
+    @Test(expected = Test.None.class)
+    public void createLoggerWithoutTrowExpWhenIncorrectPathToFileName() {
+        TxtLogger txtLogger = new TxtLogger(FILENAME);
+    }
+
+    @Test(expected = Test.None.class)
+    public void createLogByTextLoggerWhenIncorrectPathToFileName() {
+        TxtLogger txtLogger = new TxtLogger(FILENAME);
+
+        txtLogger.log(MESSAGE);
+    }
+
+    @Test(expected = Test.None.class)
+    public void canGetLogOnTextLoggerWhenPathToFileIncorrect() {
+        TxtLogger txtLogger = new TxtLogger(FILENAME);
+        txtLogger.log(MESSAGE);
+
+        txtLogger.getLogger();
+    }
 }
