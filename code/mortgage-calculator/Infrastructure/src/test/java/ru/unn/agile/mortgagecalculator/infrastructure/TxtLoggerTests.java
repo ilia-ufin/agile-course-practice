@@ -120,18 +120,4 @@ public class TxtLoggerTests {
         assertTrue(res.matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}: INFO .*"));
     }
 
-    @Test(expected = IOException.class)
-    public void checkFileReader() throws FileNotFoundException {
-        new FileReader("abracadabra");
-    }
-
-    @Test
-    public void canCreateLogFileOnDisk() {
-        try {
-            new BufferedReader(new FileReader(FILENAME));
-        } catch (FileNotFoundException e) {
-            fail("File " + FILENAME + " wasn't found!");
-        }
-    }
-
 }

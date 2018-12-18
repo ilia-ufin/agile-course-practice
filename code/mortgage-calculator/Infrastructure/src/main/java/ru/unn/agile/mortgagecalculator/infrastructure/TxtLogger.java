@@ -23,15 +23,12 @@ public class TxtLogger implements ILogger {
 
     @Override
     public void log(final String str) {
-        if (writer == null) {
-            return;
-        }
         try {
             writer.write(getTime() + ": INFO " + str);
             writer.newLine();
 
             writer.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -51,9 +48,6 @@ public class TxtLogger implements ILogger {
     @Override
     public List<String> getLog() {
         ArrayList<String> logs = new ArrayList<>();
-        if (writer == null) {
-            return logs;
-        }
         try {
             FileReader fileReader = new FileReader(logFile);
 
