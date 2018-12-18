@@ -1,14 +1,17 @@
 package ru.unn.agile.mortgagecalculator.viewmodel.legacy;
 
-import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ViewModel.Status;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ViewModel.Status;
 
 import javax.swing.table.DefaultTableModel;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
 
 public class ViewModelTests {
 
@@ -302,5 +305,14 @@ public class ViewModelTests {
     @Test
     public void checkGetLog() {
         assertNotNull(viewModel.getLog());
+    }
+
+    @Test
+    public void isNotEmptyLog() {
+        viewModel.checkCountFields();
+
+        List<String> res = viewModel.getLog();
+
+        assertFalse(res.isEmpty());
     }
 }
