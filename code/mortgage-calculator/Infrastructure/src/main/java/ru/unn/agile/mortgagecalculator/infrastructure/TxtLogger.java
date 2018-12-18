@@ -12,8 +12,8 @@ import java.util.List;
 
 public class TxtLogger implements ILogger {
     private final BufferedWriter writer;
-    private final BufferedReader reader;
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private String logFile;
 
     private static String getTime() {
         Calendar cal = Calendar.getInstance();
@@ -31,26 +31,21 @@ public class TxtLogger implements ILogger {
             writer.newLine();
 
             writer.flush();
-        } catch (IOException e) {
-            return;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public TxtLogger(final String logFile) {
-        BufferedReader logReader = null;
+        this.logFile = logFile;
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(logFile));
-            FileReader fileReader = new FileReader(logFile);
-            logReader = new BufferedReader(fileReader);
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         writer = logWriter;
-        reader = logReader;
-
     }
 
     @Override
@@ -60,6 +55,10 @@ public class TxtLogger implements ILogger {
             return logs;
         }
         try {
+            FileReader fileReader = new FileReader(logFile);
+
+            BufferedReader reader = new BufferedReader(fileReader);
+
             String record = reader.readLine();
 
             while (record != null) {
@@ -67,8 +66,8 @@ public class TxtLogger implements ILogger {
                 record = reader.readLine();
             }
 
-        } catch (IOException e) {
-            return logs;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return logs;
