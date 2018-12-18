@@ -1,5 +1,6 @@
 package ru.unn.agile.shapevolume.viewmodel;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ru.unn.agile.shapevolume.model.Cuboid;
@@ -10,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import ru.unn.agile.shapevolume.model.RegularPolygonPrism;
+import sun.rmi.runtime.Log;
 
 import java.util.*;
 
@@ -18,9 +20,30 @@ enum Status {
     INVALID_ARGUMENTS("Некорректные входные данные");
 
     private final String name;
+
     Status(final String name) {
         this.name = name;
     }
+
+    public String toString() {
+        return name;
+    }
+}
+
+enum LogMessages {
+    FIRST_ARGUMENT_INPUTED("Первый аргумент введен, значение - "),
+    SECOND_ARGUMENT_INPUTED("Второй аргумент введен, значение - "),
+    THIRD_ARGUMENT_INPUTED("Третий аргумент введен, значение - "),
+    SHAPE_CHANGED("Фигура была изменена на "),
+    CALCULATION_PERFORMED("Вычисления выполнены, результат - ");
+
+
+    private final String name;
+
+    LogMessages(final String name) {
+        this.name = name;
+    }
+
     public String toString() {
         return name;
     }
@@ -38,23 +61,36 @@ public class ViewModel {
     private final ObjectProperty<Shape> currentShape = new SimpleObjectProperty<>();
     private final StringProperty result = new SimpleStringProperty();
 
+
     private final ObjectProperty<ObservableList<Shape>> shapes =
             new SimpleObjectProperty<>(FXCollections.observableArrayList(Shape.values()));
 
+
+    private ILogger logger;
+
     public static final Map<Shape, String[]> SHAPE_TO_PARAMETERS_NAMES =
             Collections.unmodifiableMap(new HashMap<Shape, String[]>() {{
-                put(Shape.UNKNOWN, new String[] {"", "", ""});
-                put(Shape.CUBE, new String[] {"a", "b", "c"});
-                put(Shape.REGULAR_POLYGON_PRISM, new String[] {
+                put(Shape.UNKNOWN, new String[]{"", "", ""});
+                put(Shape.CUBE, new String[]{"a", "b", "c"});
+                put(Shape.REGULAR_POLYGON_PRISM, new String[]{
                         "Количество сторон",
                         "Длина стороны",
                         "Высота призмы"});
             }});
 
+
     public static final String DEFAULT_VALUE = "";
 
-
     public ViewModel() {
+        init();
+    }
+
+    public ViewModel(ILogger logger) {
+        this.logger = logger;
+        init();
+    }
+
+    private void init() {
         currentShape.set(Shape.UNKNOWN);
         updateArgumentsNames(Shape.UNKNOWN);
         firstArgumentValue.set(DEFAULT_VALUE);
@@ -70,17 +106,26 @@ public class ViewModel {
             }
         });
 
-        final List<StringProperty> arguments =
-                Arrays.asList(firstArgumentValue, secondArgumentValue, thirdArgumentValue);
-        for (StringProperty argument : arguments) {
-            argument.addListener((ObservableValue<? extends String> observable,
-                               String oldValue, String newValue) -> {
+        setupChangeValueListeners();
+    }
+
+    private void setupChangeValueListeners() {
+        final Map<String, StringProperty> arguments = new HashMap<>();
+        arguments.put(LogMessages.FIRST_ARGUMENT_INPUTED.toString(), firstArgumentValue);
+        arguments.put(LogMessages.SECOND_ARGUMENT_INPUTED.toString(), secondArgumentValue);
+        arguments.put(LogMessages.THIRD_ARGUMENT_INPUTED.toString(), thirdArgumentValue);
+
+        for (Map.Entry<String, StringProperty> argument : arguments.entrySet()) {
+            argument.getValue().addListener((ObservableValue<? extends String> observable,
+                                  String oldValue, String newValue) -> {
+                logger.log(argument.getKey() + " " + newValue);
                 if (!oldValue.equals(newValue)) {
                     calculate();
                 }
             });
         }
     }
+
 
     private void updateArgumentsNames(final Shape shape) {
         String[] parametersNames = SHAPE_TO_PARAMETERS_NAMES.get(Shape.UNKNOWN);
@@ -126,7 +171,9 @@ public class ViewModel {
                     break;
             }
             if (volume != null) {
-                result.set(String.format(Locale.US, "%.3f", volume));
+                String formattedVolume = String.format(Locale.US, "%.3f", volume);
+                logger.log(LogMessages.CALCULATION_PERFORMED + " " + formattedVolume);
+                result.set(formattedVolume);
             } else {
                 result.set(Status.INVALID_ARGUMENTS.toString());
             }
@@ -138,9 +185,11 @@ public class ViewModel {
     public StringProperty firstArgumentValueProperty() {
         return firstArgumentValue;
     }
+
     public StringProperty secondArgumentValueProperty() {
         return secondArgumentValue;
     }
+
     public StringProperty thirdArgumentValueProperty() {
         return thirdArgumentValue;
     }
@@ -148,18 +197,23 @@ public class ViewModel {
     public StringProperty firstArgumentNameProperty() {
         return firstArgumentName;
     }
+
     public StringProperty secondArgumentNameProperty() {
         return secondArgumentName;
     }
+
     public StringProperty thirdArgumentNameProperty() {
         return thirdArgumentName;
     }
+
     public String getFirstArgumentName() {
         return firstArgumentName.get();
     }
+
     public String getSecondArgumentName() {
         return secondArgumentName.get();
     }
+
     public String getThirdArgumentName() {
         return thirdArgumentName.get();
     }
@@ -175,4 +229,16 @@ public class ViewModel {
     public String getResult() {
         return result.get();
     }
+
+    public ILogger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(ILogger logger) {
+        this.logger = logger;
+    }
+
+
 }
+
+

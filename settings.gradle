@@ -261,6 +261,8 @@ include "code/shape-volume-calculator/ViewModel"
 project(":code/shape-volume-calculator/ViewModel").name = "shape-volume-calculator-ViewModel"
 include "code/shape-volume-calculator/View"
 project(":code/shape-volume-calculator/View").name = "shape-volume-calculator-View"
+include "code/shape-volume-calculator/Infrastracture"
+project(":code/shape-volume-calculator/Infrastracture").name = "shape-volume-calculator-Infrastracture"
 
 // Rumiantseva Maria, Quadratic Equation Solver
 include "code/quadratic-equation-solver/Model"

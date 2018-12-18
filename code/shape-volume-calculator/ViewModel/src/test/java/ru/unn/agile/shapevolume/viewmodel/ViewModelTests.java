@@ -3,14 +3,18 @@ package ru.unn.agile.shapevolume.viewmodel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        viewModel = new ViewModel(new DummyLogger());
     }
 
     @After
@@ -177,4 +181,50 @@ public class ViewModelTests {
     public void checkShapeToString() {
         assertEquals("Куб", Shape.CUBE.toString());
     }
+
+    @Test
+    public void changeOfFirstValueIsLogged()
+    {
+        viewModel.currentShapeProperty().set(Shape.CUBE);
+        viewModel.firstArgumentValueProperty().set("3");
+        List<String> log = viewModel.getLogger().getLog();
+        String s = log.get(log.size() -1) ;
+        assertTrue(s.contains(LogMessages.FIRST_ARGUMENT_INPUTED.toString()) && s.contains("3"));
+    }
+
+    @Test
+    public void changeOfSecondValueIsLogged()
+    {
+        viewModel.currentShapeProperty().set(Shape.CUBE);
+        viewModel.secondArgumentValueProperty().set("3");
+        List<String> log = viewModel.getLogger().getLog();
+        String s = log.get(log.size() -1) ;
+        assertTrue(s.contains(LogMessages.SECOND_ARGUMENT_INPUTED.toString()) && s.contains("3"));
+    }
+
+    @Test
+    public void changeOfThirdValueIsLogged()
+    {
+        viewModel.currentShapeProperty().set(Shape.CUBE);
+        viewModel.thirdArgumentValueProperty().set("3");
+        List<String> log = viewModel.getLogger().getLog();
+        String s = log.get(log.size() -1) ;
+        assertTrue(s.contains(LogMessages.THIRD_ARGUMENT_INPUTED.toString()) && s.contains("3"));
+    }
+
+    @Test
+    public void calculateIsLogged() {
+        viewModel.currentShapeProperty().set(Shape.REGULAR_POLYGON_PRISM);
+        viewModel.firstArgumentValueProperty().set("6");
+        viewModel.secondArgumentValueProperty().set("1");
+        viewModel.thirdArgumentValueProperty().set("2");
+        List<String> log = viewModel.getLogger().getLog();
+        String s = log.get(log.size() -1) ;
+        assertTrue(s.contains(LogMessages.CALCULATION_PERFORMED.toString()) && s.contains("5.196"));
+       
+    }
+
+
+
+
 }

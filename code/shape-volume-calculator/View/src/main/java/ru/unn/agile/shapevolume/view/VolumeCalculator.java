@@ -1,5 +1,7 @@
 package ru.unn.agile.shapevolume.view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -25,5 +27,7 @@ public class VolumeCalculator {
         txtThirdArgument.textProperty().bindBidirectional(viewModel.thirdArgumentValueProperty());
 
         cbShapes.valueProperty().bindBidirectional(viewModel.currentShapeProperty());
+
+
     }
 }
