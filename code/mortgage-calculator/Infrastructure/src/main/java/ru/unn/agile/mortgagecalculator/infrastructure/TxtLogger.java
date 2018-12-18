@@ -33,7 +33,6 @@ public class TxtLogger implements ILogger {
 
             writer.flush();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -44,7 +43,6 @@ public class TxtLogger implements ILogger {
         try {
             logWriter = new BufferedWriter(new FileWriter(logFile));
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
         writer = logWriter;
@@ -71,7 +69,6 @@ public class TxtLogger implements ILogger {
             }
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
 
         return logs;
