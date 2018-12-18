@@ -21,7 +21,7 @@ public class TxtLoggerTests {
         txtLogger = new TxtLogger(FILENAME);
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void initialWithInvalidFileName() {
         txtLogger = new TxtLogger("");
     }
@@ -36,7 +36,7 @@ public class TxtLoggerTests {
         txtLogger.log("I'm superman");
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void canNotWriteToLog() {
         txtLogger = new TxtLogger("");
 
@@ -102,7 +102,7 @@ public class TxtLoggerTests {
         assertTrue(f.exists());
     }
 
-    @Test
+    @Test(expected = Test.None.class)
     public void checkEmptyLog() {
         txtLogger = new TxtLogger("");
 
