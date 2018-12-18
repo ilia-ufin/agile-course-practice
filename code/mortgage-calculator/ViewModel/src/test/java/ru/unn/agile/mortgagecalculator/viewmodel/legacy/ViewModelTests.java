@@ -297,4 +297,9 @@ public class ViewModelTests {
                     tableModel.getValueAt(indexMonth, 2));
         }
     }
+
+    @Test
+    public void checkGetStatus() {
+        viewModel.getStatus();
+    }
 }
