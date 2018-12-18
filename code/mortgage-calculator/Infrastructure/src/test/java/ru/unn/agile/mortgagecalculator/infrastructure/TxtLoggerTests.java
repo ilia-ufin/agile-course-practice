@@ -102,4 +102,13 @@ public class TxtLoggerTests {
         assertTrue(f.exists());
     }
 
+    @Test
+    public void checkEmptyLog() {
+        txtLogger = new TxtLogger("");
+
+        txtLogger.log("I don't be superman");
+
+        assertTrue(txtLogger.getLog().isEmpty());
+    }
+
 }
