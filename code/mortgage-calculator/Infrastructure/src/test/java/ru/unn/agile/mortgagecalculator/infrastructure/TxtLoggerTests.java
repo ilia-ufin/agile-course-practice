@@ -3,9 +3,11 @@ package ru.unn.agile.mortgagecalculator.infrastructure;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.*;
 
 
@@ -43,7 +45,7 @@ public class TxtLoggerTests {
 
     @Test
     public void canGetLog() {
-        ArrayList<String> expected = new ArrayList<String>();
+        ArrayList<String> expected = new ArrayList<>();
 
         assertEquals(expected.getClass(), txtLogger.getLog().getClass());
     }
@@ -91,6 +93,13 @@ public class TxtLoggerTests {
         }
 
         assertTrue(containsRecords);
+    }
+
+    @Test
+    public void canCreateFile() {
+        File f = new File(FILENAME);
+
+        assertTrue(f.exists());
     }
 
 }
