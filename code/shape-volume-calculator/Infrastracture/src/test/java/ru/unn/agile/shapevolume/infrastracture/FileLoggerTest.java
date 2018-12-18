@@ -40,9 +40,22 @@ public class FileLoggerTest {
         assertEquals(logString, log.get(0));
     }
 
+
     @Test(expected = IllegalArgumentException.class)
-    public void canNotCreateFileLoggerFromEmptyString() {
-        ILogger f = new FileLogger("");
+    public void canNotGetLogForEmptyFileName() {
+        String testPath = "";
+        ILogger f = new FileLogger(testPath);
+        List<String> log = f.getLog();
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canNotWriteLogForEmptyFileName() {
+        String testPath = "";
+        ILogger f = new FileLogger(testPath);
+
+        String logString = "test";
+        f.log(logString);
+    }
+
 
 }

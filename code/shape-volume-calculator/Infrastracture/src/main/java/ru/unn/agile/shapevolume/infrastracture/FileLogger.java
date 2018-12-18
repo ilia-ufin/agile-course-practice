@@ -16,8 +16,8 @@ public class FileLogger implements ILogger {
         try {
             writer = new BufferedWriter(new FileWriter(fileName));
             this.fileName = fileName;
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Something is wrong with file", e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
@@ -29,7 +29,7 @@ public class FileLogger implements ILogger {
             writer.write(s);
             writer.newLine();
             writer.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("Something is wrong with file", e);
         }
 
@@ -37,8 +37,8 @@ public class FileLogger implements ILogger {
 
     @Override
     public List<String> getLog() {
-        File file = new File(fileName);
         try {
+            File file = new File(fileName);
             BufferedReader br = new BufferedReader(new FileReader(file));
             List<String> log = new LinkedList<>();
             String currentLine = br.readLine();
@@ -48,7 +48,7 @@ public class FileLogger implements ILogger {
             }
             return log;
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("Something is wrong with file", e);
         }
     }

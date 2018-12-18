@@ -246,6 +246,17 @@ public class ViewModelTests {
 
     }
 
+    @Test
+    public void canGetLogFromViewModel() {
+        viewModel.currentShapeProperty().set(Shape.REGULAR_POLYGON_PRISM);
+        viewModel.firstArgumentValueProperty().set("6");
+        viewModel.secondArgumentValueProperty().set("1");
+        viewModel.thirdArgumentValueProperty().set("2");
+        String s = viewModel.getLogs();
+        assertTrue(s.contains(LogMessages.CALCULATION_PERFORMED.toString())
+                && s.contains("5.196"));
+    }
+
 
     @Test
     public void shapeChangeIsLogged() {
