@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TxtLogger implements ILogger {
     private final BufferedWriter writer;
-    private final String logFile;
+    private final BufferedReader reader;
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private static String getTime() {
@@ -20,7 +20,6 @@ public class TxtLogger implements ILogger {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
         return dateFormat.format(cal.getTime());
     }
-
 
     @Override
     public void log(final String str) {
@@ -33,45 +32,43 @@ public class TxtLogger implements ILogger {
 
             writer.flush();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            return;
         }
     }
 
     public TxtLogger(final String logFile) {
-        this.logFile = logFile;
-
+        BufferedReader logReader = null;
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(logFile));
+            FileReader fileReader = new FileReader(logFile);
+            logReader = new BufferedReader(fileReader);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         writer = logWriter;
+        reader = logReader;
+
     }
 
     @Override
     public List<String> getLog() {
-        BufferedReader buffer;
         ArrayList<String> logs = new ArrayList<>();
         if (writer == null) {
             return logs;
         }
         try {
-
-            FileReader fileReader = new FileReader(logFile);
-
-            buffer = new BufferedReader(fileReader);
-
-            String record = buffer.readLine();
+            String record = reader.readLine();
 
             while (record != null) {
                 logs.add(record);
-                record = buffer.readLine();
+                record = reader.readLine();
             }
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            return logs;
         }
 
         return logs;
