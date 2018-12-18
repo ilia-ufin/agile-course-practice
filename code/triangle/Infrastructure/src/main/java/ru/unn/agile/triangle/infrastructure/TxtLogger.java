@@ -52,11 +52,11 @@ public class TxtLogger implements ILogger {
             reader = new BufferedReader(new FileReader(fileName));
             String message = reader.readLine();
 
-            while (!message.isEmpty()) {
+            while (message != null && !message.isEmpty()) {
                 logger.add(message);
                 message = reader.readLine();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         return logger;
