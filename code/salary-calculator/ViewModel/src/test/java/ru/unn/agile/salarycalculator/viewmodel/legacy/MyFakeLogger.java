@@ -3,7 +3,7 @@ package ru.unn.agile.salarycalculator.viewmodel.legacy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class myFakeLogger implements ILogger {
+public class MyFakeLogger implements ILogger {
     private ArrayList<String> logList = new ArrayList<>();
 
     @Override
