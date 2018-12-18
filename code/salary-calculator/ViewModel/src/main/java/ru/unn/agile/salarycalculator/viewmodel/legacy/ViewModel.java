@@ -3,6 +3,7 @@ package ru.unn.agile.salarycalculator.viewmodel.legacy;
 import ru.unn.agile.salarycalculator.model.SalaryCalculator;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 
 public class ViewModel {
@@ -18,6 +19,8 @@ public class ViewModel {
     private String result;
     private String status;
     private boolean isCalculateButtonEnabled;
+    private ILogger logger;
+    private boolean isInputChanged;
 
     public ViewModel() {
         salary = "";
@@ -27,6 +30,23 @@ public class ViewModel {
         result = "";
         status = Status.COUNT_WAITING;
         isCalculateButtonEnabled = false;
+        isInputChanged = true;
+    }
+
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+
+        this.logger = logger;
+        salary = "";
+        workedHours = "";
+        countMonth = "";
+        countYear = "";
+        result = "";
+        status = Status.COUNT_WAITING;
+        isCalculateButtonEnabled = false;
+        isInputChanged = true;
     }
 
     public final class Status {
@@ -43,6 +63,14 @@ public class ViewModel {
 
         private Status() {
 
+        }
+    }
+
+    public final class LogMessages {
+        public static final String CALCULATE_WAS_PRESSED = "Calculate salary. ";
+        public static final String EDITING_FINISHED = "Updated input. ";
+
+        private LogMessages() {
         }
     }
 
@@ -73,6 +101,7 @@ public class ViewModel {
     }
 
     public void calculateSalary() {
+        logger.log(calculateLogMessage());
         if (!isCalculateButtonEnabled) {
             return;
         }
@@ -97,20 +126,36 @@ public class ViewModel {
     }
 
     public void setSalary(final String inSalary) {
+        if (inSalary.equals(this.salary)) {
+            return;
+        }
         this.salary = inSalary;
+        isInputChanged = true;
     }
 
 
     public void setWorkedHours(final String inWorkedHours) {
+        if (inWorkedHours.equals(this.workedHours)) {
+            return;
+        }
         this.workedHours = inWorkedHours;
+        isInputChanged = true;
     }
 
     public void setCountMonth(final String inCountMonth) {
+        if (inCountMonth.equals(this.countMonth)) {
+            return;
+        }
         this.countMonth = inCountMonth;
+        isInputChanged = true;
     }
 
     public void setCountYear(final String inCountYear) {
+        if (inCountYear.equals(this.countYear)) {
+            return;
+        }
         this.countYear = inCountYear;
+        isInputChanged = true;
     }
 
     public String getResult() {
@@ -184,5 +229,39 @@ public class ViewModel {
 
     public String getCountYear() {
         return countYear;
+    }
+
+    public List<String> getLog() {
+        return logger.getLog();
+    }
+
+    private String calculateLogMessage() {
+        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
+                + ": salary = " + salary
+                + "; workedHours = " + workedHours
+                + "; countMonth = " + countMonth
+                + "; countYear = " + countYear + ".";
+    }
+
+    private void logInputParams() {
+        if (!isInputChanged) {
+            return;
+        }
+
+        logger.log(editingFinishedLogMessage());
+        isInputChanged = false;
+    }
+
+    public void focusLost() {
+        logInputParams();
+    }
+
+    private String editingFinishedLogMessage() {
+        return LogMessages.EDITING_FINISHED
+                + "Input arguments are: ["
+                + salary + "; "
+                + workedHours + "; "
+                + countMonth + "; "
+                + countYear + "]";
     }
 }

@@ -5,14 +5,22 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.salarycalculator.viewmodel.legacy.ViewModel.Status;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    public void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUpEmptyExample() {
-        viewModel = new ViewModel();
+        //viewModel = new ViewModel();
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
         viewModel.setSalary("10000");
         viewModel.setWorkedHours("154");
         viewModel.setCountMonth("10");
@@ -156,5 +164,115 @@ public class ViewModelTests {
         viewModel.checkCountFields();
 
         assertEquals(Status.BAD_MONTH_FORMAT, viewModel.getStatus());
+    }
+
+    @Test
+    public void canCreateViewModelWithLogger() {
+        FakeLogger logger = new FakeLogger();
+        ViewModel viewModelLogged = new ViewModel(logger);
+
+        assertNotNull(viewModelLogged);
+    }
+
+    @Test
+    public void viewModelConstructorThrowsExceptionWithNullLogger() {
+        try {
+            new ViewModel(null);
+            fail("Exception wasn't thrown");
+        } catch (IllegalArgumentException ex) {
+            assertEquals("Logger parameter can't be null", ex.getMessage());
+        } catch (Exception ex) {
+            fail("Invalid exception type");
+        }
+    }
+
+    @Test
+    public void isLogEmptyInTheBeginning() {
+        List<String> log = viewModel.getLog();
+
+        assertEquals(0, log.size());
+    }
+
+    @Test
+    public void isCalculatePuttingSomething() {
+        viewModel.calculateSalary();
+
+        List<String> log = viewModel.getLog();
+        assertNotEquals(0, log.size());
+    }
+
+    @Test
+    public void isLogContainsProperMessage() {
+        viewModel.calculateSalary();
+        String message = viewModel.getLog().get(0);
+
+        assertEquals(message, ViewModel.LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
+                + ": salary = " + viewModel.getSalary()
+                + "; workedHours = " + viewModel.getWorkedHours()
+                + "; countMonth = " + viewModel.getCountMonth()
+                + "; countYear = " + viewModel.getCountYear() + ".");
+    }
+
+    @Test
+    public void canPutSeveralLogMessages() {
+        viewModel.checkCountFields();
+        viewModel.calculateSalary();
+        viewModel.calculateSalary();
+        viewModel.calculateSalary();
+
+        assertEquals(3, viewModel.getLog().size());
+    }
+
+    @Test
+    public void isEditingFinishLogged() {
+        viewModel.setSalary("1000");
+        viewModel.focusLost();
+        String message = viewModel.getLog().get(0);
+
+        assertEquals(message, getLogTemplate());
+    }
+
+    @Test
+    public void doNotLogSameParametersTwice() {
+        viewModel.setCountYear("1000");
+        viewModel.setCountYear("1000");
+
+        viewModel.focusLost();
+
+        String message = viewModel.getLog().get(0);
+        assertEquals(message, getLogTemplate());
+    }
+
+    @Test
+    public void doNotLogSalaryParametersTwiceWithPartialInput() {
+        viewModel.setSalary("1000");
+        viewModel.setSalary("1000");
+
+        viewModel.focusLost();
+
+        viewModel.checkCountFields();
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void doNotLogCountMonthParametersTwiceWithPartialInput() {
+        viewModel.setCountMonth("12");
+        viewModel.setCountMonth("12");
+        viewModel.setCountMonth("12");
+
+        viewModel.focusLost();
+        viewModel.focusLost();
+        viewModel.focusLost();
+        viewModel.checkCountFields();
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    public String getLogTemplate() {
+        return ViewModel.LogMessages.EDITING_FINISHED
+                + "Input arguments are: ["
+                + viewModel.getSalary() + "; "
+                + viewModel.getWorkedHours() + "; "
+                + viewModel.getCountMonth() + "; "
+                + viewModel.getCountYear() + "]";
     }
 }

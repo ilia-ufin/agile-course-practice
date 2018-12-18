@@ -1,10 +1,15 @@
 package ru.unn.agile.salarycalculator.view.legacy;
 
+import ru.unn.agile.salarycalculator.infrastructure.Logger;
 import ru.unn.agile.salarycalculator.viewmodel.legacy.ViewModel;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public final class SalaryCalculatorView {
     private JPanel mainPanel;
@@ -15,7 +20,12 @@ public final class SalaryCalculatorView {
     private JButton calculateButton;
     private JLabel lbStatus;
     private JTextField txtCountMonth;
+    private JPanel loggerPanel;
+    private JLabel loggerLabel;
+    private JList<String> listLog;
     private ViewModel viewModel;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 300;
 
     private SalaryCalculatorView() {
     }
@@ -25,13 +35,21 @@ public final class SalaryCalculatorView {
         backBind();
         salaryCalculatorActionListener();
         salaryCalculatorKeyAdapter();
+        loggerPanel.setBackground(Color.CYAN);
+        loggerLabel.setBackground(Color.BLACK);
+        txtSalary.addFocusListener(focusLostListener);
+        txtWorkedHours.addFocusListener(focusLostListener);
+        txtCountMonth.addFocusListener(focusLostListener);
+        txtCountYear.addFocusListener(focusLostListener);
     }
 
     public static void main(final String[] args) {
         JFrame frame = new JFrame("SalaryCalculatorView");
-        frame.setContentPane(new SalaryCalculatorView(new ViewModel()).mainPanel);
+        Logger logger = new Logger("./salaryCalculator.log");
+        frame.setContentPane(new SalaryCalculatorView(new ViewModel(logger)).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(WIDTH, HEIGHT);
         frame.setVisible(true);
     }
 
@@ -46,6 +64,10 @@ public final class SalaryCalculatorView {
         calculateButton.setEnabled(viewModel.isCalculateButtonEnable());
         txtResult.setText(viewModel.getResult());
         lbStatus.setText(viewModel.getStatus());
+
+        List<String> log = viewModel.getLog();
+        String[] items = log.toArray(new String[log.size()]);
+        listLog.setListData(items);
     }
 
     private void salaryCalculatorActionListener() {
@@ -71,4 +93,13 @@ public final class SalaryCalculatorView {
         txtCountMonth.addKeyListener(whenInCountType);
         txtCountYear.addKeyListener(whenInCountType);
     }
+
+    private FocusAdapter focusLostListener = new FocusAdapter() {
+        public void focusLost(final FocusEvent e) {
+            bind();
+            viewModel.focusLost();
+            backBind();
+        }
+    };
+
 }

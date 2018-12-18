@@ -30,6 +30,10 @@ public class SalaryCalculator {
     }
 
     public void setSalary(final double inSalary) {
+        if (inSalary == this.salary) {
+            return;
+        }
+
         if (inSalary < 0) {
             throw new NumberFormatException("Negative salary");
         }
@@ -40,6 +44,9 @@ public class SalaryCalculator {
     }
 
     public void setWorkedHourInMonth(final int inWorkedHourInMonth) {
+        if (inWorkedHourInMonth == this.salary) {
+            return;
+        }
         if (inWorkedHourInMonth < 0) {
             throw new NumberFormatException("Negative meaning");
         }
