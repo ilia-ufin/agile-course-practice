@@ -199,9 +199,9 @@ include "code/mortgage-calculator/ViewModel"
 project(":code/mortgage-calculator/ViewModel").name = "mortgage-calculator-ViewModel"
 
 
-// Kochuev Andrey, Length Converter
-include "code/kochuev-andrey-length-converter"
-project(":code/kochuev-andrey-length-converter").name = "kochuev-andrey-length-converter"
+// Kochuev Andrey, Golovanova Tatyana Length Converter
+include "code/length-converter/Model"
+project(":code/length-converter/Model").name = "length-converter-Model"
 
 // Osechkin Sergey, DepositCalculator
 include "code/deposit-calculator/Model"
