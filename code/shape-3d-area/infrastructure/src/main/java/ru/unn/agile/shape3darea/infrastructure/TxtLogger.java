@@ -64,8 +64,8 @@ public class TxtLogger implements ILogger {
     }
 
     private static String getCurrentTime() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
+        final SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
+        final Calendar cal = Calendar.getInstance();
         return sdf.format(cal.getTime());
     }
 }

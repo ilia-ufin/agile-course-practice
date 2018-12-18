@@ -1,9 +1,12 @@
 package ru.unn.agile.shape3darea.viewmodel;
 
+import javafx.beans.property.ObjectProperty;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.shape3darea.model.ShapeType;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -147,12 +150,14 @@ public class ViewModelTest {
 
     @Test
     public void checkLogValuesWhenSwitchToSphereAndBack() {
-        viewModel.selectedShapeProperty().set(ShapeType.SPHERE);
-        viewModel.selectedShapeProperty().set(ShapeType.SQUARE_PYRAMID);
-        String logSphere = viewModel.getLog().get(0);
-        String logSquarePyramid = viewModel.getLog().get(1);
-        assertTrue(logSphere.matches("(.*)" + LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE));
-        assertTrue(logSquarePyramid.matches(
+        ObjectProperty<ShapeType> selectedShape = viewModel.selectedShapeProperty();
+
+        selectedShape.set(ShapeType.SPHERE);
+        selectedShape.set(ShapeType.SQUARE_PYRAMID);
+        List<String> log = viewModel.getLog();
+
+        assertTrue(log.get(0).matches("(.*)" + LogMessages.SHAPE_WAS_CHANGED + ShapeType.SPHERE));
+        assertTrue(log.get(1).matches(
                 "(.*)" + LogMessages.SHAPE_WAS_CHANGED + ShapeType.SQUARE_PYRAMID));
     }
 
