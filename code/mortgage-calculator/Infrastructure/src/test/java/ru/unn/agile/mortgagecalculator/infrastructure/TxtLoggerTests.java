@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -75,6 +76,22 @@ public class TxtLoggerTests {
         }
 
         assertFalse(containsRecord);
+    }
+
+    @Test
+    public void canSeveralLogs(){
+        txtLogger.log("I'm superman");
+        txtLogger.log("I'm batman");
+
+        boolean containsRecords = false;
+        List<String> logs = txtLogger.getLog();
+
+        if (logs.get(0).contains("I'm superman") &&
+                logs.get(1).contains("I'm batman")){
+            containsRecords = true;
+        }
+        
+        assertTrue(containsRecords);
     }
 
 }
