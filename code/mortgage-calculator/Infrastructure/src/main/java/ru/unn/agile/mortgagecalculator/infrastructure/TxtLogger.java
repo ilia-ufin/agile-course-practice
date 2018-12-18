@@ -54,7 +54,7 @@ public class TxtLogger implements ILogger {
     public List<String> getLog() {
         BufferedReader buffer;
         ArrayList<String> logs = new ArrayList<>();
-        if (writer == null){
+        if (writer == null) {
             return logs;
         }
         try {
