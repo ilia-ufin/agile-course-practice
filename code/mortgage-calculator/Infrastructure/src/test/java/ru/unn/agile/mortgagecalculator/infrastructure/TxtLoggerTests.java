@@ -3,7 +3,7 @@ package ru.unn.agile.mortgagecalculator.infrastructure;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,36 +21,36 @@ public class TxtLoggerTests {
         txtLogger = new TxtLogger(FILENAME);
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void initialWithInvalidFileName() {
         txtLogger = new TxtLogger("");
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canCreateLogFile() {
         assertNotNull(txtLogger);
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canWriteToLog() {
         txtLogger.log("I'm superman");
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canNotWriteToLog() {
         txtLogger = new TxtLogger("");
 
         txtLogger.log("I don't be superman");
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canGetLog() {
         ArrayList<String> expected = new ArrayList<>();
 
         assertEquals(expected.getClass(), txtLogger.getLog().getClass());
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canGetNotEmptyLog() {
         txtLogger.log("I'm superman");
 
@@ -66,7 +66,7 @@ public class TxtLoggerTests {
         assertTrue(containsRecord);
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canGetEmptyLog() {
         boolean containsRecord = false;
 
@@ -80,7 +80,7 @@ public class TxtLoggerTests {
         assertFalse(containsRecord);
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canSeveralLogs() {
         txtLogger.log("I'm superman");
         txtLogger.log("I'm batman");
@@ -95,14 +95,14 @@ public class TxtLoggerTests {
         assertTrue(containsRecords);
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void canCreateFile() {
         File f = new File(FILENAME);
 
         assertTrue(f.exists());
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void checkEmptyLog() {
         txtLogger = new TxtLogger("");
 
@@ -111,13 +111,27 @@ public class TxtLoggerTests {
         assertTrue(txtLogger.getLog().isEmpty());
     }
 
-    @Test(expected = Test.None.class)
+    @Test
     public void checkFormatTime() {
         txtLogger.log("I don't be superman");
 
         String res = txtLogger.getLog().get(0);
 
         assertTrue(res.matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}: INFO .*"));
+    }
+
+    @Test(expected = IOException.class)
+    public void checkFileReader() throws FileNotFoundException {
+        new FileReader("abracadabra");
+    }
+
+    @Test
+    public void canCreateLogFileOnDisk() {
+        try {
+            new BufferedReader(new FileReader(FILENAME));
+        } catch (FileNotFoundException e) {
+            fail("File " + FILENAME + " wasn't found!");
+        }
     }
 
 }
