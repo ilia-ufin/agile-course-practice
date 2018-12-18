@@ -1,6 +1,5 @@
 package ru.unn.agile.numbersinwords.viewmodel;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,11 +20,6 @@ public class NumbersInWordsViewModelLogTests {
     public void setUp() throws IOException {
         FakeLogger newLogger = new FakeLogger();
         this.setLogger(newLogger);
-    }
-
-    @After
-    public void tearDown() {
-        logger.close();
     }
 
 
