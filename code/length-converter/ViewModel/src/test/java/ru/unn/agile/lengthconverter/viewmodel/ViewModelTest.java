@@ -99,4 +99,12 @@ public class ViewModelTest {
 
         assertEquals(Status.WAITING.toString(), viewModel.getStatus());
     }
+    @Test
+    public void getExceptionFromConvert() {
+        viewModel.convertFromProperty().set("-100.0");
+
+        viewModel.convert();
+
+        assertEquals(Status.ERROR.toString(), viewModel.getStatus());
+    }
 }

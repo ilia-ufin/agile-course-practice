@@ -4,10 +4,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ru.unn.agile.lengthconverter.model.LengthConverte;
+import ru.unn.agile.lengthconverter.model.LengthConverterExceptions;
 import ru.unn.agile.lengthconverter.model.LengthUnit;
 
 public class ViewModel {
@@ -30,7 +30,6 @@ public class ViewModel {
         unitFrom.set(LengthUnit.MILLIMETERS);
         unitTo.set(LengthUnit.METERS);
         status.set(Status.READY.toString());
-
     }
 
     public ObjectProperty<ObservableList<LengthUnit>> unitsProperty() {
@@ -74,19 +73,19 @@ public class ViewModel {
             }
         }
     }
+
     public void convert() {
         checkInputValues();
         if (status.get() != Status.READY.toString()) {
             return;
         }
-
         try {
             double valueToConvert = Double.parseDouble(convertFrom.get());
             double result = LengthConverte.convert(unitFrom.get(), valueToConvert, unitTo.get());
 
             convertTo.set(String.valueOf(result));
             status.set(Status.SUCCESS.toString());
-        } catch (Exception e) {
+        } catch (LengthConverterExceptions e) {
             status.set(Status.ERROR.toString());
         }
     }
