@@ -62,7 +62,7 @@ public class FileLoggerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void canNotReadLogFromWrongFile() throws IOException {
-        String testPath = "test";
+        String testPath = "test1";
         FileLogger f = new FileLogger(testPath);
         f.log("test");
         f.setFileName("");
