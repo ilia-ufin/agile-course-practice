@@ -57,16 +57,20 @@ public class ViewModel {
         return convertTo.get();
     }
 
+    public final String getConvertFrom() {
+        return convertFrom.get();
+    }
+
     public final String getStatus() {
         return status.get();
     }
 
     public void checkInputValues() {
-        if (convertFrom.get().isEmpty()) {
+        if (getConvertFrom().isEmpty()) {
             status.set(Status.WAITING.toString());
         } else {
             try {
-                Double.parseDouble(convertFrom.get());
+                Double.parseDouble(getConvertFrom());
                 status.set(Status.READY.toString());
             } catch (NumberFormatException e) {
                 status.set(Status.INCORRECT_FORMAT.toString());
@@ -80,7 +84,7 @@ public class ViewModel {
             return;
         }
         try {
-            double valueToConvert = Double.parseDouble(convertFrom.get());
+            double valueToConvert = Double.parseDouble(getConvertFrom());
             double result = LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
 
             convertTo.set(String.valueOf(result));
