@@ -50,7 +50,7 @@ public class ViewModelTest {
     @Test
     public void createEmptyViewModel() {
         assertEquals("", viewModel.convertFromProperty().get());
-        assertEquals(LengthUnit.METERS, viewModel.getUnit());
+        assertEquals(LengthUnit.METERS, viewModel.getUnitTo());
         assertEquals("", viewModel.getConvertTo());
         assertEquals(Status.READY.toString(), viewModel.getStatus());
     }
@@ -62,5 +62,14 @@ public class ViewModelTest {
         viewModel.checkInputValues();
 
         assertEquals("0.0", viewModel.convertFromProperty().get());
+    }
+
+    @Test
+    public void canGetConvertToValue() {
+        viewModel.convertFromProperty().set("1000.0");
+
+        viewModel.convert();
+
+        assertEquals("1.0", viewModel.convertToProperty().get());
     }
 }

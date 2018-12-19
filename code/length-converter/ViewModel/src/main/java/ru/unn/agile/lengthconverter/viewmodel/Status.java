@@ -4,7 +4,9 @@ enum Status {
 
     READY("Press 'Convert' or Enter"),
     WAITING("Please provide input data"),
-    BAD_FORMAT("Bad format");
+    BAD_FORMAT("Bad format"),
+    SUCCESS("Success"),
+    ERROR("Converting error");
 
     private final String name;
 
