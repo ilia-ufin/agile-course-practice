@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 public class ViewModelTest {
     private ViewModel viewModel;
 
-    private String getCheckIntersectionLogMessage(){
+    private String getCheckIntersectionLogMessage() {
         return String.format(
                 ViewModel.LogMessages.CHECK_WAS_PRESSED,
                 viewModel.firstSegmentFirstPointCoordXProperty().get(),

@@ -50,7 +50,7 @@ public class TxtLoggerTest {
 
     @Test
     public void canWriteSeveralMessages() {
-        String[] messages = {TEST_MESSAGE+"0", TEST_MESSAGE+"1"};
+        String[] messages = {TEST_MESSAGE + "0", TEST_MESSAGE + "1"};
 
         for (String message : messages) {
             txtLogger.log(message);

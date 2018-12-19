@@ -27,10 +27,10 @@ public class TxtLogger implements ILogger {
         String timeMsg = new SimpleDateFormat(DT_FORMAT).format(new Date());
 
         try {
-			if (writer != null) {
-				writer.write(timeMsg + " : " + s + "\n");
-				writer.flush();
-			}
+            if (writer != null) {
+                writer.write(timeMsg + " : " + s + "\n");
+                writer.flush();
+            }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

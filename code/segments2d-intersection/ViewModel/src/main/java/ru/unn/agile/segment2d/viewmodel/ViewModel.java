@@ -35,7 +35,8 @@ public class ViewModel {
 
     private ILogger logger;
 
-    public StringProperty logProperty() { return log; }
+    public StringProperty logProperty() {
+        return log; }
     public StringProperty firstSegmentFirstPointCoordXProperty() {
         return firstSegmentFirstPointCoordX;
     }
@@ -263,7 +264,7 @@ public class ViewModel {
         log.set(logMsg.toString());
     }
 
-    private String getCheckIntersectionLogMessage(){
+    private String getCheckIntersectionLogMessage() {
         return String.format(
                 LogMessages.CHECK_WAS_PRESSED,
                 getFirstSegmentFirstPointCoordX(), getFirstSegmentFirstPointCoordY(),
