@@ -31,7 +31,12 @@ public class ViewModel {
     private StringProperty secondSegmentStatus = new SimpleStringProperty();
 
     private StringProperty result = new SimpleStringProperty();
+    private StringProperty log = new SimpleStringProperty();
 
+    private ILogger logger;
+
+    public StringProperty logProperty() {
+        return log; }
     public StringProperty firstSegmentFirstPointCoordXProperty() {
         return firstSegmentFirstPointCoordX;
     }
@@ -137,6 +142,11 @@ public class ViewModel {
         init();
     }
 
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        init();
+    }
+
     public void checkIntersection() {
         checkIsSegmentsValid();
         if (!firstSegmentStatus.get().equals(SEGMENT_CORRECT_STATUS)
@@ -159,6 +169,7 @@ public class ViewModel {
         } else {
             result.set(SEGMENT_NOT_INTERSECT_STATUS);
         }
+        writeToLog(getCheckIntersectionLogMessage());
     }
 
     private void init() {
@@ -173,6 +184,7 @@ public class ViewModel {
         firstSegmentStatus.set("");
         secondSegmentStatus.set("");
         result.set("");
+        log.set("");
     }
 
     private List<String> createFirstSegmentCoordsList() {
@@ -228,5 +240,45 @@ public class ViewModel {
     private void checkIsSegmentsValid() {
         checkIsFirstSegmentValid();
         checkIsSecondSegmentValid();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger can't be null!");
+        }
+        this.logger = logger;
+    }
+
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
+    private void writeToLog(final String msg) {
+        logger.log(msg);
+        StringBuilder logMsg = new StringBuilder();
+
+        for (String line : logger.getLog()) {
+            logMsg.append(line).append("\n");
+        }
+
+        log.set(logMsg.toString());
+    }
+
+    private String getCheckIntersectionLogMessage() {
+        return String.format(
+                LogMessages.CHECK_WAS_PRESSED,
+                getFirstSegmentFirstPointCoordX(), getFirstSegmentFirstPointCoordY(),
+                getFirstSegmentSecondPointCoordX(), getFirstSegmentSecondPointCoordY(),
+                getSecondSegmentFirstPointCoordX(), getSecondSegmentFirstPointCoordY(),
+                getSecondSegmentSecondPointCoordX(), getSecondSegmentSecondPointCoordY());
+    }
+
+    public String getLog() {
+        return log.get();
+    }
+
+    public static final class LogMessages {
+        public static final String CHECK_WAS_PRESSED =
+                "Check intersection was pressed. Args: (%s, %s) ; (%s, %s) | (%s, %s) ; (%s, %s)";
     }
 }

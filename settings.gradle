@@ -330,6 +330,9 @@ include "code/segments2d-intersection/ViewModel"
 project(":code/segments2d-intersection/ViewModel").name = "segments2d-intersection-ViewModel"
 include "code/segments2d-intersection/View"
 project(":code/segments2d-intersection/View").name = "segments2d-intersection-View"
+include "code/segments2d-intersection/Infrastructure"
+project(":code/segments2d-intersection/Infrastructure").name = "segments2d-intersection-Infrastructure"
+
 
 // Harry Potter Book Store
 include "code/book-store/Model"
