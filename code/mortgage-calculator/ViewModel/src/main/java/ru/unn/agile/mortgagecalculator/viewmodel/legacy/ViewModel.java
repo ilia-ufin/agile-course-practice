@@ -3,6 +3,7 @@ package ru.unn.agile.mortgagecalculator.viewmodel.legacy;
 import ru.unn.agile.mortgagecalculator.model.MortgageCalculator;
 
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 import java.util.Locale;
 
 public class ViewModel {
@@ -23,10 +24,13 @@ public class ViewModel {
     private boolean isCalculateButtonEnabled;
 
     private DefaultTableModel tableModel;
-    private  Object[] namesColumns =
-            new String[] {"Month", "Interest charges", "Amount of payment"};
+    private Object[] namesColumns =
+            new String[]{"Month", "Interest charges", "Amount of payment"};
 
-    public ViewModel() {
+    private ILogger logger;
+
+    public ViewModel(final ILogger logger) {
+        this.logger = logger;
         apartmentPrice = "";
         initialPayment = "";
         interestRate = "";
@@ -36,6 +40,9 @@ public class ViewModel {
         tableModel = new DefaultTableModel();
     }
 
+    public List<String> getLog() {
+        return logger.getLog();
+    }
 
     public final class Status {
         public static final String COUNT_WAITING =
@@ -87,6 +94,10 @@ public class ViewModel {
                 && isInitialPaymentCorrect()
                 && isInterestRateCorrect()
                 && isTermMortgageCorrect();
+
+        if (isCalculateButtonEnabled) {
+            logger.log("Button is enabled");
+        }
     }
 
     public void calculateFullPriceMortgage() {
@@ -104,6 +115,8 @@ public class ViewModel {
         fullPriceMortgage = getMoneyFormatInFullPriceValue(calculator);
         fillingTableModelWithData(calculator);
         status = Status.FULL_PRICE_MORTGAGE;
+
+        logger.log("calculateFullPriceMortgage");
     }
 
     public void fillingTableModelWithData(final MortgageCalculator isCalculator) {
@@ -111,7 +124,7 @@ public class ViewModel {
 
         String[] monthsNumbersAsArray = new String[numberOfMonths];
 
-        for (int indexMonth = 0; indexMonth  < numberOfMonths; indexMonth++) {
+        for (int indexMonth = 0; indexMonth < numberOfMonths; indexMonth++) {
             monthsNumbersAsArray[indexMonth] = String.valueOf(indexMonth + 1);
         }
 
@@ -128,6 +141,9 @@ public class ViewModel {
     }
 
     private boolean isApartmentPriceCorrect() {
+
+        logger.log("isApartmentPriceCorrect");
+
         if (apartmentPrice.length() > MAX_COUNT_CHAR_APARTMENT_PRICE) {
             status = Status.BAD_APARTMENT_PRICE_FORMAT_NUMBERS;
             return false;
@@ -150,6 +166,9 @@ public class ViewModel {
     }
 
     private boolean isInitialPaymentCorrect() {
+
+        logger.log("isInitialPaymentCorrect");
+
         if (initialPayment.length() > MAX_COUNT_CHAR_APARTMENT_PRICE) {
             status = Status.BAD_INITIAL_PAYMENT_FORMAT_NUMBERS;
             return false;
@@ -172,6 +191,9 @@ public class ViewModel {
     }
 
     private boolean isInterestRateCorrect() {
+
+        logger.log("isInterestRateCorrect");
+
         if (interestRate.length() > MAX_COUNT_CHAR_RATE) {
             status = Status.BAD_INTEREST_RATE_FORMAT_NUMBERS;
             return false;
@@ -194,6 +216,9 @@ public class ViewModel {
     }
 
     private boolean isTermMortgageCorrect() {
+
+        logger.log("isTermMortgageCorrect");
+
         if (termMortgage.length() > MAX_COUNT_CHAR_TERM) {
             status = Status.BAD_TERM_FORMAT_NUMBERS;
             return false;
@@ -219,19 +244,19 @@ public class ViewModel {
         return isCalculateButtonEnabled;
     }
 
-    public void  setApartmentPrice(final String isApartmentPrice) {
+    public void setApartmentPrice(final String isApartmentPrice) {
         this.apartmentPrice = isApartmentPrice;
     }
 
-    public void setInitialPayment(final  String isInitialPayment) {
+    public void setInitialPayment(final String isInitialPayment) {
         this.initialPayment = isInitialPayment;
     }
 
-    public void setInterestRate(final  String isInterestRate) {
+    public void setInterestRate(final String isInterestRate) {
         this.interestRate = isInterestRate;
     }
 
-    public void setTermMortgage(final  String isTermMortgage) {
+    public void setTermMortgage(final String isTermMortgage) {
         this.termMortgage = isTermMortgage;
     }
 
@@ -243,18 +268,19 @@ public class ViewModel {
         return initialPayment;
     }
 
-    public  String getInterestRate() {
+    public String getInterestRate() {
         return interestRate;
     }
 
     public String getTermMortgage() {
         return termMortgage;
     }
-    public  String getStatus() {
+
+    public String getStatus() {
         return status;
     }
 
-    public  String getFullPriceMortgage() {
+    public String getFullPriceMortgage() {
         return fullPriceMortgage;
     }
 
