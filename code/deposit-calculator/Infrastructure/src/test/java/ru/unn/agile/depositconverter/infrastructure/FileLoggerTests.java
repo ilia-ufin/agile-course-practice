@@ -44,7 +44,7 @@ public class FileLoggerTests {
 
         fileLogger.log(testMessage);
 
-        String message = fileLogger.getLogDepositCalculator().get(0);
+        String message = fileLogger.getLog().get(0);
         assertTrue(message.matches(".*" + testMessage + "$"));
     }
 
@@ -55,7 +55,7 @@ public class FileLoggerTests {
         fileLogger.log(messagesLog[0]);
         fileLogger.log(messagesLog[1]);
 
-        List<String> actualMessages = fileLogger.getLogDepositCalculator();
+        List<String> actualMessages = fileLogger.getLog();
         for (int i = 0; i < actualMessages.size(); i++) {
             assertTrue(actualMessages.get(i).matches(".*" + messagesLog[i] + "$"));
         }
@@ -67,7 +67,7 @@ public class FileLoggerTests {
 
         fileLogger.log(testMessageLog);
 
-        String message = fileLogger.getLogDepositCalculator().get(0);
+        String message = fileLogger.getLog().get(0);
         assertTrue(message.matches(DATE_AND_TIME_PATTERN));
     }
 
@@ -75,7 +75,7 @@ public class FileLoggerTests {
     public void canNotGetLogForEmptyFileName() {
         String testPath = "";
         FileLogger fileLogger = new FileLogger(testPath);
-        List<String> log = fileLogger.getLogDepositCalculator();
+        List<String> log = fileLogger.getLog();
     }
 
 

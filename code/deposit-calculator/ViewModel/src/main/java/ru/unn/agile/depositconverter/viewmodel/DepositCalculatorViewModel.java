@@ -80,7 +80,7 @@ public class DepositCalculatorViewModel {
     }
 
     public List<String> getLog() {
-        return logger.getLogDepositCalculator();
+        return logger.getLog();
     }
 
     private void logInputParams() {

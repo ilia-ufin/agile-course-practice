@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class FileLogger implements ILogger {
     private static final String DATE_FORMAT_PATTERN = "dd-MM-yyyy HH:mm:ss";
-    private static final String ERROR_FILE = "Error file ";
+    private static final String ERROR_FILE_MESSAGE = "Error file ";
     private final BufferedWriter writer;
     private final String filename;
 
@@ -45,12 +45,12 @@ public class FileLogger implements ILogger {
             writer.newLine();
             writer.flush();
         } catch (Exception e) {
-            throw new IllegalArgumentException(ERROR_FILE, e);
+            throw new IllegalArgumentException(ERROR_FILE_MESSAGE, e);
         }
     }
 
     @Override
-    public List<String> getLogDepositCalculator() {
+    public List<String> getLog() {
         BufferedReader bufferedReader;
         ArrayList<String> log = new ArrayList<String>();
         try {
@@ -62,7 +62,7 @@ public class FileLogger implements ILogger {
                 line = bufferedReader.readLine();
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException(ERROR_FILE, e);
+            throw new IllegalArgumentException(ERROR_FILE_MESSAGE, e);
         }
 
         return log;

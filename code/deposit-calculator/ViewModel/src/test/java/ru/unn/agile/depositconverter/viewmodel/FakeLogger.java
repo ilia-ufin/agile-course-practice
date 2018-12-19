@@ -12,7 +12,7 @@ public class FakeLogger implements ILogger {
     }
 
     @Override
-    public List<String> getLogDepositCalculator() {
+    public List<String> getLog() {
         return log;
     }
 }
