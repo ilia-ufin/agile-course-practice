@@ -48,7 +48,6 @@ public class ViewModel {
         return convertTo;
     }
 
-
     public LengthUnit getUnitTo() {
         return unitTo.get();
     }

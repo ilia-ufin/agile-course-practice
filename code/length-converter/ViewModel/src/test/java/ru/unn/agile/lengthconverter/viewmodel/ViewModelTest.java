@@ -41,8 +41,7 @@ public class ViewModelTest {
 
     @Test
     public void canGetMeasure() {
-        ObservableList<LengthUnit> units
-                = viewModel.getUnits();
+        ObservableList<LengthUnit> units = viewModel.getUnits();
 
         assertEquals(units.get(0), LengthUnit.METERS);
     }
