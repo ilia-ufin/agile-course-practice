@@ -125,7 +125,7 @@ public class LengthConverterTest {
     public void testConstructorIsPrivate()
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
-        Constructor<LengthConverter> constructor = LengthConverte.class.getDeclaredConstructor();
+        Constructor<LengthConverter> constructor = LengthConverter.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         constructor.setAccessible(true);
         constructor.newInstance();
