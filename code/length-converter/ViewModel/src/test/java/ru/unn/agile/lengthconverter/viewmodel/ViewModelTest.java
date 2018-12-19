@@ -90,4 +90,13 @@ public class ViewModelTest {
 
         assertEquals(Status.WAITING.toString(), viewModel.getStatus());
     }
+
+    @Test
+    public void setStatusNotReadyWithEmptyString() {
+        viewModel.convertFromProperty().set("");
+
+        viewModel.convert();
+
+        assertEquals(Status.WAITING.toString(), viewModel.getStatus());
+    }
 }
