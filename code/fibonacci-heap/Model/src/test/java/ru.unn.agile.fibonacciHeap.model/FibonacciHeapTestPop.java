@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(OleasterRunner.class)
-public class FibbonaciHeapTestPop {
+public class FibonacciHeapTestPop {
     private FibonacciHeap heap;
     private Node firstNode;
     private Node secondNode;

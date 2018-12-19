@@ -7,7 +7,7 @@ import static com.mscharhag.oleaster.runner.StaticRunnerSupport.*;
 import static org.junit.Assert.*;
 
 @RunWith(OleasterRunner.class)
-public class FibbonaciHeapTestUtils {
+public class FibonacciHeapTestUtils {
     private FibonacciHeap heap;
     private Node firstNode;
     private Node secondNode;

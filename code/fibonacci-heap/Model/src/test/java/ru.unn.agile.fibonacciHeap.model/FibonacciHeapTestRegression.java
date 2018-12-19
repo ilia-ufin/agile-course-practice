@@ -7,7 +7,7 @@ import static com.mscharhag.oleaster.runner.StaticRunnerSupport.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(OleasterRunner.class)
-public class FibbonaciHeapTestRegression {
+public class FibonacciHeapTestRegression {
     private FibonacciHeap heap;
     private double delta = 0.00001;
     {

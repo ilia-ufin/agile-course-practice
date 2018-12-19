@@ -34,14 +34,15 @@ public class FibonacciHeap {
             if (rootRight != null) {
                 node.setRight(rootRight);
                 rootRight.setLeft(node);
+            } else {
+                rootNode.setLeft(node);
+                node.setRight(rootNode);
             }
 
             rootNode.setRight(node);
-            rootNode.setLeft(node);
             node.setLeft(rootNode);
-            node.setRight(rootNode);
 
-            if (rootNode.getValue() > node.getValue()) {
+            if (node.getValue() < rootNode.getValue()) {
                 rootNode = node;
             }
         }
@@ -187,7 +188,11 @@ public class FibonacciHeap {
 
                 addToRootList(y);
 
-                if (y.getValue() > rootNode.getValue()) {
+                rootNode.setRight(y);
+                Node yRight = y.getRight();
+                yRight.setLeft(y);
+
+                if (y.getValue() < rootNode.getValue()) {
                     rootNode = y;
                 }
             } else {

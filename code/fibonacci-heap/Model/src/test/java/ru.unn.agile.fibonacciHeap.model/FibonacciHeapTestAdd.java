@@ -7,7 +7,7 @@ import static com.mscharhag.oleaster.runner.StaticRunnerSupport.*;
 import static org.junit.Assert.*;
 
 @RunWith(OleasterRunner.class)
-public class FibbonaciHeapTestAdd {
+public class FibonacciHeapTestAdd {
     private FibonacciHeap heap;
     private Node firstNode;
     private Node secondNode;
@@ -108,16 +108,16 @@ public class FibbonaciHeapTestAdd {
                         assertEquals(leftLink, heap.getRootNode());
                     });
 
+                    it("new node right to second node", () -> {
+                        Node rightLink = thirdNode.getRight();
+
+                        assertEquals(rightLink, secondNode);
+                    });
+
                     it("second node left to new node", () -> {
                         Node leftLink = secondNode.getLeft();
 
                         assertEquals(thirdNode, leftLink);
-                    });
-
-                    it("second node right to root node", () -> {
-                        Node rightLink = secondNode.getRight();
-
-                        assertEquals(rightLink, heap.getRootNode());
                     });
                 });
             });
