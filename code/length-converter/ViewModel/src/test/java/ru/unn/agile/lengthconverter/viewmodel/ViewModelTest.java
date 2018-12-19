@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import ru.unn.agile.lengthconverter.model.LengthUnit;
 
@@ -31,6 +32,11 @@ public class ViewModelTest {
         assertEquals(unitsProperty.get().get(0), LengthUnit.METERS);
     }
 
+    @Test
+    public void canInitViewModel() {
+        viewModel = new ViewModel();
 
+        assertNotEquals(viewModel, null);
+    }
 
 }
