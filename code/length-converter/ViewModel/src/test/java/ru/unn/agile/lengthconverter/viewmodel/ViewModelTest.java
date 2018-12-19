@@ -25,7 +25,7 @@ public class ViewModelTest {
     }
 
     @Test
-    public void canGetScalesProperty() {
+    public void canGetMeasureProperty() {
         ObjectProperty<ObservableList<LengthUnit>> unitsProperty
                 = viewModel.unitsProperty();
 
@@ -39,4 +39,11 @@ public class ViewModelTest {
         assertNotEquals(viewModel, null);
     }
 
+    @Test
+    public void canGetMeasure() {
+        ObservableList<LengthUnit> units
+                = viewModel.getUnits();
+
+        assertEquals(units.get(0), LengthUnit.METERS);
+    }
 }

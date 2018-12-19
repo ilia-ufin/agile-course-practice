@@ -15,4 +15,8 @@ public class ViewModel {
     public ObjectProperty<ObservableList<LengthUnit>> unitsProperty() {
         return units;
     }
+
+    public final ObservableList<LengthUnit> getUnits() {
+        return units.get();
+    }
 }
