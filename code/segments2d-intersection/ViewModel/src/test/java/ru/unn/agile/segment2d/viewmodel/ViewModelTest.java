@@ -27,6 +27,10 @@ public class ViewModelTest {
                 viewModel.secondSegmentSecondPointCoordYProperty().get());
     }
 
+    protected void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void createViewModel() {
         viewModel = new ViewModel(new FakeLogger());
@@ -93,7 +97,7 @@ public class ViewModelTest {
         List<String> logList = viewModel.getLogList();
         String message = getCheckIntersectionLogMessage();
 
-        assertEquals(logList.get(0), message);
+        assertTrue(logList.get(0).contains(message));
     }
 
     @Test
