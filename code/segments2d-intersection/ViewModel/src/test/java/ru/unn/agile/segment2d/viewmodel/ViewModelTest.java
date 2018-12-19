@@ -1,9 +1,12 @@
 package ru.unn.agile.segment2d.viewmodel;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -12,12 +15,24 @@ public class ViewModelTest {
 
     @Before
     public void createViewModel() {
-        viewModel = new ViewModel();
+        viewModel = new ViewModel(new FakeLogger());
     }
 
     @After
     public void deleteViewModel() {
         viewModel = null;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void viewModelConstructorThrowsExceptionWithNullLogger() {
+        new ViewModel(null);
+    }
+
+    @Test
+    public void isLogInit() {
+        List<String> log = viewModel.getLogList();
+
+        assertTrue(log.isEmpty());
     }
 
     @Test

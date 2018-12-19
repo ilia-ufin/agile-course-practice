@@ -31,6 +31,9 @@ public class ViewModel {
     private StringProperty secondSegmentStatus = new SimpleStringProperty();
 
     private StringProperty result = new SimpleStringProperty();
+    private StringProperty log = new SimpleStringProperty();
+
+    private ILogger logger;
 
     public StringProperty firstSegmentFirstPointCoordXProperty() {
         return firstSegmentFirstPointCoordX;
@@ -137,6 +140,15 @@ public class ViewModel {
         init();
     }
 
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        init();
+    }
+
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
     public void checkIntersection() {
         checkIsSegmentsValid();
         if (!firstSegmentStatus.get().equals(SEGMENT_CORRECT_STATUS)
@@ -173,6 +185,7 @@ public class ViewModel {
         firstSegmentStatus.set("");
         secondSegmentStatus.set("");
         result.set("");
+        log.set("");
     }
 
     private List<String> createFirstSegmentCoordsList() {
@@ -228,5 +241,12 @@ public class ViewModel {
     private void checkIsSegmentsValid() {
         checkIsFirstSegmentValid();
         checkIsSecondSegmentValid();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger can't be null!");
+        }
+        this.logger = logger;
     }
 }
