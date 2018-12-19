@@ -16,8 +16,8 @@ public class ViewModel {
                     FXCollections.observableArrayList(LengthUnit.values()));
     private final StringProperty convertFrom = new SimpleStringProperty();
     private final StringProperty convertTo = new SimpleStringProperty();
-    private final ObjectProperty <LengthUnit> unitFrom = new SimpleObjectProperty<LengthUnit>();
-    private final ObjectProperty <LengthUnit> unitTo = new SimpleObjectProperty<LengthUnit>();
+    private final ObjectProperty<LengthUnit> unitFrom = new SimpleObjectProperty<LengthUnit>();
+    private final ObjectProperty<LengthUnit> unitTo = new SimpleObjectProperty<LengthUnit>();
     private final StringProperty status = new SimpleStringProperty();
 
     public ViewModel() {
@@ -83,7 +83,7 @@ public class ViewModel {
 
         try {
             double valueToConvert = Double.parseDouble(convertFrom.get());
-            double result = LengthConverte.convert(unitFrom.get(),valueToConvert, unitTo.get());
+            double result = LengthConverte.convert(unitFrom.get(), valueToConvert, unitTo.get());
 
             convertTo.set(String.valueOf(result));
             status.set(Status.SUCCESS.toString());
