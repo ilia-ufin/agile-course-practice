@@ -45,6 +45,11 @@ public class ViewModelWithLoggerTest extends DepositCalculatorViewModelTests {
     }
 
     @Test
+    public void checkGetLog() {
+        assertNotNull(viewModel.getLog());
+    }
+
+    @Test
     public void logContainsProperMessageDepositAmountCalculation() {
         viewModel.setDepositAmount(DEPOSIT_AMOUNT_EXAMPLE);
         viewModel.focusLost();

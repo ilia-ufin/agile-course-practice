@@ -2,6 +2,7 @@ package ru.unn.agile.depositconverter.infrastructure;
 
 import org.junit.Before;
 import org.junit.Test;
+import static junit.framework.TestCase.assertNotNull;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -10,8 +11,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
-
-import static junit.framework.TestCase.assertNotNull;
 
 public class FileLoggerTests {
     private static final String FILE_NAME_LOG = "./FileLoggerTests-lab3-Deposit.log";
@@ -71,4 +70,21 @@ public class FileLoggerTests {
         String message = fileLogger.getLogDepositCalculator().get(0);
         assertTrue(message.matches(DATE_AND_TIME_PATTERN));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canNotGetLogForEmptyFileName() {
+        String testPath = "";
+        FileLogger fileLogger = new FileLogger(testPath);
+        List<String> log = fileLogger.getLogDepositCalculator();
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+        public void canNotWriteLogForEmptyFileName() {
+            String testPath = "";
+            FileLogger fileLogger = new FileLogger(testPath);
+
+            String logString = "test";
+            fileLogger.log(logString);
+        }
 }

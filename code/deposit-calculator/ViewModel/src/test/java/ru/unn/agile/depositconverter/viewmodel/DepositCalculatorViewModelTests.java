@@ -76,6 +76,18 @@ public class DepositCalculatorViewModelTests {
         assertEquals(false, viewModel.isCalculateButtonEnabled());
 
     }
+
+    @Test
+    public void canSetAddToDeposit() {
+        viewModel.setAccruedInterest(ACCRUED_INTEREST_EXAMPLE);
+        assertEquals(AccruedInterest.addToDeposit, viewModel.getAccruedInterest());
+    }
+
+    @Test
+    public  void canSetFrequencyOfCapitalization() {
+        viewModel.setFrequencyOfCapitalization(WRONG_LETTER_VALUE);
+    }
+
     @Test
     public void byDefaultButtonCalculateDisabled() {
         assertFalse(viewModel.isCalculateButtonEnabled());
@@ -99,36 +111,21 @@ public class DepositCalculatorViewModelTests {
     @Test
     public void whenDepositAmountEmptyButtonCalculateDisabled() {
         viewModel.setDepositAmount(EMPTY_STRING);
-        assertFalse(viewModel.isCalculateButtonEnabled());
-    }
-
-    @Test
-    public void whenDepositAmountClearButtonCalculateDisabled() {
-        viewModel.setDepositAmount(EMPTY_STRING);
+        viewModel.checkCountFields();
         assertFalse(viewModel.isCalculateButtonEnabled());
     }
 
     @Test
     public void whenTermPlacementEmptyButtonCalculateDisabled() {
         viewModel.setTermPlacement(EMPTY_STRING);
-        assertFalse(viewModel.isCalculateButtonEnabled());
-    }
-
-    @Test
-    public void whenTermPlacementClearButtonCalculateDisabled() {
-        viewModel.setTermPlacement(EMPTY_STRING);
+        viewModel.checkCountFields();
         assertFalse(viewModel.isCalculateButtonEnabled());
     }
 
     @Test
     public void whenInterestRateEmptyButtonCalculateDisabled() {
         viewModel.setInterestRate(EMPTY_STRING);
-        assertFalse(viewModel.isCalculateButtonEnabled());
-    }
-
-    @Test
-    public void whenInterestRateClearButtonCalculateDisabled() {
-        viewModel.setInterestRate(EMPTY_STRING);
+        viewModel.checkCountFields();
         assertFalse(viewModel.isCalculateButtonEnabled());
     }
 
@@ -183,6 +180,15 @@ public class DepositCalculatorViewModelTests {
         viewModel.checkCountFields();
         viewModel.calculate();
         assertEquals("219.39", viewModel.getIncomeViewModel());
+    }
+
+    @Test
+    public void whenCalculateIsNotCorrect() {
+        setFillValues();
+        viewModel.setDepositAmount(NEGATIVE_NUMBER_INCORRECT_FORM);
+        viewModel.checkCountFields();
+        viewModel.calculate();
+        assertEquals(false, viewModel.isCalculateButtonEnabled());
     }
 
     @Test

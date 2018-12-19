@@ -14,6 +14,7 @@ import java.util.Locale;
 
 public class FileLogger implements ILogger {
     private static final String DATE_FORMAT_PATTERN = "dd-MM-yyyy HH:mm:ss";
+    private static final String ERROR_FILE = "Error file ";
     private final BufferedWriter writer;
     private final String filename;
 
@@ -44,7 +45,7 @@ public class FileLogger implements ILogger {
             writer.newLine();
             writer.flush();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException(ERROR_FILE, e);
         }
     }
 
@@ -61,7 +62,7 @@ public class FileLogger implements ILogger {
                 line = bufferedReader.readLine();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new IllegalArgumentException(ERROR_FILE, e);
         }
 
         return log;
