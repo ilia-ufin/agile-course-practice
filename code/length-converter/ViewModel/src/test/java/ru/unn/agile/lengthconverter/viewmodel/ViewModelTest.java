@@ -54,4 +54,13 @@ public class ViewModelTest {
         assertEquals("", viewModel.getConvertTo());
         assertEquals(Status.READY.toString(), viewModel.getStatus());
     }
+
+    @Test
+    public void canAddValueToConvert() {
+        viewModel.convertFromProperty().set("0.0");
+
+        viewModel.checkInputValues();
+
+        assertEquals("0.0", viewModel.convertFromProperty().get());
+    }
 }

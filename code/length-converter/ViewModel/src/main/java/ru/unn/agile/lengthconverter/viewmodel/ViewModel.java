@@ -53,4 +53,18 @@ public class ViewModel {
     public final String getStatus() {
         return status.get();
     }
+
+    public void checkInputValues() {
+        if (convertFrom.get().isEmpty()) {
+            status.set(Status.WAITING.toString());
+        }
+        try {
+            if (!convertFrom.get().isEmpty()) {
+                Double.parseDouble(convertFrom.get());
+                status.set(Status.READY.toString());
+            }
+        } catch (NumberFormatException e) {
+            status.set(Status.BAD_FORMAT.toString());
+        }
+    }
 }
