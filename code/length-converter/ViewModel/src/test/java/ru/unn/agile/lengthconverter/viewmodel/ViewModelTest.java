@@ -46,4 +46,12 @@ public class ViewModelTest {
 
         assertEquals(units.get(0), LengthUnit.METERS);
     }
+
+    @Test
+    public void createEmptyViewModel() {
+        assertEquals("", viewModel.convertFromProperty().get());
+        assertEquals(LengthUnit.METERS, viewModel.getUnit());
+        assertEquals("", viewModel.getConvertTo());
+        assertEquals(Status.READY.toString(), viewModel.getStatus());
+    }
 }
