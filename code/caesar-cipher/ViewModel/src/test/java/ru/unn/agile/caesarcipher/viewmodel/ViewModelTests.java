@@ -183,6 +183,14 @@ public abstract class ViewModelTests {
     }
 
     @Test
+    public void canDisplayLimitedStatus() {
+        viewModel.setTextBoxInput("");
+        viewModel.setTextBoxOffset("1234567890123");
+
+        assertEquals("You can enter up to 12 digits", viewModel.getStatus());
+    }
+    
+    @Test
     public void canDisplaySuccessfullyStatus() {
         viewModel.setTextBoxInput("ABC");
         viewModel.setTextBoxOffset("1");
@@ -192,13 +200,6 @@ public abstract class ViewModelTests {
         assertEquals("Successful", viewModel.getStatus());
     }
 
-    @Test
-    public void canDisplayLimitedStatus() {
-        viewModel.setTextBoxInput("");
-        viewModel.setTextBoxOffset("1234567890123");
-
-        assertEquals("You can enter up to 12 digits", viewModel.getStatus());
-    }
 
     @Test
     public void isStatusWaitingInTheBegin() {
