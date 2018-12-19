@@ -75,10 +75,10 @@ public class ViewModelTest {
 
     @Test
     public void canProcessBadInputFormat() {
-        viewModel.convertFromProperty().set("a");
+        viewModel.convertFromProperty().set("ghf");
 
         viewModel.checkInputValues();
 
-        assertEquals(Status.BAD_FORMAT.toString(), viewModel.getStatus());
+        assertEquals(Status.INCORRECT_FORMAT.toString(), viewModel.getStatus());
     }
 }

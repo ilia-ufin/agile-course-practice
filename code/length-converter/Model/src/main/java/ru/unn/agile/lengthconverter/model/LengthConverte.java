@@ -1,6 +1,6 @@
 package ru.unn.agile.lengthconverter.model;
 
-public class LengthConverte {
+public final class LengthConverte {
     private LengthConverte() {
     }
     public static double convert(final LengthUnit sourceUnit,

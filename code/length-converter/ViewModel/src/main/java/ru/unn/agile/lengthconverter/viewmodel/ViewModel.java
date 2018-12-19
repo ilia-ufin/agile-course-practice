@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ru.unn.agile.lengthconverter.model.LengthConverte;
@@ -12,8 +13,7 @@ import ru.unn.agile.lengthconverter.model.LengthUnit;
 public class ViewModel {
 
     private final ObjectProperty<ObservableList<LengthUnit>> units =
-            new SimpleObjectProperty<>(
-                    FXCollections.observableArrayList(LengthUnit.values()));
+            new SimpleObjectProperty<>(FXCollections.observableArrayList(LengthUnit.values()));
     private final StringProperty convertFrom = new SimpleStringProperty();
     private final StringProperty convertTo = new SimpleStringProperty();
     private final ObjectProperty<LengthUnit> unitFrom = new SimpleObjectProperty<LengthUnit>();
@@ -65,14 +65,13 @@ public class ViewModel {
     public void checkInputValues() {
         if (convertFrom.get().isEmpty()) {
             status.set(Status.WAITING.toString());
-        }
-        try {
-            if (!convertFrom.get().isEmpty()) {
+        } else {
+            try {
                 Double.parseDouble(convertFrom.get());
                 status.set(Status.READY.toString());
+            } catch (NumberFormatException e) {
+                status.set(Status.INCORRECT_FORMAT.toString());
             }
-        } catch (NumberFormatException e) {
-            status.set(Status.BAD_FORMAT.toString());
         }
     }
     public void convert() {
@@ -91,4 +90,14 @@ public class ViewModel {
             status.set(Status.ERROR.toString());
         }
     }
+
+    public ObjectProperty<LengthUnit> unitPropertyFrom() {
+        return unitFrom;
+    }
+
+    public ObjectProperty<LengthUnit> unitPropertyTo() {
+        return unitTo;
+    }
+
+
 }

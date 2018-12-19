@@ -2,9 +2,9 @@ package ru.unn.agile.lengthconverter.viewmodel;
 
 enum Status {
 
-    READY("Press 'Convert' or Enter"),
+    READY("Press 'Converting'"),
     WAITING("Please provide input data"),
-    BAD_FORMAT("Bad format"),
+    INCORRECT_FORMAT("Incorrect format"),
     SUCCESS("Success"),
     ERROR("Converting error");
 
