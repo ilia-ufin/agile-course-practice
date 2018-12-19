@@ -35,6 +35,7 @@ public class ViewModel {
 
     private ILogger logger;
 
+    public StringProperty logProperty() { return log; }
     public StringProperty firstSegmentFirstPointCoordXProperty() {
         return firstSegmentFirstPointCoordX;
     }
@@ -145,10 +146,6 @@ public class ViewModel {
         init();
     }
 
-    public List<String> getLogList() {
-        return logger.getLog();
-    }
-
     public void checkIntersection() {
         checkIsSegmentsValid();
         if (!firstSegmentStatus.get().equals(SEGMENT_CORRECT_STATUS)
@@ -171,6 +168,7 @@ public class ViewModel {
         } else {
             result.set(SEGMENT_NOT_INTERSECT_STATUS);
         }
+        writeToLog(getCheckIntersectionLogMessage());
     }
 
     private void init() {
@@ -248,5 +246,38 @@ public class ViewModel {
             throw new IllegalArgumentException("Logger can't be null!");
         }
         this.logger = logger;
+    }
+
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
+    private void writeToLog(final String s) {
+        logger.log(s);
+        StringBuilder logMsg = new StringBuilder();
+
+        for (String line : logger.getLog()) {
+            logMsg.append(line).append("\n");
+        }
+
+        log.set(logMsg.toString());
+    }
+
+    private String getCheckIntersectionLogMessage(){
+        return String.format(
+                LogMessages.CHECK_WAS_PRESSED,
+                getFirstSegmentFirstPointCoordX(), getFirstSegmentFirstPointCoordY(),
+                getFirstSegmentSecondPointCoordX(), getFirstSegmentSecondPointCoordY(),
+                getSecondSegmentFirstPointCoordX(), getSecondSegmentFirstPointCoordY(),
+                getSecondSegmentSecondPointCoordX(), getSecondSegmentSecondPointCoordY());
+    }
+
+    public String getLog() {
+        return log.get();
+    }
+
+    public static final class LogMessages {
+        public static final String CHECK_WAS_PRESSED =
+                "Check intersection was pressed. Args: (%s, %s) ; (%s, %s) | (%s, %s) ; (%s, %s)";
     }
 }

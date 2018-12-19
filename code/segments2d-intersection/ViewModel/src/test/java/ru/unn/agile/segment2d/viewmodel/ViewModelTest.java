@@ -9,9 +9,23 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ViewModelTest {
     private ViewModel viewModel;
+
+    private String getCheckIntersectionLogMessage(){
+        return String.format(
+                ViewModel.LogMessages.CHECK_WAS_PRESSED,
+                viewModel.firstSegmentFirstPointCoordXProperty().get(),
+                viewModel.firstSegmentFirstPointCoordYProperty().get(),
+                viewModel.firstSegmentSecondPointCoordXProperty().get(),
+                viewModel.firstSegmentSecondPointCoordYProperty().get(),
+                viewModel.secondSegmentFirstPointCoordXProperty().get(),
+                viewModel.secondSegmentFirstPointCoordYProperty().get(),
+                viewModel.secondSegmentSecondPointCoordXProperty().get(),
+                viewModel.secondSegmentSecondPointCoordYProperty().get());
+    }
 
     @Before
     public void createViewModel() {
@@ -33,6 +47,53 @@ public class ViewModelTest {
         List<String> log = viewModel.getLogList();
 
         assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void canInitViewModel() {
+        viewModel = new ViewModel();
+
+        assertNotEquals(viewModel, null);
+    }
+
+    @Test
+    public void canGetLog() {
+        String log = viewModel.getLog();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void canGetLogProperty() {
+        String log = viewModel.logProperty().get();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void canCreateLogMessages() {
+        ViewModel.LogMessages logMessages = new ViewModel.LogMessages();
+
+        assertNotNull(logMessages);
+    }
+
+    @Test
+    public void logContainsMessageWhenCheckedIntersection() {
+        viewModel.setFirstSegmentFirstPointCoordX("1");
+        viewModel.setFirstSegmentFirstPointCoordY("2");
+        viewModel.setFirstSegmentSecondPointCoordX("0");
+        viewModel.setFirstSegmentSecondPointCoordY("0");
+        viewModel.setSecondSegmentFirstPointCoordX("3");
+        viewModel.setSecondSegmentFirstPointCoordY("4");
+        viewModel.setSecondSegmentSecondPointCoordX("1");
+        viewModel.setSecondSegmentSecondPointCoordY("0");
+
+        viewModel.checkIntersection();
+
+        List<String> logList = viewModel.getLogList();
+        String message = getCheckIntersectionLogMessage();
+
+        assertEquals(logList.get(0), message);
     }
 
     @Test
