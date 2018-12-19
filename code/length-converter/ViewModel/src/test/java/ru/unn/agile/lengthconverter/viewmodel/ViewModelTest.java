@@ -92,7 +92,7 @@ public class ViewModelTest {
     }
 
     @Test
-    public void setStatusNotReadyWithEmptyString() {
+    public void notChangingStatusFromWaitingAfterConvertWithEmptyString() {
         viewModel.convertFromProperty().set("");
 
         viewModel.convert();
@@ -100,7 +100,7 @@ public class ViewModelTest {
         assertEquals(Status.WAITING.toString(), viewModel.getStatus());
     }
     @Test
-    public void getExceptionFromConvert() {
+    public void checkConvertWithNegativeValue() {
         viewModel.convertFromProperty().set("-100.0");
 
         viewModel.convert();

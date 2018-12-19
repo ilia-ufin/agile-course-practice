@@ -66,15 +66,15 @@ public class ViewModel {
     }
 
     public void checkInputValues() {
-        if (getConvertFrom().isEmpty()) {
-            status.set(Status.WAITING.toString());
-        } else {
+        if (!getConvertFrom().isEmpty()) {
             try {
                 Double.parseDouble(getConvertFrom());
                 status.set(Status.READY.toString());
             } catch (NumberFormatException e) {
                 status.set(Status.INCORRECT_FORMAT.toString());
             }
+        } else {
+            status.set(Status.WAITING.toString());
         }
     }
 
@@ -86,7 +86,6 @@ public class ViewModel {
         try {
             double valueToConvert = Double.parseDouble(getConvertFrom());
             double result = LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
-
             convertTo.set(String.valueOf(result));
             status.set(Status.SUCCESS.toString());
         } catch (LengthConverterExceptions e) {
