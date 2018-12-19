@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 
 import ru.unn.agile.MyAbstractSet.model.MyAbstractSet;
 
+import java.util.List;
+
 public class ViewModel {
     private final StringProperty firstSetTextArea = new SimpleStringProperty();
     private final StringProperty secondSetTextArea = new SimpleStringProperty();
@@ -17,13 +19,17 @@ public class ViewModel {
     private final ObjectProperty<ObservableList<Operation>> operations =
             new SimpleObjectProperty<>(FXCollections.observableArrayList(Operation.values()));
     private final ObjectProperty<Operation> operation = new SimpleObjectProperty<>();
-    private final ValueChangeListener valueChangeListener = new ValueChangeListener();
     private static final String WHITESPACE_PATTERN = "\\s+";
     private static final String VALID_INPUT_PATTERN = "^-?[a-z A-Z0-9,]+";
     private static final String LETTERS_PATTERN = "[a-zA-Z]{2,}";
+    private ILogger logger;
+    private final ListProperty<String> logList = new SimpleListProperty<>();
 
-
-    public ViewModel() {
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
         firstSetTextArea.setValue("");
         secondSetTextArea.setValue("");
         operation.setValue(Operation.UNITE);
@@ -31,8 +37,13 @@ public class ViewModel {
         status.setValue(Status.WAITING.toString());
         executeButtonDisabled.setValue(true);
 
-        firstSetTextArea.addListener(valueChangeListener);
-        secondSetTextArea.addListener(valueChangeListener);
+        StringValueChangeListener stringValueChangeListener = new StringValueChangeListener();
+        firstSetTextArea.addListener(stringValueChangeListener);
+        secondSetTextArea.addListener(stringValueChangeListener);
+
+        OperationValueChangeListener operationValueChangeListener =
+                new OperationValueChangeListener();
+        operation.addListener(operationValueChangeListener);
     }
 
     public StringProperty firstSetTextAreaProperty() {
@@ -58,11 +69,27 @@ public class ViewModel {
     public ObjectProperty<ObservableList<Operation>> operationsProperty() {
         return operations;
     }
+
     public ObjectProperty<Operation> operationProperty() {
         return operation;
     }
 
+    public final List<String> getLog() {
+        return logger.getLog();
+    }
+    public final ListProperty<String> logProperty() {
+        return logList;
+    }
+
+    private void updateLog() {
+        logList.set(FXCollections.observableArrayList(logger.getLog()));
+    }
+
     public void execute() {
+        if (executeButtonDisabled.get()) {
+            return;
+        }
+
         Object[] firstSet = firstSetTextArea.get().replaceAll(WHITESPACE_PATTERN, "").split(",");
         Object[] secondSet = secondSetTextArea.get().replaceAll(WHITESPACE_PATTERN, "").split(",");
 
@@ -72,6 +99,11 @@ public class ViewModel {
         MyAbstractSet res = operation.get().apply(set1, set2);
         status.set(Status.SUCCESS.toString());
         resultTextArea.setValue(res.toString());
+
+        String message = String.format(LogMessages.EXECUTE_PRESSED, firstSetTextArea.get(),
+                secondSetTextArea.get(), operation.get());
+        logger.log(message);
+        updateLog();
     }
 
     private boolean checkValidInput(final String input) {
@@ -95,12 +127,29 @@ public class ViewModel {
         return getInputStatus() != Status.READY;
     }
 
-    private class ValueChangeListener implements ChangeListener<String> {
+    private class StringValueChangeListener implements ChangeListener<String> {
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
             status.set(getInputStatus().toString());
             executeButtonDisabled.set(canNotExecuteOperation());
+            if (status.get().equals(Status.READY.toString())) {
+                String message = String.format(LogMessages.EDITING_FINISHED, firstSetTextArea.get(),
+                        secondSetTextArea.get());
+                logger.log(message);
+                updateLog();
+            }
+        }
+    }
+
+    private class OperationValueChangeListener implements ChangeListener<Operation> {
+        @Override
+        public void changed(final ObservableValue<? extends Operation> observableValue,
+                            final Operation oldValue, final Operation newValue) {
+            status.set(getInputStatus().toString());
+            executeButtonDisabled.set(canNotExecuteOperation());
+            logger.log(LogMessages.OPERATION_CHANGED + operation.get().toString());
+            updateLog();
         }
     }
 
@@ -143,4 +192,13 @@ enum Status {
     public String toString() {
         return name;
     }
+}
+
+final class LogMessages {
+    public static final String EXECUTE_PRESSED = "Execute. SetA : { %s } ; SetB : { %s }. "
+            + "Operation : %s .";
+    public static final String OPERATION_CHANGED = "Operation was changed to ";
+    public static final String EDITING_FINISHED = "Updated input. SetA : { %s }; SetB : { %s }";
+
+    private LogMessages() { }
 }
