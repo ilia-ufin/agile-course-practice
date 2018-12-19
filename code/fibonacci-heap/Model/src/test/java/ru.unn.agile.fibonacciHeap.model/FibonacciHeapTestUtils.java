@@ -20,12 +20,12 @@ public class FibonacciHeapTestUtils {
                 heap = new FibonacciHeap();
             });
 
-            describe("By default. Create instance", () -> {
-                it("with length = 0", () -> {
+            describe("By default:", () -> {
+                it("Create instance with length = 0", () -> {
                     assertEquals(heap.getRootAmount(), 0, delta);
                 });
 
-                it("with null rootNode", () -> {
+                it("Create instance with null rootNode", () -> {
                    assertNull(heap.getRootNode());
                 });
             });
