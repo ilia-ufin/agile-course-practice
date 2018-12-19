@@ -100,7 +100,6 @@ public class ViewModelWithLoggerTest extends DepositCalculatorViewModelTests {
         assertTrue(logMsg.matches(".*" + LogMessages.ACCRUED_INTEREST_WAS_CHANGED + ".*"));
     }
 
-
     @Test
     public void canPutSeveralLogMessages() {
         viewModel.checkCountFields();

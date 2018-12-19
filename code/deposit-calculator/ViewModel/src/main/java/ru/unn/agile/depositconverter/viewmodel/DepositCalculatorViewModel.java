@@ -120,6 +120,7 @@ public class DepositCalculatorViewModel {
     private double round(final double roundedNum) {
         return Math.round(roundedNum * HUNDRED) / HUNDRED;
     }
+
     public void checkCountFields() {
         status = Status.READY;
         isCalculateButtonEnabled = isDepositAmountCorrect()
@@ -170,6 +171,7 @@ public class DepositCalculatorViewModel {
         }
         return true;
     }
+
     public boolean isInterestRate() {
         if ("".equals(interestRate)) {
             isCalculateButtonEnabled = false;
@@ -286,5 +288,4 @@ public class DepositCalculatorViewModel {
     public String getIncomeViewModel() {
         return income;
     }
-
 }

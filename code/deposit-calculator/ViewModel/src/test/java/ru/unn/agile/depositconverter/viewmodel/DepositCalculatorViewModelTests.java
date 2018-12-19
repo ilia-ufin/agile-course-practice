@@ -41,17 +41,18 @@ public class DepositCalculatorViewModelTests {
         viewModel.setFrequencyOfCapitalization(FREQUENCY_OF_CAPITALIZATION_EXAMPLE);
         setFillValues();
     }
+
     @After
     public void afterTestsDepositCalculator() {
         viewModel = null;
 
     }
 
-
     public void setViewModel(final DepositCalculatorViewModel inViewModel) {
         this.viewModel = inViewModel;
         setFillValues();
     }
+
     public void setFillValues() {
         viewModel.setDepositAmount(DEPOSIT_AMOUNT_EXAMPLE);
         viewModel.setTermPlacement(TERM_PLACEMENT_EXAMPLE);
@@ -74,7 +75,6 @@ public class DepositCalculatorViewModelTests {
 
         assertEquals(Status.WAITING, viewModel.getStatus());
         assertEquals(false, viewModel.isCalculateButtonEnabled());
-
     }
 
     @Test
@@ -101,10 +101,10 @@ public class DepositCalculatorViewModelTests {
         assertEquals(AccruedInterest.addToDeposit, viewModel.getAccruedInterest());
         assertEquals(FrequencyOfCapitalization.onceMonth, viewModel.getFrequencyOfCapitalization());
     }
+
     @Test
     public void checkStatusWhenReadyCalculate() {
         viewModel.checkCountFields();
-
         assertEquals(Status.READY, viewModel.getStatus());
     }
 

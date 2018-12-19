@@ -78,12 +78,10 @@ public class FileLoggerTests {
         List<String> log = fileLogger.getLog();
     }
 
-
     @Test(expected = IllegalArgumentException.class)
         public void canNotWriteLogForEmptyFileName() {
             String testPath = "";
             FileLogger fileLogger = new FileLogger(testPath);
-
             String logString = "test";
             fileLogger.log(logString);
         }
