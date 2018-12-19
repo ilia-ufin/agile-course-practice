@@ -92,6 +92,22 @@ public class FileLoggerViewModelTest {
                 .contains(LogMessages.SOMETHING_WENT_WRONG.toString()));
     }
 
+    @Test
+    public void loggingOfCalculationWentWrong() throws IOException {
+        ViewModel viewModel = new ViewModel();
+        viewModel.setLogger(new FileLogger(""));
+
+        viewModel.currentShapeProperty().set(Shape.REGULAR_POLYGON_PRISM);
+        viewModel.firstArgumentValueProperty().set("6");
+        viewModel.secondArgumentValueProperty().set("1");
+        viewModel.thirdArgumentValueProperty().set("2");
+
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.SOMETHING_WENT_WRONG.toString()));
+    }
+
     private String getWholeLog(final BufferedReader br) throws IOException {
         StringBuilder wholeLog = new StringBuilder();
         String currentLine = br.readLine();
