@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':numeral-systems-calculator-Infrastructure')
+
+    testCompile project(':numeral-systems-calculator-Infrastructure').sourceSets.test.output
+}

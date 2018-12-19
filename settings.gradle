@@ -367,6 +367,8 @@ include "code/numeral-systems-calculator/ViewModel"
 project(":code/numeral-systems-calculator/ViewModel").name = "numeral-systems-calculator-ViewModel"
 include "code/numeral-systems-calculator/View"
 project(":code/numeral-systems-calculator/View").name = "numeral-systems-calculator-View"
+include "code/numeral-systems-calculator/Infrastructure"
+project(":code/numeral-systems-calculator/Infrastructure").name = "numeral-systems-calculator-Infrastructure"
 
 // Krutoberezskaya Irina, numbers-in-words
 include "code/numbers-in-words/Model"

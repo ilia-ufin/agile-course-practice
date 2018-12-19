@@ -1,5 +1,6 @@
 package ru.unn.agile.calculator.viewmodel;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
@@ -26,8 +27,18 @@ public class ViewModel {
                     .filter(s -> !NumeralSystem.UNKNOWN.equals(s))
                     .collect(Collectors.toList()));
 
-    public ViewModel() {
+    private ObjectProperty<ILogger> logger;
 
+    ViewModel() {
+        init();
+    }
+
+    public ViewModel(ILogger logger) {
+        this.logger.set(logger);
+        init();
+    }
+
+    private void init() {
         outputNumberSystem.setValue(NumeralSystem.BINARY);
         result.set("");
         userMessage.set(UserMessages.WAIT_FOR_INPUT.toString());
@@ -53,7 +64,6 @@ public class ViewModel {
             final ValueChangeListener listener = new ValueChangeListener();
             field.addListener(listener);
         }
-
     }
 
     public String getResult() {
@@ -110,6 +120,11 @@ public class ViewModel {
 
     public StringProperty userMessageProperty() {
         return userMessage;
+    }
+
+    public String getLog() {
+        Bindings.selectString(logger, "log")
+        return logger.getLog();
     }
 
 

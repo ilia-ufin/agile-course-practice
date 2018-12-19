@@ -3,8 +3,8 @@ package ru.unn.agile.calculator.viewmodel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.unn.agile.calculator.model.RadixCalculator;
 import ru.unn.agile.calculator.model.NumeralSystem;
+import ru.unn.agile.calculator.model.RadixCalculator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +14,7 @@ public class ViewModelTests {
 
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        viewModel = new ViewModel(new DummyLogger());
     }
 
     @After
@@ -129,5 +129,8 @@ public class ViewModelTests {
         assertEquals(UserMessages.SUCCESS.toString(), viewModel.getUserMessage());
     }
 
-
+    @Test
+    public void testLogIsEmptyInitially() {
+        viewModel.getLog()
+    }
 }
