@@ -36,7 +36,6 @@ public class IntersectionChecker {
 
     @FXML
     void initialize() {
-
         viewModel.setLogger(new TxtLogger("./SegmentsChecker.log"));
         firstSegmentFirstPointCoordX.textProperty().bindBidirectional(
                 viewModel.firstSegmentFirstPointCoordXProperty());

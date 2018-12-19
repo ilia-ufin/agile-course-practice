@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
@@ -26,13 +25,6 @@ public class TxtLoggerTest {
     @After
     public void tearDown() {
         txtLogger = null;
-    }
-
-    @Test
-    public void canCreateLogFile() {
-        File f = new File(FILE_NAME);
-
-        assertTrue(f.exists());
     }
 
     @Test
