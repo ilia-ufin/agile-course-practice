@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewModel {
-    public static final String EDITING_FINISHED = "Updated input. ";
+    public static final String EDITING_FINISHED = "Updated input."
+            + " Input arguments are: %s, %s, %s, %s, %s, %s ";
     private StringProperty aX = new SimpleStringProperty();
     private StringProperty bX = new SimpleStringProperty();
     private StringProperty cX = new SimpleStringProperty();
@@ -274,12 +275,9 @@ public class ViewModel {
 
         for (ValueCachingChangeListener listener : valueChangedListeners) {
             if (listener.isChanged()) {
-                StringBuilder message = new StringBuilder(EDITING_FINISHED);
-                String messageString = String.format("Input arguments are: %s, %s, %s, %s, %s, %s ",
+                String messageString = String.format(EDITING_FINISHED,
                         aX.get(), aY.get(), bX.get(), bY.get(), cX.get(), cY.get());
-                message.append(messageString);
-                System.out.println(messageString);
-                logger.log(message.toString());
+                logger.log(messageString);
                 updateLogs();
                 listener.cache();
                 break;
