@@ -84,7 +84,8 @@ public class ViewModel {
         if (checkReady()) {
             try {
                 double valueToConvert = Double.parseDouble(getConvertFrom());
-                double result = LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
+                double result =
+                        LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
                 convertTo.set(String.valueOf(result));
                 status.set(Status.SUCCESS.toString());
             } catch (LengthConverterExceptions e) {
