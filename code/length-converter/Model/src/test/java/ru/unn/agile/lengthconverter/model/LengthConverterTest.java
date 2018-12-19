@@ -54,7 +54,7 @@ public class LengthConverterTest {
     @Test
     public void canConvertMillimetersToFeet() {
         double convertedValue =
-                LengthConverte.convert(LengthUnit.MILLIMETERS, 5, LengthUnit.FEET);
+                LengthConverter.convert(LengthUnit.MILLIMETERS, 5, LengthUnit.FEET);
         assertEquals(0.0164042, convertedValue, EPSILON);
     }
 
