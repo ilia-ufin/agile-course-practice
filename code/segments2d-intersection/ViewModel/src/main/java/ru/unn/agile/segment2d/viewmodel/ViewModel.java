@@ -253,8 +253,8 @@ public class ViewModel {
         return logger.getLog();
     }
 
-    private void writeToLog(final String s) {
-        logger.log(s);
+    private void writeToLog(final String msg) {
+        logger.log(msg);
         StringBuilder logMsg = new StringBuilder();
 
         for (String line : logger.getLog()) {

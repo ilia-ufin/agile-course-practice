@@ -62,9 +62,9 @@ public class ViewModelTest {
 
     @Test
     public void canGetLog() {
-        String log = viewModel.getLog();
+        String fullLog = viewModel.getLog();
 
-        assertTrue(log.isEmpty());
+        assertTrue(fullLog.isEmpty());
     }
 
     @Test

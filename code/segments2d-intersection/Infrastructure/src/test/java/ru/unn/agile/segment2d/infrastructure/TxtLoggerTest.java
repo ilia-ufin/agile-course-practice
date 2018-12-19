@@ -50,15 +50,15 @@ public class TxtLoggerTest {
 
     @Test
     public void canWriteSeveralMessages() {
-        String[] messages = {TEST_MESSAGE + "0", TEST_MESSAGE + "1"};
+        String[] messages = {TEST_MESSAGE + "0", TEST_MESSAGE + "1", TEST_MESSAGE + "2"};
 
-        for (String message : messages) {
-            txtLogger.log(message);
+        for (String msg : messages) {
+            txtLogger.log(msg);
         }
 
-        List<String> log = txtLogger.getLog();
-        for (int i = 0; i < log.size(); i++) {
-            assertTrue(log.get(i).matches(DT_LOG_LINE + messages[i]));
+        List<String> fullLog = txtLogger.getLog();
+        for (int i = 0; i < fullLog.size(); i++) {
+            assertTrue(fullLog.get(i).matches(DT_LOG_LINE + messages[i]));
         }
     }
 
