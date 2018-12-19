@@ -81,4 +81,13 @@ public class ViewModelTest {
 
         assertEquals(Status.INCORRECT_FORMAT.toString(), viewModel.getStatus());
     }
+
+    @Test
+    public void setStatusWaitingWithEmptyString() {
+        viewModel.convertFromProperty().set("");
+
+        viewModel.checkInputValues();
+
+        assertEquals(Status.WAITING.toString(), viewModel.getStatus());
+    }
 }
