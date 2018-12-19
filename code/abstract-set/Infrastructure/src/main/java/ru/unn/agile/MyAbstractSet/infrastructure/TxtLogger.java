@@ -37,9 +37,11 @@ public class TxtLogger implements ILogger {
     public void log(final String s) {
         String message = dateTimeNow() + " > " + s;
         try {
-            writer.write(message);
-            writer.newLine();
-            writer.flush();
+            if (writer != null) {
+                writer.write(message);
+                writer.newLine();
+                writer.flush();
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

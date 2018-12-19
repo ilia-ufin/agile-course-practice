@@ -61,4 +61,19 @@ public class TxtLoggerTest {
         String message = txtLogger.getLog().get(0);
         assertTrue(message.matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*"));
     }
+
+    @Test(expected = Test.None.class)
+    public void canWriteInLogWithEmptyFileName() {
+        TxtLogger logger = new TxtLogger("");
+
+        logger.log(TEST_MESSAGE);
+        assertEquals(0, logger.getLog().size());
+    }
+
+    @Test(expected = Test.None.class)
+    public void canReadFromLogWithEmptyFileName() {
+        TxtLogger logger = new TxtLogger("");
+
+        assertEquals(0, logger.getLog().size());
+    }
 }
