@@ -12,21 +12,20 @@ public class FileLogger implements ILogger {
     private String fileName;
 
     public FileLogger(final String fileName) {
-        try {
-            writer = new BufferedWriter(new FileWriter(fileName));
-            this.fileName = fileName;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.fileName = fileName;
+
     }
 
     @Override
     public void log(final String s) {
         try {
+            if (writer == null) {
+                writer = new BufferedWriter(new FileWriter(fileName));
+            }
             writer.write(s);
             writer.newLine();
             writer.flush();
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("Something is wrong with file", e);
         }
     }
@@ -44,8 +43,16 @@ public class FileLogger implements ILogger {
             }
             return log;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new IllegalArgumentException("Something is wrong with file", e);
         }
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(final String fileName) {
+        this.fileName = fileName;
     }
 }

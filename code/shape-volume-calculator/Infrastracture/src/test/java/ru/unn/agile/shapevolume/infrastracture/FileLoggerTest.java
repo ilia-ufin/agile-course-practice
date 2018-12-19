@@ -1,9 +1,13 @@
 package ru.unn.agile.shapevolume.infrastracture;
 
 import org.junit.Test;
-import ru.unn.agile.shapevolume.viewmodel.ILogger;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -12,13 +16,19 @@ import static org.junit.Assert.assertEquals;
 public class FileLoggerTest {
     @Test(expected = Test.None.class)
     public void canCreateFileLogger() {
-        ILogger f = new FileLogger("test file");
+        FileLogger f = new FileLogger("test file");
+    }
+
+    @Test
+    public void canGetFileName() {
+        FileLogger f = new FileLogger("test file");
+        assertEquals(f.getFileName(), "test file");
     }
 
     @Test
     public void canCreateFileLoggerAndLogSomething() throws IOException {
         String testPath = "test file";
-        ILogger f = new FileLogger(testPath);
+        FileLogger f = new FileLogger(testPath);
 
         String logString = "test";
         f.log(logString);
@@ -32,7 +42,7 @@ public class FileLoggerTest {
     @Test
     public void canGetLog() {
         String testPath = "test file";
-        ILogger f = new FileLogger(testPath);
+        FileLogger f = new FileLogger(testPath);
 
         String logString = "test";
         f.log(logString);
@@ -41,19 +51,31 @@ public class FileLoggerTest {
         assertEquals(logString, log.get(0));
     }
 
+
     @Test(expected = IllegalArgumentException.class)
-    public void canNotGetLogForEmptyFileName() {
-        String testPath = "";
-        ILogger f = new FileLogger(testPath);
+    public void canNotGetLogFromFolder() throws IOException {
+        String testPath = "test";
+        Files.createDirectories(Paths.get(testPath));
+        FileLogger f = new FileLogger(testPath);
         List<String> log = f.getLog();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void canNotWriteLogForEmptyFileName() {
-        String testPath = "";
-        ILogger f = new FileLogger(testPath);
-
-        String logString = "test";
-        f.log(logString);
+    public void canNotReadLogFromWrongFile() throws IOException {
+        String testPath = "test";
+        FileLogger f = new FileLogger(testPath);
+        f.log("test");
+        f.setFileName("");
+        List<String> log = f.getLog();
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canNotWriteLogInWrongFile() throws IOException {
+        String testPath = "test";
+        FileLogger f = new FileLogger(testPath);
+        f.log("test");
+        f.setFileName("");
+        f.log("test");
+    }
+
 }
