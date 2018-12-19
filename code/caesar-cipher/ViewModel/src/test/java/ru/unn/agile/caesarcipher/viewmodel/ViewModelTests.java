@@ -189,7 +189,7 @@ public abstract class ViewModelTests {
 
         assertEquals("You can enter up to 12 digits", viewModel.getStatus());
     }
-    
+
     @Test
     public void canDisplaySuccessfullyStatus() {
         viewModel.setTextBoxInput("ABC");
