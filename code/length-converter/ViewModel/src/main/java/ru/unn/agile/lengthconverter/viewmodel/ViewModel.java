@@ -64,31 +64,32 @@ public class ViewModel {
         return status.get();
     }
 
-    public void checkInputValues() {
+    public boolean checkReady() {
         if (!getConvertFrom().isEmpty()) {
             try {
                 Double.parseDouble(getConvertFrom());
                 status.set(Status.READY.toString());
+                return true;
             } catch (NumberFormatException e) {
                 status.set(Status.INCORRECT_FORMAT.toString());
+                return false;
             }
         } else {
             status.set(Status.WAITING.toString());
+            return false;
         }
     }
 
     public void convert() {
-        checkInputValues();
-        if (status.get() != Status.READY.toString()) {
-            return;
-        }
-        try {
-            double valueToConvert = Double.parseDouble(getConvertFrom());
-            double result = LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
-            convertTo.set(String.valueOf(result));
-            status.set(Status.SUCCESS.toString());
-        } catch (LengthConverterExceptions e) {
-            status.set(Status.ERROR.toString());
+        if (checkReady()) {
+            try {
+                double valueToConvert = Double.parseDouble(getConvertFrom());
+                double result = LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
+                convertTo.set(String.valueOf(result));
+                status.set(Status.SUCCESS.toString());
+            } catch (LengthConverterExceptions e) {
+                status.set(Status.ERROR.toString());
+            }
         }
     }
 

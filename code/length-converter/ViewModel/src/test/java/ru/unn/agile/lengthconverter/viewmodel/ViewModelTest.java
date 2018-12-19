@@ -58,7 +58,7 @@ public class ViewModelTest {
     public void canAddValueToConvert() {
         viewModel.convertFromProperty().set("0.0");
 
-        viewModel.checkInputValues();
+        viewModel.checkReady();
 
         assertEquals("0.0", viewModel.convertFromProperty().get());
     }
@@ -76,7 +76,7 @@ public class ViewModelTest {
     public void canProcessBadInputFormat() {
         viewModel.convertFromProperty().set("ghf");
 
-        viewModel.checkInputValues();
+        viewModel.checkReady();
 
         assertEquals(Status.INCORRECT_FORMAT.toString(), viewModel.getStatus());
     }
@@ -85,7 +85,7 @@ public class ViewModelTest {
     public void setStatusWaitingWithEmptyString() {
         viewModel.convertFromProperty().set("");
 
-        viewModel.checkInputValues();
+        viewModel.checkReady();
 
         assertEquals(Status.WAITING.toString(), viewModel.getStatus());
     }
