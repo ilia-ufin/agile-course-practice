@@ -12,15 +12,12 @@ public class FileLogger implements ILogger {
     private String fileName;
 
     public FileLogger(final String fileName) {
-
         try {
             writer = new BufferedWriter(new FileWriter(fileName));
             this.fileName = fileName;
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -32,7 +29,6 @@ public class FileLogger implements ILogger {
         } catch (Exception e) {
             throw new IllegalArgumentException("Something is wrong with file", e);
         }
-
     }
 
     @Override

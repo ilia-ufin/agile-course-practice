@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public class FileLoggerTest {
-    @Test
+    @Test(expected = Test.None.class)
     public void canCreateFileLogger() {
         ILogger f = new FileLogger("test file");
     }
@@ -24,8 +24,9 @@ public class FileLoggerTest {
         f.log(logString);
 
         File file = new File(testPath);
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        assertEquals(logString, br.readLine());
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        assertEquals(logString, reader.readLine());
     }
 
     @Test
@@ -39,7 +40,6 @@ public class FileLoggerTest {
 
         assertEquals(logString, log.get(0));
     }
-
 
     @Test(expected = IllegalArgumentException.class)
     public void canNotGetLogForEmptyFileName() {
@@ -56,6 +56,4 @@ public class FileLoggerTest {
         String logString = "test";
         f.log(logString);
     }
-
-
 }

@@ -66,6 +66,32 @@ public class FileLoggerViewModelTest {
                 && logString.contains(viewModel.getResult()));
     }
 
+    @Test
+    public void problemWithFileLoggerIsLogged() throws IOException {
+        ViewModel viewModel = new ViewModel();
+        viewModel.setLogger(new FileLogger(""));
+
+        viewModel.currentShapeProperty().set(Shape.REGULAR_POLYGON_PRISM);
+
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.SOMETHING_WENT_WRONG.toString()));
+    }
+
+    @Test
+    public void problemWithFileLoggerWhenSetParamsIsLogged() throws IOException {
+        ViewModel viewModel = new ViewModel();
+        viewModel.setLogger(new FileLogger(""));
+
+        viewModel.firstArgumentValueProperty().set("6");
+
+        assertTrue(viewModel
+                .logsProperty()
+                .get()
+                .contains(LogMessages.SOMETHING_WENT_WRONG.toString()));
+    }
+
     private String getWholeLog(final BufferedReader br) throws IOException {
         StringBuilder wholeLog = new StringBuilder();
         String currentLine = br.readLine();
@@ -75,4 +101,5 @@ public class FileLoggerViewModelTest {
         }
         return wholeLog.toString();
     }
+
 }

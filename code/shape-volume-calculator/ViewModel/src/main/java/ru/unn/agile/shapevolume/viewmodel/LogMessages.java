@@ -5,7 +5,9 @@ public enum LogMessages {
     SECOND_ARGUMENT_INPUTED("Второй аргумент введен, значение - "),
     THIRD_ARGUMENT_INPUTED("Третий аргумент введен, значение - "),
     SHAPE_CHANGED("Фигура была изменена на "),
-    CALCULATION_PERFORMED("Вычисления выполнены, результат - ");
+    CALCULATION_PERFORMED("Вычисления выполнены, результат - "),
+    SOMETHING_WENT_WRONG("Во время записи логов"
+            + " произошла неизвестная проблема");
 
 
     private final String name;

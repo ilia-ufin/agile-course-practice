@@ -75,13 +75,20 @@ public class ViewModel {
         firstArgumentValue.set(DEFAULT_VALUE);
         secondArgumentValue.set(DEFAULT_VALUE);
         thirdArgumentValue.set(DEFAULT_VALUE);
+        logs.set("");
 
         result.set(Status.WAITING.toString());
 
         currentShape.addListener((ObservableValue<? extends Shape> observable,
                                   Shape oldValue, Shape newValue) -> {
-            logger.log(LogMessages.SHAPE_CHANGED + " " + newValue.toString());
-            updateLogs();
+            try {
+                logger.log(LogMessages.SHAPE_CHANGED + " " + newValue.toString());
+                updateLogs();
+
+            } catch (Exception e) {
+                logs.set(LogMessages.SOMETHING_WENT_WRONG.toString().concat(logs.get()));
+            }
+
             if (!oldValue.equals(newValue)) {
                 updateArgumentsNames(newValue);
 
@@ -100,8 +107,13 @@ public class ViewModel {
         for (Map.Entry<String, StringProperty> argument : arguments.entrySet()) {
             argument.getValue().addListener((ObservableValue<? extends String> observable,
                                              String oldValue, String newValue) -> {
-                logger.log(argument.getKey() + " " + newValue);
-                updateLogs();
+                try {
+                    logger.log(argument.getKey() + " " + newValue);
+                    updateLogs();
+                } catch (Exception e) {
+                    logs.set(logs.get().concat(LogMessages.SOMETHING_WENT_WRONG.toString()));
+                }
+
                 if (!oldValue.equals(newValue)) {
                     calculate();
                 }
@@ -155,8 +167,13 @@ public class ViewModel {
             }
             if (volume != null) {
                 String formattedVolume = String.format(Locale.US, "%.3f", volume);
-                logger.log(LogMessages.CALCULATION_PERFORMED + " " + formattedVolume);
-                updateLogs();
+                try {
+                    logger.log(LogMessages.CALCULATION_PERFORMED + " " + formattedVolume);
+                    updateLogs();
+                } catch (Exception e) {
+                    logs.set(logs.get().concat(LogMessages.SOMETHING_WENT_WRONG.toString()));
+                }
+
                 result.set(formattedVolume);
             } else {
                 result.set(Status.INVALID_ARGUMENTS.toString());

@@ -27,7 +27,5 @@ public class VolumeCalculator {
         txtThirdArgument.textProperty().bindBidirectional(viewModel.thirdArgumentValueProperty());
         cbShapes.valueProperty().bindBidirectional(viewModel.currentShapeProperty());
         viewModel.setLogger(new FileLogger(FILE_NAME));
-
-
     }
 }
