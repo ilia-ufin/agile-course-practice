@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import ru.unn.agile.lengthconverter.model.LengthConverte;
+import ru.unn.agile.lengthconverter.model.LengthConverter;
 import ru.unn.agile.lengthconverter.model.LengthConverterExceptions;
 import ru.unn.agile.lengthconverter.model.LengthUnit;
 
@@ -81,7 +81,7 @@ public class ViewModel {
         }
         try {
             double valueToConvert = Double.parseDouble(convertFrom.get());
-            double result = LengthConverte.convert(unitFrom.get(), valueToConvert, unitTo.get());
+            double result = LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
 
             convertTo.set(String.valueOf(result));
             status.set(Status.SUCCESS.toString());
