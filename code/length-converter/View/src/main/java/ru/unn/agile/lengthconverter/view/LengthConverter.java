@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import ru.unn.agile.lengthconverter.model.LengthUnit;
 import ru.unn.agile.lengthconverter.viewmodel.ViewModel;
 
-public class LengthConverte {
+public class LengthConverter {
     @FXML
     private ViewModel viewModel;
 
