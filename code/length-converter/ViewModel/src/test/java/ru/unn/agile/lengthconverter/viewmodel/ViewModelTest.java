@@ -72,4 +72,13 @@ public class ViewModelTest {
 
         assertEquals("1.0", viewModel.convertToProperty().get());
     }
+
+    @Test
+    public void canProcessBadInputFormat() {
+        viewModel.convertFromProperty().set("a");
+
+        viewModel.checkInputValues();
+
+        assertEquals(Status.BAD_FORMAT.toString(), viewModel.getStatus());
+    }
 }
