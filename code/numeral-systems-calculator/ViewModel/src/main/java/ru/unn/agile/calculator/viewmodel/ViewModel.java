@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 
 
 public class ViewModel {
+    static final String LOG_CALCULATED = "Calculation success";
+    static final String LOG_VALUES_CHANGED = "Values changed: a = %s, b = %s";
+
     private final ObjectProperty<NumeralSystem> outputNumberSystem = new SimpleObjectProperty<>();
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty userMessage = new SimpleStringProperty();
@@ -104,7 +107,7 @@ public class ViewModel {
         result.set(composedResult);
         userMessage.set(UserMessages.SUCCESS.toString());
 
-        logger.log(LogMessages.CALCULATED);
+        logger.log(LOG_CALCULATED);
         updateLog();
     }
 
@@ -146,7 +149,7 @@ public class ViewModel {
                             final String oldValue, final String newValue) {
             userMessage.set(checkInput().toString());
 
-            logger.log(String.format(LogMessages.VALUES_CHANGED, number1.get(), number2.get()));
+            logger.log(String.format(LOG_VALUES_CHANGED, number1.get(), number2.get()));
             updateLog();
         }
     }

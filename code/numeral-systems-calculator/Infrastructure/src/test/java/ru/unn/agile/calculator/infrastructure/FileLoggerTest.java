@@ -8,11 +8,13 @@ import static org.junit.Assert.assertTrue;
 public class FileLoggerTest {
     private static final String LOG_FILE_NAME = "./numeral-systems-calculator-FileLoggerTest.log";
 
-    @Test(expected = IllegalStateException.class)
-    public void whenFileNameInvalidThenThrowException() {
+    @Test()
+    public void whenFileNameInvalidThenDoNothing() {
         FileLogger fileLogger = new FileLogger("");
 
         fileLogger.log("test");
+
+        assertEquals("", fileLogger.getLog());
     }
 
     @Test()

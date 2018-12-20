@@ -142,7 +142,7 @@ public class ViewModelTests {
 
     @Test
     public void testLogIsEmptyInitially() {
-        assertTrue(viewModel.logProperty().get().isEmpty());
+        assertTrue(viewModel.getLog().isEmpty());
     }
 
     @Test
@@ -154,7 +154,7 @@ public class ViewModelTests {
         viewModel.number2Property().setValue(b);
 
         String log = viewModel.logProperty().get();
-        assertTrue(log.contains(String.format(LogMessages.VALUES_CHANGED, a, b)));
+        assertTrue(log.contains(String.format(ViewModel.LOG_VALUES_CHANGED, a, b)));
     }
 
     @Test
@@ -166,6 +166,6 @@ public class ViewModelTests {
         viewModel.number2Property().setValue(b);
         viewModel.calculate();
 
-        assertTrue(viewModel.logProperty().get().contains(LogMessages.CALCULATED));
+        assertTrue(viewModel.logProperty().get().contains(ViewModel.LOG_CALCULATED));
     }
 }

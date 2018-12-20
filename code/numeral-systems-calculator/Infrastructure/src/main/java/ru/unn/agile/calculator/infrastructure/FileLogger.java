@@ -18,36 +18,32 @@ public class FileLogger implements ILogger {
 
     public FileLogger(final String fileName) {
         this.fileName = fileName;
+
+        try {
+            fileWriter = new BufferedWriter(new FileWriter(fileName));
+            fileWriter.flush();
+        } catch (IOException e) {
+            System.out.println(String.format(ERROR_CAN_NOT_OPEN_FILE, fileName));
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void log(final String message) {
-        openFileIfNeeded();
-
         try {
-            fileWriter.write(dateFormat.format(new Date()) + " " + message);
-            fileWriter.newLine();
-            fileWriter.flush();
+            if (fileWriter != null) {
+                fileWriter.write(dateFormat.format(new Date()) + " " + message);
+                fileWriter.newLine();
+                fileWriter.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void openFileIfNeeded() {
-        try {
-            if (fileWriter == null) {
-                fileWriter = new BufferedWriter(new FileWriter(fileName));
-                fileWriter.flush();
-            }
-        } catch (IOException e) {
-            throw new IllegalStateException(String.format(ERROR_CAN_NOT_OPEN_FILE, fileName), e);
-        }
-    }
 
     @Override
     public String getLog() {
-        openFileIfNeeded();
-
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             return reader.lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {
