@@ -87,10 +87,10 @@ public class ViewModelTest {
 
         viewModel.add();
 
-        String actualMessage = viewModel.getListLog().get(2);
-        String expectedMessage = String.format(LogMessage.OPERATION_PASSED,
+        String Msg = viewModel.getListLog().get(2);
+        String expectMsg = String.format(LogMessage.OPERATION_PASSED,
                 viewModel.getFirstPolynomialStr(), viewModel.getSecondPolynomialStr(), viewModel.getResultStr());
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(Msg.contains(expectMsg));
         assertEquals("-4.0x^2 + 6.0x - 8.0", viewModel.getResultStr());
     }
 
@@ -101,10 +101,10 @@ public class ViewModelTest {
 
         viewModel.multiply();
 
-        String actualMessage = viewModel.getListLog().get(2);
-        String expectedMessage = String.format(LogMessage.OPERATION_PASSED,
+        String actualMsg = viewModel.getListLog().get(2);
+        String expectedMsg = String.format(LogMessage.OPERATION_PASSED,
                 viewModel.getFirstPolynomialStr(), viewModel.getSecondPolynomialStr(), viewModel.getResultStr());
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMsg.contains(expectedMsg));
         assertEquals("5.0x^3 - 10.0x^2 + 15.0x - 20.0", viewModel.getResultStr());
     }
 
