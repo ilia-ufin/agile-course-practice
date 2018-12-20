@@ -3,15 +3,11 @@ package ru.unn.agile.salarycalculator.infrastructure;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class LoggerTests {
     private static final String FILENAME = "./LoggerTests-lab3.log";
@@ -25,15 +21,6 @@ public class LoggerTests {
     @Test
     public void canCreateLoggerClassWithFileName() {
         assertNotNull(myLogger);
-    }
-
-    @Test
-    public void canCreateLogFileOnDisk() {
-        try {
-            new BufferedReader(new FileReader(FILENAME));
-        } catch (FileNotFoundException e) {
-            fail("File with name= " + FILENAME + " not found");
-        }
     }
 
     @Test
@@ -67,6 +54,27 @@ public class LoggerTests {
         myLogger.log(myTestMessage);
 
         String message = myLogger.getLog().get(0);
+        assertTrue(message.contains(myLogger.currentTime()));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void doesLogContainsDateAndTimeAtPositionMoreThenSizeLog() {
+        String myTestMessage = "My Test Message";
+
+        myLogger.log(myTestMessage);
+
+        String message = myLogger.getLog().get(5);
+    }
+
+    @Test
+    public void doesLogContainsDateAndTimeAt5Position() {
+        String myTestMessage = "My Test Message";
+
+       for (int stringLog = 0; stringLog < 6; stringLog++) {
+           myLogger.log(myTestMessage);
+       }
+       String message = myLogger.getLog().get(5);
+
         assertTrue(message.contains(myLogger.currentTime()));
     }
 
