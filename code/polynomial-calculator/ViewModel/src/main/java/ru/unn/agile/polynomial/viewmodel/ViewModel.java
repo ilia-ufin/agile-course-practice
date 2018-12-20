@@ -92,7 +92,8 @@ public class ViewModel {
     public void add() {
         if (parseInput()) {
             setResultStr(p1.add(p2).toString());
-            addLog(String.format(LogMessage.OPERATION_PASSED + p1 +" + " + p2 + " = " + getResultStr()));
+            addLog(String.format(LogMessage.OPERATION_PASSED +
+                    p1 + " + " + p2 + " = " + getResultStr()));
         } else {
             return;
         }
@@ -101,7 +102,8 @@ public class ViewModel {
     public void subtract() {
         if (parseInput()) {
             setResultStr(p1.subtract(p2).toString());
-            addLog(String.format(LogMessage.OPERATION_PASSED + p1 + " - " + p2 + " = " + getResultStr()));
+            addLog(String.format(LogMessage.OPERATION_PASSED +
+                    p1 + " - " + p2 + " = " + getResultStr()));
         } else {
             return;
         }
@@ -110,7 +112,8 @@ public class ViewModel {
     public void multiply() {
         if (parseInput()) {
             setResultStr(p1.multiply(p2).toString());
-            addLog(String.format(LogMessage.OPERATION_PASSED + p1 + " * " + p2 + " = " + getResultStr()));
+            addLog(String.format(LogMessage.OPERATION_PASSED +
+                    p1 + " * " + p2 + " = " + getResultStr()));
         } else {
             return;
         }
