@@ -136,17 +136,17 @@ public class ViewModelTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testCanNotSetNullLogger() {
+    public void whenSetNullLoggerThenThrowException() {
         viewModel.setLogger(null);
     }
 
     @Test
-    public void testLogIsEmptyInitially() {
+    public void whenGetLogThenLogIsEmpty() {
         assertTrue(viewModel.getLog().isEmpty());
     }
 
     @Test
-    public void testLogValuesChange() {
+    public void whenSetNumbersThenLogContainsMessage() {
         String a = "b11";
         String b = "b10";
 
@@ -158,7 +158,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void testLogCalculation() {
+    public void whenSetNumbersAndCalculateThenLogContainsMessage() {
         String a = "b11";
         String b = "b10";
 
