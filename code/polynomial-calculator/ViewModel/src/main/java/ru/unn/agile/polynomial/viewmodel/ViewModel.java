@@ -137,4 +137,7 @@ public class ViewModel {
         }
         log.set(logMsg.toString());
     }
+    public String getLog() {
+        return log.get();
+    }
 }

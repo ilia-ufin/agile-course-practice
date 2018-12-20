@@ -1,6 +1,5 @@
 package ru.unn.agile.polynomial.infrastructure;
 
-
 import ru.unn.agile.polynomial.viewmodel.ViewModel;
 import ru.unn.agile.polynomial.viewmodel.ViewModelTest;
 

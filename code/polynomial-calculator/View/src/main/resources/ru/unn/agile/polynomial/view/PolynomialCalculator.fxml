@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import ru.unn.agile.polynomial.viewmodel.ViewModel?>
 
-<AnchorPane prefHeight="298.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.polynomial.view.PolynomialCalculator">
+<AnchorPane prefHeight="600.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.polynomial.view.PolynomialCalculator">
    <fx:define>
       <ViewModel fx:id="viewModel"/>
    </fx:define>
@@ -21,5 +21,6 @@
       <Label layoutX="342.0" layoutY="60.0" text="Форма записи полинома" />
       <Label layoutX="356.0" layoutY="85.0" text="-2.5x^2+3x +6.9" />
       <Label layoutX="28.0" layoutY="236.0" prefHeight="25.0" prefWidth="500.0" text="${viewModel.resultStr}" wrapText="true" />
+      <TextArea layoutX="28.0" layoutY="280.0" prefHeight="250.0" prefWidth="450.0" text="${viewModel.log}" />
    </children>
 </AnchorPane>
