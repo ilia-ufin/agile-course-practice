@@ -1,7 +1,7 @@
 package ru.unn.agile.calculator.viewmodel;
 
 public interface ILogger {
-    void log(final String message);
+    void log(String message);
 
     String getLog();
 }

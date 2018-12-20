@@ -61,7 +61,7 @@ public class ViewModel {
         }
     }
 
-    public void setLogger(ILogger logger) {
+    public void setLogger(final ILogger logger) {
         if (logger == null) {
             throw new IllegalArgumentException("Logger must be mot null");
         }
