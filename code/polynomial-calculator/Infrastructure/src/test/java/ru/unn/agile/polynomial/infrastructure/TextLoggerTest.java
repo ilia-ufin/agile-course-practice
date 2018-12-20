@@ -5,8 +5,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 
 public class TextLoggerTest {
@@ -46,6 +49,12 @@ public class TextLoggerTest {
 
         String logMessage = textLogger.getListLog().get(0);
         assertTrue(logMessage.matches(TEXT_1));
+    }
+    @Test
+    public void checkLogFileCreated() {
+        final File file = new File(FILE_NAME);
+        Assert.assertTrue(file.exists());
+        assertFalse(file.isDirectory());
     }
 
     }
