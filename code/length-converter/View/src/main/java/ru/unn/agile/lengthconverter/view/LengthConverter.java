@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import ru.unn.agile.lengthconverter.infrastructure.TxtLogger;
 import ru.unn.agile.lengthconverter.model.LengthUnit;
 import ru.unn.agile.lengthconverter.viewmodel.ViewModel;
 
@@ -27,6 +28,8 @@ public class LengthConverter {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./LengthConverter.log"));
+
         value.textProperty().bindBidirectional(viewModel.convertFromProperty());
 
         unitFrom.valueProperty().bindBidirectional(viewModel.unitPropertyFrom());
