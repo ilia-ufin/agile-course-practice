@@ -2,10 +2,7 @@ package ru.unn.agile.intersect.infrastructure;
 
 import ru.unn.agile.intersect.viewmodel.ILogger;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,8 +27,8 @@ public class Logger implements ILogger {
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(filename));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException exc) {
+            System.out.println(exc.getMessage());
         }
         this.logWriter = logWriter;
     }
@@ -39,11 +36,14 @@ public class Logger implements ILogger {
     @Override
     public void writeLog(final String s) {
         try {
+            if (logWriter == null) {
+                return;
+            }
             logWriter.write(now() + ": " + s);
             logWriter.newLine();
             logWriter.flush();
-        } catch (Exception e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+        } catch (IOException exc) {
+            System.out.println(exc.getMessage());
         }
     }
 
@@ -59,8 +59,8 @@ public class Logger implements ILogger {
                 log.add(s);
                 s = reader.readLine();
             }
-        } catch (Exception e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+        } catch (IOException exc) {
+            System.out.println(exc.getMessage());
         }
 
         return log;
