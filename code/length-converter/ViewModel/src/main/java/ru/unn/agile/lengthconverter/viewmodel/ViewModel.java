@@ -145,5 +145,8 @@ public class ViewModel {
         return unitTo;
     }
 
-
+    public static final class LogMessages {
+        public static final String CONVERT_IS_PRESSED = "Convert %s %s -> %s %s";
+        public static final String INPUT_VALUE_IS_INCORRECT = "Value %s is incorrect";
+    }
 }

@@ -135,7 +135,19 @@ public class ViewModelTest {
         viewModel.convert();
 
         String message = viewModel.getLog();
-        String expectedMessage = String.format(LogMessages.INPUT_VALUE_IS_INCORRECT,
+        String expectedMessage = String.format(ViewModel.LogMessages.INPUT_VALUE_IS_INCORRECT,
+                viewModel.getConvertFrom());
+        assertTrue(message.contains(expectedMessage));
+    }
+
+    @Test
+    public void canGetLogProperty() {
+        viewModel.convertFromProperty().set("a");
+
+        viewModel.convert();
+
+        String message = viewModel.logProperty().get();
+        String expectedMessage = String.format(ViewModel.LogMessages.INPUT_VALUE_IS_INCORRECT,
                 viewModel.getConvertFrom());
         assertTrue(message.contains(expectedMessage));
     }
@@ -149,7 +161,7 @@ public class ViewModelTest {
         viewModel.convert();
 
         String message = viewModel.getLogList().get(0);
-        String expectedMessage = String.format(LogMessages.CONVERT_IS_PRESSED,
+        String expectedMessage = String.format(ViewModel.LogMessages.CONVERT_IS_PRESSED,
                 viewModel.getConvertFrom(), LengthUnit.METERS,
                 viewModel.getConvertTo(), LengthUnit.KILOMETERS);
         assertTrue(message.contains(expectedMessage));
@@ -164,7 +176,7 @@ public class ViewModelTest {
         viewModel.convert();
 
         String message = viewModel.getLogList().get(0);
-        String expectedMessage = String.format(LogMessages.INPUT_VALUE_IS_INCORRECT,
+        String expectedMessage = String.format(ViewModel.LogMessages.INPUT_VALUE_IS_INCORRECT,
                 viewModel.getConvertFrom());
         assertTrue(message.contains(expectedMessage));
     }
@@ -178,7 +190,7 @@ public class ViewModelTest {
         viewModel.convert();
 
         String message = viewModel.getLogList().get(0);
-        String expectedMessage = String.format(LogMessages.INPUT_VALUE_IS_INCORRECT,
+        String expectedMessage = String.format(ViewModel.LogMessages.INPUT_VALUE_IS_INCORRECT,
                 viewModel.getConvertFrom());
         assertTrue(message.contains(expectedMessage));
     }
