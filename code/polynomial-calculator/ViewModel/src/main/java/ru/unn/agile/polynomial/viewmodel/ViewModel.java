@@ -90,7 +90,7 @@ public class ViewModel {
     public void add() {
         if (parseInput()) {
             setResultStr(p1.add(p2).toString());
-            addLog(String.format(LogMessage.OPERATION_PASSED+p1+" + "+p2+" = "+resultStrProperty()));
+            addLog(String.format(LogMessage.OPERATION_PASSED+p1+" + "+p2+" = "+getResultStr()));
 
         } else {
             return;

@@ -84,7 +84,7 @@ public class ViewModelTest {
         viewModel.add();
 
         String actualMessage = viewModel.getListLog().get(0);
-        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" + "+viewModel.getSecondPolynomialStr()+" = "+viewModel.resultStrProperty() );
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" + "+viewModel.getSecondPolynomialStr()+" = "+viewModel.getResultStr());
         assertTrue(actualMessage.contains(expectedMessage));
         assertEquals(expectedMessage, actualMessage);
     }
