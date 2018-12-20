@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.List;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -66,6 +68,12 @@ public class TextLoggerTest {
         final File file = new File(FILE_NAME);
         Assert.assertTrue(file.exists());
         assertFalse(file.isDirectory());
+    }
+    @Test(expected = Test.None.class)
+    public void noExceptionForLoggerWithIncorrectFileName() {
+        TextLogger textLogger = new TextLogger("*/*/");
+        List<String> listLog = textLogger.getListLog();
+        assertEquals(0, listLog.size());
     }
 
     }
