@@ -92,11 +92,14 @@ public class ViewModelTest {
     @Test
     public void canMultiplyByNumber() {
         ViewModel viewModel = new ViewModel();
-        viewModel.setFirstPolynomialStr("1.0x^3-2.0x^2+3.0x-4.0");
+        viewModel.setFirstPolynomialStr("1.0x^3 - 2.0x^2 + 3.0x - 4.0");
         viewModel.setSecondPolynomialStr("5.0");
 
         viewModel.multiply();
 
+        String actualMessage = viewModel.getListLog().get(0);
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" * "+viewModel.getSecondPolynomialStr()+" = "+viewModel.getResultStr());
+        assertTrue(actualMessage.contains(expectedMessage));
         assertEquals("5.0x^3 - 10.0x^2 + 15.0x - 20.0", viewModel.getResultStr());
     }
 
