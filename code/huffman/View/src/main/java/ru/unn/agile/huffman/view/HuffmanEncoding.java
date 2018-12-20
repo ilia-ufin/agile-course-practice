@@ -7,7 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 
+import ru.unn.agile.huffman.viewmodel.ILogger;
 import ru.unn.agile.huffman.viewmodel.ViewModel;
+import ru.unn.agile.huffman.infrastructure.TextFileLogger;
 
 public class HuffmanEncoding {
     @FXML
@@ -27,6 +29,8 @@ public class HuffmanEncoding {
 
     @FXML
     void initialize() {
+        ILogger logger = new TextFileLogger(TextFileLogger.STANDARD_LOG_FILE_NAME);
+        viewModel.setLogger(logger);
         txtInput.textProperty().bindBidirectional(viewModel.txtProperty());
         txtOutput.textProperty().bindBidirectional(viewModel.txtEncodeProperty());
         lbStatus.textProperty().bindBidirectional(viewModel.statusProperty());
