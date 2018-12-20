@@ -67,7 +67,9 @@ public class ViewModel {
 
     public Polynomial parsePolynomial(final String polynomialStrSource) {
         PolynomialParser parser = new PolynomialParser(polynomialStrSource);
-        return parser.parsePolynomial();
+        Polynomial p = parser.parsePolynomial();
+        addLog(String.format(LogMessage.PARSE_PASSED+p.toString()));
+        return p;
     }
 
 
