@@ -32,38 +32,39 @@ public class LoggerTests {
         try {
             new BufferedReader(new FileReader(FILENAME));
         } catch (FileNotFoundException e) {
-            fail("File " + FILENAME + " wasn't found!");
+            fail("File with name= " + FILENAME + " not found");
         }
     }
 
     @Test
     public void canWriteLogMessage() {
-        String testMessage = "Test message";
+        String myTestMessage = "my test message";
 
-        myLogger.log(testMessage);
+        myLogger.log(myTestMessage);
 
         String message = myLogger.getLog().get(0);
-        assertEquals(message, myLogger.currentTime() + " --- " + testMessage);
+        assertEquals(message, myLogger.currentTime() + " --- " + myTestMessage);
     }
 
     @Test
-    public void canWriteSeveralLogMessage() {
-        String[] messages = {"Test message 1", "Test message 2"};
+    public void canWriteSomeLogMessage() {
+        String[] myMessages = {"my Test Message 1", "my Test Message 2"};
 
-        myLogger.log(messages[0]);
-        myLogger.log(messages[1]);
+        myLogger.log(myMessages[0]);
+        myLogger.log(myMessages[1]);
 
         List<String> actualMessages = myLogger.getLog();
-        for (int i = 0; i < actualMessages.size(); i++) {
-            assertEquals(actualMessages.get(i), myLogger.currentTime() + " --- " + messages[i]);
+        for (int strLog = 0; strLog < actualMessages.size(); strLog++) {
+            assertEquals(actualMessages.get(strLog),
+                    myLogger.currentTime() + " --- " + myMessages[strLog]);
         }
     }
 
     @Test
-    public void doesLogContainDateAndTime() {
-        String testMessage = "Test message";
+    public void doesLogContainsDateAndTime() {
+        String myTestMessage = "My Test Message";
 
-        myLogger.log(testMessage);
+        myLogger.log(myTestMessage);
 
         String message = myLogger.getLog().get(0);
         assertTrue(message.contains(myLogger.currentTime()));
