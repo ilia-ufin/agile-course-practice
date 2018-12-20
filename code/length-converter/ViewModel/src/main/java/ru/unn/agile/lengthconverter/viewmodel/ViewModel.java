@@ -76,6 +76,10 @@ public class ViewModel {
         return convertTo;
     }
 
+    public LengthUnit getUnitFrom() {
+        return unitFrom.get();
+    }
+
     public LengthUnit getUnitTo() {
         return unitTo.get();
     }
@@ -99,41 +103,43 @@ public class ViewModel {
     public String getLog() {
         return log.get();
     }
+
     public StringProperty logProperty() {
         return log;
     }
 
     public boolean checkReady() {
-        if (!getConvertFrom().isEmpty()) {
-            try {
+        try {
+            if (!getConvertFrom().isEmpty()) {
                 Double.parseDouble(getConvertFrom());
                 status.set(Status.READY.toString());
                 return true;
-            } catch (NumberFormatException e) {
-                writeLog(String.format(LogMessages.INPUT_VALUE_IS_INCORRECT, convertFrom.get()));
-                status.set(Status.INCORRECT_FORMAT.toString());
+            } else {
+                status.set(Status.WAITING.toString());
                 return false;
             }
-        } else {
-            status.set(Status.WAITING.toString());
+        } catch (NumberFormatException e) {
+            writeLog(String.format(LogMessages.INPUT_VALUE_IS_INCORRECT, getConvertFrom()));
+            status.set(Status.INCORRECT_FORMAT.toString());
             return false;
         }
+
     }
 
     public void convert() {
-        if (checkReady()) {
-            try {
+        try {
+            if (checkReady()) {
                 double valueToConvert = Double.parseDouble(getConvertFrom());
                 double result =
-                        LengthConverter.convert(unitFrom.get(), valueToConvert, unitTo.get());
+                        LengthConverter.convert(getUnitFrom(), valueToConvert, getUnitTo());
                 convertTo.set(String.valueOf(result));
                 writeLog(String.format(LogMessages.CONVERT_IS_PRESSED,
-                        valueToConvert, unitFrom.get(), result, unitTo.get()));
+                        valueToConvert, getUnitFrom(), result, getUnitTo()));
                 status.set(Status.SUCCESS.toString());
-            } catch (LengthConverterExceptions e) {
-                writeLog(String.format(LogMessages.INPUT_VALUE_IS_INCORRECT, convertFrom.get()));
-                status.set(Status.ERROR.toString());
             }
+        } catch (LengthConverterExceptions e) {
+            writeLog(String.format(LogMessages.INPUT_VALUE_IS_INCORRECT, getConvertFrom()));
+            status.set(Status.ERROR.toString());
         }
     }
 

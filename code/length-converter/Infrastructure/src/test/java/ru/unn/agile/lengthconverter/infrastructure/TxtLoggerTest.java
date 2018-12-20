@@ -14,6 +14,9 @@ import static org.junit.Assert.assertTrue;
 public class TxtLoggerTest {
     private static final String FILE_NAME = "./TxtLoggerTest.log";
 
+    private static final String TEST_MESSAGE = "Test message";
+    private static final String TEST_MESSAGE_2 = "Test message 2";
+
     private TxtLogger logger;
 
     @Before
@@ -40,18 +43,17 @@ public class TxtLoggerTest {
 
     @Test
     public void canWriteLogMessage() {
-        String testMessage = "Test message";
-        logger.log(testMessage);
+        logger.log(TEST_MESSAGE);
 
         String logMessage = logger.getLog().get(0);
 
-        assertTrue(logMessage.matches(testMessage));
+        assertTrue(logMessage.matches(TEST_MESSAGE));
     }
 
     @Test
     public void canWriteTwoLogMessages() {
-        String[] messages = {"Test message 1",
-                "Test message 2"};
+        String[] messages = {TEST_MESSAGE,
+                TEST_MESSAGE_2};
 
         for (String msg : messages) {
             logger.log(msg);
@@ -74,7 +76,7 @@ public class TxtLoggerTest {
     public void writeMessageToLogWithIncorrectName() {
         TxtLogger emptyLogger = new TxtLogger("");
 
-        emptyLogger.log("Message");
+        emptyLogger.log(TEST_MESSAGE);
 
         assertEquals(0, emptyLogger.getLog().size());
     }

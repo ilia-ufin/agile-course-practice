@@ -62,7 +62,8 @@ public class ViewModelTest {
 
     @Test
     public void createEmptyViewModel() {
-        assertEquals("", viewModel.convertFromProperty().get());
+        assertEquals(LengthUnit.MILLIMETERS, viewModel.getUnitFrom());
+        assertEquals("", viewModel.getConvertFrom());
         assertEquals(LengthUnit.METERS, viewModel.getUnitTo());
         assertEquals("", viewModel.getConvertTo());
         assertEquals(Status.READY.toString(), viewModel.getStatus());
@@ -74,7 +75,7 @@ public class ViewModelTest {
 
         viewModel.checkReady();
 
-        assertEquals("0.0", viewModel.convertFromProperty().get());
+        assertEquals("0.0", viewModel.getConvertFrom());
     }
 
     @Test
@@ -83,7 +84,7 @@ public class ViewModelTest {
 
         viewModel.convert();
 
-        assertEquals("1.0", viewModel.convertToProperty().get());
+        assertEquals("1.0", viewModel.getConvertTo());
     }
 
     @Test
