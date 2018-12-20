@@ -137,7 +137,20 @@ public class ViewModel {
         }
         log.set(logMsg.toString());
     }
+
     public String getLog() {
         return log.get();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger != null) {
+            this.logger = logger;
+        } else {
+            throw new IllegalArgumentException("Logger cannot be null");
+        }
+
+    }
+    public StringProperty logProperty() {
+        return log;
     }
 }

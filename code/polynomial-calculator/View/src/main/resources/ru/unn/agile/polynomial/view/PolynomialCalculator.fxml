@@ -10,9 +10,9 @@
    </fx:define>
 
    <children>
-      <Button layoutX="50.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Сложить" />
-      <Button layoutX="222.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleSubtractButtonAction" text="Вычесть" />
-      <Button layoutX="132.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleMultiplyButtonAction" text="Умножить" />
+      <Button fx:id="btnAdd" layoutX="50.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Сложить" />
+      <Button fx:id="btnSub" layoutX="222.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleSubtractButtonAction" text="Вычесть" />
+      <Button fx:id="btnMult" layoutX="132.0" layoutY="170.0" mnemonicParsing="false" onAction="#handleMultiplyButtonAction" text="Умножить" />
       <TextField fx:id="firstPolynomial" layoutX="28.0" layoutY="68.0" prefHeight="25.0" prefWidth="281.0" />
       <TextField fx:id="secondPolynomial" layoutX="28.0" layoutY="132.0" prefHeight="25.0" prefWidth="281.0" />
       <Label layoutX="32.0" layoutY="45.0" text="Первый полином " />
