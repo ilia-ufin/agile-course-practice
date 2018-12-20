@@ -10,6 +10,7 @@ public class FileLoggerTest {
 
     private static final String TEST_MESSAGE_1 = "test1";
     private static final String TEST_MESSAGE_2 = "test2";
+    private static final String DATE_TIME_PATTERN = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
 
     @Test()
     public void whenFileNameInvalidThenDoNothing() {
@@ -34,7 +35,7 @@ public class FileLoggerTest {
         fileLogger.log(TEST_MESSAGE_1);
 
         String log = fileLogger.getLog();
-        assertTrue(log.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} test"));
+        assertTrue(log.matches(DATE_TIME_PATTERN + " " + TEST_MESSAGE_1));
     }
 
     @Test()
@@ -45,7 +46,7 @@ public class FileLoggerTest {
         fileLogger.log(TEST_MESSAGE_2);
 
         String log = fileLogger.getLog();
-        assertTrue(log.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} test1\n"
-                + "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} test2"));
+        assertTrue(log.matches(DATE_TIME_PATTERN + " " + TEST_MESSAGE_1 + "\n"
+                + DATE_TIME_PATTERN + " " + TEST_MESSAGE_2));
     }
 }
