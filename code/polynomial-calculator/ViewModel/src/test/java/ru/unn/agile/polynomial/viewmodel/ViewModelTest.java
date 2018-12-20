@@ -103,11 +103,14 @@ public class ViewModelTest {
     @Test
     public void canSubtractPolynomial() {
         ViewModel viewModel = new ViewModel();
-        viewModel.setFirstPolynomialStr("1.0x^2+2.0x+4.0");
-        viewModel.setSecondPolynomialStr("1.0x^2-2.0x+3.0");
+        viewModel.setFirstPolynomialStr("1.0x^2 + 2.0x + 4.0");
+        viewModel.setSecondPolynomialStr("1.0x^2 - 2.0x + 3.0");
 
         viewModel.subtract();
 
+        String actualMessage = viewModel.getListLog().get(0);
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" - "+viewModel.getSecondPolynomialStr()+" = "+viewModel.getResultStr());
+        assertTrue(actualMessage.contains(expectedMessage));
         assertEquals("4.0x + 1.0", viewModel.getResultStr());
     }
 
