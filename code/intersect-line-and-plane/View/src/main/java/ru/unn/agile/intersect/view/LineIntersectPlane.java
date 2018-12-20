@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import ru.unn.agile.intersect.infrastructure.Logger;
 
 import ru.unn.agile.intersect.viewmodel.ViewModel;
 
@@ -52,6 +53,8 @@ public class LineIntersectPlane {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new Logger("./IntersectLogger.log"));
+
         coordXFirstPlanePoint.textProperty().bindBidirectional(
                 viewModel.coordXFirstPlanePointProperty());
         coordYFirstPlanePoint.textProperty().bindBidirectional(

@@ -9,6 +9,8 @@ include "code/intersect-line-and-plane/Model"
 project(":code/intersect-line-and-plane/Model").name = "intersect-line-and-plane-Model"
 include "code/intersect-line-and-plane/ViewModel"
 project(":code/intersect-line-and-plane/ViewModel").name = "intersect-line-and-plane-ViewModel"
+include "code/intersect-line-and-plane/Infrastructure"
+project(":code/intersect-line-and-plane/Infrastructure").name = "intersect-line-and-plane-Infrastructure"
 
 // Currency Converter
 include "code/currency-converter/Model"
