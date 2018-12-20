@@ -1,10 +1,8 @@
 package ru.unn.agile.polynomial.viewmodel;
 
 public final class LogMessage {
-    private LogMessage() {
-    }
     public static final String OPERATION_PASSED =
-            "Operation: ";
+            "Operation: %s %s = %s";
 
     public static final String PARSE_PASSED =
             "Parse passed: ";
