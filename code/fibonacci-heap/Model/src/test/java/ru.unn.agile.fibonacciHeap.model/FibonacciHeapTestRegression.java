@@ -11,7 +11,6 @@ public class FibonacciHeapTestRegression {
     private FibonacciHeap heap;
     private double delta = 0.00001;
     {
-        //BEGIN BDD CODE
         describe("Regression cases", () -> {
             beforeEach(() -> {
                 heap = new FibonacciHeap();
@@ -32,5 +31,4 @@ public class FibonacciHeapTestRegression {
             });
         });
     }
-    //END BDD CODE
 }

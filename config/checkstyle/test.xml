@@ -168,9 +168,4 @@
         <module name="UpperEll"/>
 
     </module>
-    <module name="SuppressionCommentFilter">
-        <property name="offCommentFormat" value="BEGIN BDD CODE"/>
-        <property name="onCommentFormat" value="END BDD CODE"/>
-    </module>
-
 </module>
