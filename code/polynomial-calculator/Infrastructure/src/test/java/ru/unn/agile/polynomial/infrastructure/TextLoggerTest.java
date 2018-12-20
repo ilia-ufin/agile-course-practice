@@ -50,6 +50,17 @@ public class TextLoggerTest {
         String logMessage = textLogger.getListLog().get(0);
         assertTrue(logMessage.matches(TEXT_1));
     }
+
+    @Test
+    public void canWriteTwoLogMessages() {
+        textLogger.log(TEXT_1);
+        textLogger.log(TEXT_2);
+
+        String logMessage = textLogger.getListLog().get(1);
+        assertFalse(logMessage.matches(TEXT_1));
+        assertTrue(logMessage.matches(TEXT_2));
+    }
+
     @Test
     public void checkLogFileCreated() {
         final File file = new File(FILE_NAME);
