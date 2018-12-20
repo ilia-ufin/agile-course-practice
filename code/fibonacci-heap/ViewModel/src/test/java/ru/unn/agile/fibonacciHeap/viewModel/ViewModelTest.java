@@ -4,16 +4,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class ViewModelTest {
     private ViewModel viewModel;
     private final String emptyError = "";
 
+    public void setViewModel(final ViewModel vm) {
+        this.viewModel = vm;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
     }
 
     @After
@@ -38,6 +44,33 @@ public class ViewModelTest {
     }
 
     @Test
+    public void shouldLogElementAddition() {
+        viewModel.inputValueProperty().setValue("1");
+        viewModel.addElem();
+
+        List<String> log = viewModel.getLog();
+        assertTrue(containtLine(log, "Добавлен элемент 1"));
+    }
+
+    @Test
+    public void shouldLogLengthChange() {
+        viewModel.inputValueProperty().setValue("1");
+        viewModel.addElem();
+
+        List<String> log = viewModel.getLog();
+        assertTrue(containtLine(log, "Кол-во узлов в куче стало 1"));
+    }
+
+    @Test
+    public void shouldLogMinChange() {
+        viewModel.inputValueProperty().setValue("1");
+        viewModel.addElem();
+
+        List<String> log = viewModel.getLog();
+        assertTrue(containtLine(log, "Минимальный элемент стал 1"));
+    }
+
+    @Test
     public void shouldSetMinLabel() {
         viewModel.inputValueProperty().setValue("1");
         viewModel.addElem();
@@ -59,5 +92,9 @@ public class ViewModelTest {
         viewModel.addElem();
 
         assertNotEquals(emptyError, viewModel.errorProperty().get());
+    }
+
+    public boolean containtLine(final List<String> log, final String logLine) {
+        return log.stream().filter(o -> o.contains(logLine)).findFirst().isPresent();
     }
 }

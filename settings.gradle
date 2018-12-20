@@ -19,6 +19,8 @@ include "code/fibonacci-heap/ViewModel"
 project(":code/fibonacci-heap/ViewModel").name = "fibonacci-heap-ViewModel"
 include "code/fibonacci-heap/View"
 project(":code/fibonacci-heap/View").name = "fibonacci-heap-View"
+include "code/fibonacci-heap/Infrastructure"
+project(":code/fibonacci-heap/Infrastructure").name = "fibonacci-heap-Infrastructure"
 
 // Currency Converter
 include "code/currency-converter/Model"
