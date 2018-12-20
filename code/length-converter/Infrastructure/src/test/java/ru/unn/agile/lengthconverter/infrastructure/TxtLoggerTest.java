@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -32,13 +31,6 @@ public class TxtLoggerTest {
     @Test
     public void canCreateTxtLogger() {
         assertNotNull(logger);
-    }
-
-    @Test
-    public void canCreateLogFile() {
-        File logFile = new File(FILE_NAME);
-
-        assertTrue(logFile.exists());
     }
 
     @Test
