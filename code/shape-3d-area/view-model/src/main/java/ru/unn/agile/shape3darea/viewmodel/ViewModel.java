@@ -163,7 +163,7 @@ public final class ViewModel {
 final class LogMessages {
     static final String CALCULATE_WAS_PRESSED = "Calculate was pressed.";
     static final String SHAPE_WAS_CHANGED = "Shape was changed to ";
-    static final String PARAMETER_WAS_CHANGED = "Parameter was changed. ";
+    static final String PARAMETER_WAS_CHANGED = "Parameter %s was changed. from %s to %s";
 
     private LogMessages() { }
 }

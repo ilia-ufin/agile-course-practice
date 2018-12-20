@@ -34,10 +34,15 @@ public class ShapeParameterTest {
 
     @Test
     public void checkLogValueWhenSetParameter() {
-        parameter.valueProperty().set("1.0");
+        String oldValue = parameter.valueProperty().get();
+        String newValue = "1.0";
+        String name = parameter.getName();
+
+        parameter.valueProperty().set(newValue);
         String message = parameter.getLog().get(0);
-        assertTrue(message.matches(LogMessages.PARAMETER_WAS_CHANGED
-                + "(.*)" + PARAMETER_NAME + "(.*)"));
+
+        assertEquals(message,
+                String.format(LogMessages.PARAMETER_WAS_CHANGED, name, oldValue, newValue));
     }
 
     @Test

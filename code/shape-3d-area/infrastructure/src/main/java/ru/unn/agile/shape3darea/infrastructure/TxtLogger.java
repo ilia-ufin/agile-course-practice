@@ -23,7 +23,7 @@ public class TxtLogger implements ILogger {
         try {
             FileWriter file = new FileWriter(fileName);
             writer = new BufferedWriter(file);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -31,11 +31,13 @@ public class TxtLogger implements ILogger {
     @Override
     public void log(final String message) {
         try {
-            writer.write(getCurrentTime() + " > " + message);
-            writer.newLine();
-            writer.flush();
-            updateLogs();
-        } catch (Exception e) {
+            if (writer != null) {
+                writer.write(getCurrentTime() + " > " + message);
+                writer.newLine();
+                writer.flush();
+                updateLogs();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -47,7 +49,7 @@ public class TxtLogger implements ILogger {
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 result.add(line);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         log.setAll(result);

@@ -24,7 +24,7 @@ public class ShapeParameter {
         this.logger = logger;
         value.addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue)) {
-                this.logger.log(String.format("%s%s:from %s to %s",
+                this.logger.log(String.format(
                         LogMessages.PARAMETER_WAS_CHANGED, name, oldValue, newValue));
             }
         });

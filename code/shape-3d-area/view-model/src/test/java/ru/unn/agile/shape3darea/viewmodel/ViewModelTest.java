@@ -169,10 +169,16 @@ public class ViewModelTest {
 
     @Test
     public void checkLogValueWhenChangeParameter() {
+        ShapeParameter parameter = viewModel.getParameters().get(0);
+        String oldValue = parameter.valueProperty().get();
         String newValue = "2.345";
-        viewModel.getParameters().get(0).valueProperty().set(newValue);
+        String name = parameter.getName();
+
+        parameter.valueProperty().set(newValue);
         String message = viewModel.getLog().get(0);
-        assertTrue(message.matches("(.*)" + LogMessages.PARAMETER_WAS_CHANGED + "(.*)" + newValue));
+
+        assertTrue(message.contains(
+                String.format(LogMessages.PARAMETER_WAS_CHANGED, name, oldValue, newValue)));
     }
 
     @Test
