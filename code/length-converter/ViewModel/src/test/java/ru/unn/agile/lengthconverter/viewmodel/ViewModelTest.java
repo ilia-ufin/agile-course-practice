@@ -19,8 +19,7 @@ public class ViewModelTest {
 
     @Before
     public void setUp() {
-        FakeLogger fakeLogger = new FakeLogger();
-        viewModel = new ViewModel(fakeLogger);
+        viewModel = new ViewModel(new FakeLogger());
     }
 
     protected void setViewModel(final ViewModel viewModel) {
@@ -45,6 +44,13 @@ public class ViewModelTest {
         viewModel = new ViewModel();
 
         assertNotEquals(viewModel, null);
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void initViewModelWithNullLogger() {
+        ILogger logger = null;
+        viewModel = new ViewModel(logger);
     }
 
     @Test
@@ -120,6 +126,18 @@ public class ViewModelTest {
         List<String> log = viewModel.getLogList();
 
         assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void canGetLog() {
+        viewModel.convertFromProperty().set("a");
+
+        viewModel.convert();
+
+        String message = viewModel.getLog();
+        String expectedMessage = String.format(LogMessages.INPUT_VALUE_IS_INCORRECT,
+                viewModel.getConvertFrom());
+        assertTrue(message.contains(expectedMessage));
     }
 
     @Test

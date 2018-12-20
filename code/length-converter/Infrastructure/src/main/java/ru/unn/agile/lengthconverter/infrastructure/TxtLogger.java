@@ -2,10 +2,7 @@ package ru.unn.agile.lengthconverter.infrastructure;
 
 import ru.unn.agile.lengthconverter.viewmodel.ILogger;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +15,7 @@ public class TxtLogger implements ILogger {
 
         try {
             fileWriter = new FileWriter(fileName);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -26,8 +23,10 @@ public class TxtLogger implements ILogger {
     @Override
     public void log(final String str) {
         try {
-            fileWriter.write(str + "\n");
-            fileWriter.flush();
+            if (fileWriter != null) {
+                fileWriter.write(str + "\n");
+                fileWriter.flush();
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
