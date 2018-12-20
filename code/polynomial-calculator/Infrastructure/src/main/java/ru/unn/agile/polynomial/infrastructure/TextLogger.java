@@ -23,18 +23,20 @@ public class TextLogger implements ILogger {
 
     @Override
     public List<String> getListLog() {
-        ArrayList<String> log = new ArrayList<String>();
+        BufferedReader bufferedReader;
+        ArrayList<String> logList = new ArrayList<String>();
+        ArrayList<String> listLog = new ArrayList<String>();
         try {
-            BufferedReader bufferReader = new BufferedReader(new FileReader(filename));
-            String line = bufferReader.readLine();
+            bufferedReader = new BufferedReader(new FileReader(filename));
+            String line = bufferedReader.readLine();
             while (line != null) {
-                log.add(line);
-                line = bufferReader.readLine();
+                listLog.add(line);
+                line = bufferedReader.readLine();
             }
-        } catch (IOException exc) {
-            System.out.println(exc.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
-        return log;
+        return listLog;
 
     }
 
