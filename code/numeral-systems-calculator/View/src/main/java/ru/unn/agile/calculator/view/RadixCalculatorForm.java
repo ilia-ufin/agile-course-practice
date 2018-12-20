@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import ru.unn.agile.calculator.infrastructure.FileLogger;
 import ru.unn.agile.calculator.model.NumeralSystem;
 import ru.unn.agile.calculator.viewmodel.ViewModel;
 
@@ -22,10 +23,11 @@ public class RadixCalculatorForm {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new FileLogger("./numeral-systems-calculator-lab3.log"));
+
         txtNumber1.textProperty().bindBidirectional(viewModel.number1Property());
         txtNumber2.textProperty().bindBidirectional(viewModel.number2Property());
         outputSystem.valueProperty().bindBidirectional(viewModel.outputNumberSystemProperty());
-
 
         btnCalc.setOnAction(event -> viewModel.calculate());
     }

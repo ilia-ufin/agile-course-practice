@@ -7,14 +7,20 @@ import ru.unn.agile.calculator.model.NumeralSystem;
 import ru.unn.agile.calculator.model.RadixCalculator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    protected void setExternalViewModel(ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel(new DummyLogger());
+        viewModel = new ViewModel();
+        viewModel.setLogger(new DummyLogger());
     }
 
     @After
@@ -25,8 +31,8 @@ public class ViewModelTests {
     @Test
     public void canSetDefaultValues() {
         assertEquals(NumeralSystem.BINARY, viewModel.getOutputNumberSystem());
-        assertEquals("", viewModel.getResult());
-        assertEquals(UserMessages.WAIT_FOR_INPUT.toString(), viewModel.getUserMessage());
+        assertEquals("", viewModel.resultProperty().get());
+        assertEquals(UserMessages.WAIT_FOR_INPUT.toString(), viewModel.userMessageProperty().get());
         assertEquals(true, viewModel.isCalculationDisabled());
         assertEquals("", viewModel.number1Property().get());
         assertEquals("", viewModel.number2Property().get());
@@ -50,7 +56,7 @@ public class ViewModelTests {
                 + ", -b = "
                 + RadixCalculator.unaryMinus(b, NumeralSystem.BINARY) + "\n";
 
-        assertEquals(expectedResult, viewModel.getResult());
+        assertEquals(expectedResult, viewModel.resultProperty().get());
     }
 
 
@@ -72,7 +78,7 @@ public class ViewModelTests {
                 + ", -b = "
                 + RadixCalculator.unaryMinus(b, NumeralSystem.OCTAL) + "\n";
 
-        assertEquals(expectedResult, viewModel.getResult());
+        assertEquals(expectedResult, viewModel.resultProperty().get());
     }
 
 
@@ -86,7 +92,7 @@ public class ViewModelTests {
         viewModel.outputNumberSystemProperty().setValue(NumeralSystem.OCTAL);
 
         assertEquals(true, viewModel.isCalculationDisabled());
-        assertEquals(UserMessages.WAIT_FOR_INPUT.toString(), viewModel.getUserMessage());
+        assertEquals(UserMessages.WAIT_FOR_INPUT.toString(), viewModel.userMessageProperty().get());
     }
 
     @Test
@@ -99,7 +105,7 @@ public class ViewModelTests {
         viewModel.outputNumberSystemProperty().setValue(NumeralSystem.OCTAL);
 
         assertEquals(false, viewModel.isCalculationDisabled());
-        assertEquals(UserMessages.READY.toString(), viewModel.getUserMessage());
+        assertEquals(UserMessages.READY.toString(), viewModel.userMessageProperty().get());
     }
 
 
@@ -112,7 +118,7 @@ public class ViewModelTests {
         viewModel.number2Property().setValue(b);
 
         assertEquals(true, viewModel.isCalculationDisabled());
-        assertEquals(UserMessages.INPUT_INVALID.toString(), viewModel.getUserMessage());
+        assertEquals(UserMessages.INPUT_INVALID.toString(), viewModel.userMessageProperty().get());
     }
 
 
@@ -126,11 +132,40 @@ public class ViewModelTests {
         viewModel.calculate();
 
         assertEquals(false, viewModel.isCalculationDisabled());
-        assertEquals(UserMessages.SUCCESS.toString(), viewModel.getUserMessage());
+        assertEquals(UserMessages.SUCCESS.toString(), viewModel.userMessageProperty().get());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCanNotSetNullLogger() {
+        viewModel.setLogger(null);
     }
 
     @Test
     public void testLogIsEmptyInitially() {
-        viewModel.getLog()
+        assertTrue(viewModel.logProperty().get().isEmpty());
+    }
+
+    @Test
+    public void testLogValuesChange() {
+        String a = "b11";
+        String b = "b10";
+
+        viewModel.number1Property().setValue(a);
+        viewModel.number2Property().setValue(b);
+
+        String log = viewModel.logProperty().get();
+        assertTrue(log.contains(String.format(LogMessages.VALUES_CHANGED, a, b)));
+    }
+
+    @Test
+    public void testLogCalculation() {
+        String a = "b11";
+        String b = "b10";
+
+        viewModel.number1Property().setValue(a);
+        viewModel.number2Property().setValue(b);
+        viewModel.calculate();
+
+        assertTrue(viewModel.logProperty().get().contains(LogMessages.CALCULATED));
     }
 }

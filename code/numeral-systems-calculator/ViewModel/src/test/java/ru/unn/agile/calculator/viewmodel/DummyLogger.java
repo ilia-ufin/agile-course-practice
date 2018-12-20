@@ -1,20 +1,17 @@
 package ru.unn.agile.calculator.viewmodel;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableStringValue;
-
 final class DummyLogger implements ILogger {
 
-    private final StringProperty log = new SimpleStringProperty();
+    private final StringBuilder log = new StringBuilder();
 
     @Override
-    public void log(String message) {
-        log.set(log.get() + message + '\n');
+    public void log(final String message) {
+        log.append(message);
+        log.append('\n');
     }
 
     @Override
-    public ObservableStringValue getLog() {
-        return log;
+    public String getLog() {
+        return log.toString();
     }
 }

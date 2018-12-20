@@ -1,5 +1,5 @@
 dependencies {
-    compile project(':numeral-systems-calculator-Infrastructure')
+    compile project(':numeral-systems-calculator-ViewModel')
 
-    testCompile project(':numeral-systems-calculator-Infrastructure').sourceSets.test.output
+    testCompile project(':numeral-systems-calculator-ViewModel').sourceSets.test.output
 }

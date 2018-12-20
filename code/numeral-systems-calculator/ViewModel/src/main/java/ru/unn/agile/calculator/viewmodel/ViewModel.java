@@ -1,14 +1,13 @@
 package ru.unn.agile.calculator.viewmodel;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import ru.unn.agile.calculator.model.RadixCalculator;
-import ru.unn.agile.calculator.model.NumeralSystemConverter;
 import ru.unn.agile.calculator.model.NumeralSystem;
+import ru.unn.agile.calculator.model.NumeralSystemConverter;
+import ru.unn.agile.calculator.model.RadixCalculator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,15 +25,11 @@ public class ViewModel {
             FXCollections.observableList(Arrays.stream(NumeralSystem.values())
                     .filter(s -> !NumeralSystem.UNKNOWN.equals(s))
                     .collect(Collectors.toList()));
+    private final StringProperty log = new SimpleStringProperty();
 
-    private ObjectProperty<ILogger> logger;
+    private ILogger logger;
 
-    ViewModel() {
-        init();
-    }
-
-    public ViewModel(ILogger logger) {
-        this.logger.set(logger);
+    public ViewModel() {
         init();
     }
 
@@ -66,12 +61,16 @@ public class ViewModel {
         }
     }
 
-    public String getResult() {
-        return result.get();
+    public void setLogger(ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger must be mot null");
+        }
+        this.logger = logger;
+        updateLog();
     }
 
-    public String getUserMessage() {
-        return userMessage.get();
+    private void updateLog() {
+        log.set(logger.getLog());
     }
 
     public BooleanProperty calculationDisabledProperty() {
@@ -104,6 +103,9 @@ public class ViewModel {
                 + buildUnaryMinusResult(currentSystem, a, b);
         result.set(composedResult);
         userMessage.set(UserMessages.SUCCESS.toString());
+
+        logger.log(LogMessages.CALCULATED);
+        updateLog();
     }
 
     public NumeralSystem getOutputNumberSystem() {
@@ -122,9 +124,8 @@ public class ViewModel {
         return userMessage;
     }
 
-    public String getLog() {
-        Bindings.selectString(logger, "log")
-        return logger.getLog();
+    public StringProperty logProperty() {
+        return log;
     }
 
 
@@ -133,6 +134,9 @@ public class ViewModel {
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
             userMessage.set(checkInput().toString());
+
+            logger.log(String.format(LogMessages.VALUES_CHANGED, number1.get(), number2.get()));
+            updateLog();
         }
     }
 
