@@ -17,7 +17,6 @@ import static ru.unn.agile.intersect.infrastructure.RegexMatcher.matchesPattern;
 
 public class LoggerTests {
     private static final String FILENAME = "./Logger_Tests.log";
-    private static final String TEST_MESSAGE = "./Logger_Tests.log";
 
     private Logger logger;
 
@@ -74,23 +73,23 @@ public class LoggerTests {
     }
 
     @Test(expected = Test.None.class)
-    public void noThrowWhenCreateTxtLoggerWithIncorrectFileNameAndCreatedEmptyLogger() {
+    public void shouldntThrowErrorEmptyFileName() {
         logger = new Logger("");
 
         assertEquals(0, logger.readLog().size());
     }
 
     @Test(expected = Test.None.class)
-    public void noThrowWhenWriteToTxtLoggerWithIncorrectFileName() {
+    public void shouldntThrowErrorIncorrectFileName() {
         logger = new Logger("");
 
-        logger.writeLog(TEST_MESSAGE);
+        logger.writeLog("Some data");
 
         assertEquals(0, logger.readLog().size());
     }
 
     @Test(expected = Test.None.class)
-    public void noThrowWhenReadFromTxtLoggerWithIncorrectFileName() {
+    public void shouldntThrowErrorReadWithIncorrectFileName() {
         logger = new Logger("");
 
         List<String> logList = logger.readLog();
