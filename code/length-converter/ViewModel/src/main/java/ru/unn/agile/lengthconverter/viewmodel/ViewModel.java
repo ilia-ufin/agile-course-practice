@@ -26,15 +26,19 @@ public class ViewModel {
 
     private ILogger logger;
 
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Error: Logger is null");
+        }
+        this.logger = logger;
+    }
+
     public ViewModel() {
         init();
     }
 
     public ViewModel(final ILogger logger) {
-        if (logger == null) {
-            throw new IllegalArgumentException("Error: Logger is null");
-        }
-        this.logger = logger;
+        setLogger(logger);
         init();
     }
 
