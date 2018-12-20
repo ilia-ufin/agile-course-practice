@@ -69,6 +69,7 @@ public class FibonacciHeap {
         x.setLeft(rootNode);
         x.setRight(rootRight);
         rootNode.setRight(x);
+        x.setParent(null);
     }
 
     public Node pop() {
@@ -87,8 +88,6 @@ public class FibonacciHeap {
                 removeFromList(child);
 
                 addToRootList(child);
-
-                child.setParent(null);
 
                 child = tempRight;
 
