@@ -2,10 +2,7 @@ package ru.unn.agile.salarycalculator.infrastructure;
 
 import ru.unn.agile.salarycalculator.viewmodel.legacy.ILogger;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,7 +20,7 @@ public class Logger implements ILogger {
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(filename));
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         bufferWriter = logWriter;
@@ -42,7 +39,7 @@ public class Logger implements ILogger {
             bufferWriter.write(currentTime() + " --- " + logText);
             bufferWriter.newLine();
             bufferWriter.flush();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }

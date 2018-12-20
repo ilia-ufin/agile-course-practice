@@ -12,6 +12,14 @@ public final class ViewModel {
     private static final int MIN_YEAR = 2000;
     private static final int MAX_WORKED_HOURS = 500;
     private static final int MAX_COUNT_CHARACTERS_SALARY = 20;
+    private static final String PATTERN_PRESS_CALCULATE =
+            LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
+            + ": salary = %s"
+            + "; workedHours = %s"
+            + "; countMonth = %s"
+            + "; countYear = %s.";
+    private static final String PATTERN_FINISH_EDIT = LogMessages.EDITING_FINISHED
+            + "Input arguments are: [%s; %s; %s; %s]";
     private String salary;
     private String workedHours;
     private String countMonth;
@@ -224,11 +232,7 @@ public final class ViewModel {
     }
 
     private String calculateLogMessage() {
-        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
-                + ": salary = " + salary
-                + "; workedHours = " + workedHours
-                + "; countMonth = " + countMonth
-                + "; countYear = " + countYear + ".";
+        return String.format(PATTERN_PRESS_CALCULATE, salary, workedHours, countMonth, countYear);
     }
 
     private void logInputParams() {
@@ -245,11 +249,6 @@ public final class ViewModel {
     }
 
     private String editingFinishedLogMessage() {
-        return LogMessages.EDITING_FINISHED
-                + "Input arguments are: ["
-                + salary + "; "
-                + workedHours + "; "
-                + countMonth + "; "
-                + countYear + "]";
+        return String.format(PATTERN_FINISH_EDIT, salary, workedHours, countMonth, countYear);
     }
 }
