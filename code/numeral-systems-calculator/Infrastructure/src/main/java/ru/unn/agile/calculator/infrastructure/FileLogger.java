@@ -47,6 +47,7 @@ public class FileLogger implements ILogger {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             return reader.lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {
+            e.printStackTrace();
             return "";
         }
     }

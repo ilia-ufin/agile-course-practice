@@ -143,17 +143,6 @@ public class ViewModel {
         return log.get();
     }
 
-    private class ValueChangeListener implements ChangeListener<String> {
-        @Override
-        public void changed(final ObservableValue<? extends String> observable,
-                            final String oldValue, final String newValue) {
-            userMessage.set(checkInput().toString());
-
-            logger.log(String.format(LOG_VALUES_CHANGED, number1.get(), number2.get()));
-            updateLog();
-        }
-    }
-
     private String buildUnaryMinusResult(final NumeralSystem currentSystem,
                                          final String a,
                                          final String b) {
@@ -194,5 +183,16 @@ public class ViewModel {
         }
 
         return UserMessages.READY;
+    }
+
+    private class ValueChangeListener implements ChangeListener<String> {
+        @Override
+        public void changed(final ObservableValue<? extends String> observable,
+                            final String oldValue, final String newValue) {
+            userMessage.set(checkInput().toString());
+
+            logger.log(String.format(LOG_VALUES_CHANGED, number1.get(), number2.get()));
+            updateLog();
+        }
     }
 }
