@@ -5,5 +5,5 @@ public final class LogMessage {
             "Operation: %s %s = %s";
 
     public static final String PARSE_PASSED =
-            "Parse passed: ";
+            "Parse passed: %s";
 }

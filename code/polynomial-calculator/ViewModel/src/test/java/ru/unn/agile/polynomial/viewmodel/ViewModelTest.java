@@ -59,7 +59,7 @@ public class ViewModelTest {
 
         assertEquals("1.0x^3 - 2.0x^2 + 3.0x", polynomial.toString());
         String actualMessage = viewModel.getListLog().get(0);
-        String expectedMessage = String.format(LogMessage.PARSE_PASSED + polynomial.toString());
+        String expectedMessage = String.format(LogMessage.PARSE_PASSED, polynomial.toString());
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
