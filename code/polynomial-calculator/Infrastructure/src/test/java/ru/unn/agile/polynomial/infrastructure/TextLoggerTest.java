@@ -69,6 +69,7 @@ public class TextLoggerTest {
         Assert.assertTrue(file.exists());
         assertFalse(file.isDirectory());
     }
+
     @Test(expected = Test.None.class)
     public void noExceptionForLoggerWithIncorrectFileName() {
         TextLogger textLogger = new TextLogger("*/*/");
