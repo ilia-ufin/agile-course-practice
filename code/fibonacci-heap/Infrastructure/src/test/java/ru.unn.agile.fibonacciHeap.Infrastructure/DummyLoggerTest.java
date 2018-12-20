@@ -19,8 +19,8 @@ public class DummyLoggerTest {
         txtLogger = new DummyLogger(FILENAME);
     }
 
-    @Test
-    public void shouldntFailOnEmptyFilename() {
+    @Test(expected = RuntimeException.class)
+    public void shouldFailOnEmptyFilename() {
         new DummyLogger("");
     }
 

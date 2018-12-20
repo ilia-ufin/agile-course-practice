@@ -2,9 +2,13 @@ package ru.unn.agile.fibonacciHeap.Infrastructure;
 
 import ru.unn.agile.fibonacciHeap.viewModel.ILogger;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -23,12 +27,12 @@ public class DummyLogger implements ILogger {
     public DummyLogger(final String fileName) {
         this.fileName = fileName;
 
-        BufferedWriter logWriter = null;
+        BufferedWriter logWriter;
 
         try {
             logWriter = new BufferedWriter(new FileWriter(fileName));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
 
         writer = logWriter;
@@ -36,27 +40,11 @@ public class DummyLogger implements ILogger {
 
     @Override
     public List<String> getLog() {
-        BufferedReader reader;
-        ArrayList<String> logList = new ArrayList<String>();
-
         try {
-            FileReader r = new FileReader(fileName);
-            reader = new BufferedReader(r);
-            String line = reader.readLine();
-
-            if (line == null) {
-                return logList;
-            }
-
-            do {
-                logList.add(line);
-                line = reader.readLine();
-            } while (line != null);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            return Files.readAllLines(new File(fileName).toPath(), Charset.defaultCharset());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        return logList;
     }
 
     @Override
@@ -67,7 +55,7 @@ public class DummyLogger implements ILogger {
 
             writer.flush();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }
