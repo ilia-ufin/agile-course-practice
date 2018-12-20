@@ -1,6 +1,7 @@
 package ru.unn.agile.polynomial.infrastructure;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,4 +32,8 @@ public class TextLoggerTest {
         textLogger = new TextLogger("");
     }
 
+    @Test
+    public void canCreateLogFile() {
+        Assert.assertNotNull(textLogger);
+    }
     }
