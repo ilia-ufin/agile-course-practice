@@ -5,6 +5,6 @@ import java.util.List;
 public interface ILogger {
 
     List<String> getListLog();
-    void log(final String s);
+    void log(String s);
 }
 

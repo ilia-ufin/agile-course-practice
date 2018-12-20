@@ -1,6 +1,6 @@
 package ru.unn.agile.polynomial.viewmodel;
 
-public class LogMessage {
+public final class LogMessage {
     public static final String OPERATION_PASSED =
             "Operation: ";
 
