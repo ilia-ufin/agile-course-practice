@@ -15,16 +15,16 @@ import static org.junit.Assert.fail;
 
 public class LoggerTests {
     private static final String FILENAME = "./LoggerTests-lab3.log";
-    private static Logger logger;
+    private static Logger myLogger;
 
     @Before
     public void setUp() {
-        logger = new Logger(FILENAME);
+        myLogger = new Logger(FILENAME);
     }
 
     @Test
-    public void canCreateLoggerWithFileName() {
-        assertNotNull(logger);
+    public void canCreateLoggerClassWithFileName() {
+        assertNotNull(myLogger);
     }
 
     @Test
@@ -40,22 +40,22 @@ public class LoggerTests {
     public void canWriteLogMessage() {
         String testMessage = "Test message";
 
-        logger.log(testMessage);
+        myLogger.log(testMessage);
 
-        String message = logger.getLog().get(0);
-        assertEquals(message, logger.currentTime() + " --- " + testMessage);
+        String message = myLogger.getLog().get(0);
+        assertEquals(message, myLogger.currentTime() + " --- " + testMessage);
     }
 
     @Test
     public void canWriteSeveralLogMessage() {
         String[] messages = {"Test message 1", "Test message 2"};
 
-        logger.log(messages[0]);
-        logger.log(messages[1]);
+        myLogger.log(messages[0]);
+        myLogger.log(messages[1]);
 
-        List<String> actualMessages = logger.getLog();
+        List<String> actualMessages = myLogger.getLog();
         for (int i = 0; i < actualMessages.size(); i++) {
-            assertEquals(actualMessages.get(i), logger.currentTime() + " --- " + messages[i]);
+            assertEquals(actualMessages.get(i), myLogger.currentTime() + " --- " + messages[i]);
         }
     }
 
@@ -63,10 +63,10 @@ public class LoggerTests {
     public void doesLogContainDateAndTime() {
         String testMessage = "Test message";
 
-        logger.log(testMessage);
+        myLogger.log(testMessage);
 
-        String message = logger.getLog().get(0);
-        assertTrue(message.contains(logger.currentTime()));
+        String message = myLogger.getLog().get(0);
+        assertTrue(message.contains(myLogger.currentTime()));
     }
 
 }
