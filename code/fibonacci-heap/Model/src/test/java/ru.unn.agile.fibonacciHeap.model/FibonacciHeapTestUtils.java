@@ -30,25 +30,6 @@ public class FibonacciHeapTestUtils {
                 });
             });
         });
-
-        describe("getNodeListSize method", () -> {
-            beforeEach(() -> {
-                firstNode = new Node(1);
-                secondNode = new Node(2);
-                thirdNode = new Node(3);
-            });
-
-            it("Should return 1 for single node", () -> {
-                assertEquals(heap.getNodeListSize(firstNode), 1, delta);
-            });
-
-            it("Should count nodes in tree", () -> {
-                firstNode.setChild(secondNode);
-                secondNode.setRight(thirdNode);
-
-                assertEquals(heap.getNodeListSize(firstNode), 3, delta);
-            });
-        });
     }
     //END BDD CODE
 }

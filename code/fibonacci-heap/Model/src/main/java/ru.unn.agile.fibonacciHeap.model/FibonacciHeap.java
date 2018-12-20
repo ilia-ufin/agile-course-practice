@@ -50,24 +50,6 @@ public class FibonacciHeap {
         this.rootAmount++;
     }
 
-    public int getNodeListSize(final Node node) {
-        int count = 0;
-        Node current = node;
-
-        do {
-            count++;
-            Node child = current.getChild();
-
-            if (child != null) {
-                count += getNodeListSize(child);
-            }
-
-            current = current.getRight();
-        } while (current != node && current != null);
-
-        return count;
-    }
-
     private void removeFromList(final Node z) {
         Node rightNode = z.getRight();
         Node leftNode = z.getLeft();

@@ -105,15 +105,6 @@ public class FibonacciHeapTestPop {
 
                     assertEquals(degreeAfter, degreeBefore - 1, delta);
                 });
-
-                it("Should merge child into tree with size 2", () -> {
-                    heap.pop();
-
-                    Node rootNode = heap.getRootNode();
-                    int treeSize = heap.getNodeListSize(rootNode);
-
-                    assertEquals(treeSize, 2);
-                });
             });
         });
     }
