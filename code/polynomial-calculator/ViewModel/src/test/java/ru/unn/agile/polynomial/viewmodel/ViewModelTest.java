@@ -51,7 +51,7 @@ public class ViewModelTest {
 
         assertEquals("1.0x^3 - 2.0x^2 + 3.0x", polynomial.toString());
         String actualMessage = viewModel.getListLog().get(0);
-        String expectedMessage = String.format(LogMessage.PARSE_PASSED+polynomial.toString());
+        String expectedMessage = String.format(LogMessage.PARSE_PASSED + polynomial.toString());
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
@@ -87,7 +87,9 @@ public class ViewModelTest {
         viewModel.add();
 
         String actualMessage = viewModel.getListLog().get(2);
-        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" + "+viewModel.getSecondPolynomialStr()+" = "+viewModel.getResultStr());
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED
+                + viewModel.getFirstPolynomialStr() + " + " + viewModel.getSecondPolynomialStr()
+                + " = " + viewModel.getResultStr());
         assertTrue(actualMessage.contains(expectedMessage));
         assertEquals("-4.0x^2 + 6.0x - 8.0", viewModel.getResultStr());
     }
@@ -101,7 +103,10 @@ public class ViewModelTest {
         viewModel.multiply();
 
         String actualMessage = viewModel.getListLog().get(2);
-        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" * "+viewModel.getSecondPolynomialStr()+" = "+viewModel.getResultStr());
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED
+                + viewModel.getFirstPolynomialStr() + " * "
+                + viewModel.getSecondPolynomialStr() + " = "
+                + viewModel.getResultStr());
         assertTrue(actualMessage.contains(expectedMessage));
         assertEquals("5.0x^3 - 10.0x^2 + 15.0x - 20.0", viewModel.getResultStr());
     }
@@ -115,7 +120,10 @@ public class ViewModelTest {
         viewModel.subtract();
 
         String actualMessage = viewModel.getListLog().get(2);
-        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" - "+viewModel.getSecondPolynomialStr()+" = "+viewModel.getResultStr());
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED
+                + viewModel.getFirstPolynomialStr() + " - "
+                + viewModel.getSecondPolynomialStr() + " = "
+                + viewModel.getResultStr());
         assertTrue(actualMessage.contains(expectedMessage));
         assertEquals("4.0x + 1.0", viewModel.getResultStr());
     }
@@ -315,21 +323,5 @@ public class ViewModelTest {
 
         assertTrue(log.isEmpty());
     }
-/*
-    @Test
-    public void checkLogAddNumber() {
-        ViewModel viewModel = new ViewModel(new FakeLogger());
-        double[] toInit = {1.0, -2.0, 3.0, -4.0};
-        Polynomial pStart = new Polynomial(toInit);
-        Polynomial pResult = new Polynomial(toInit);
-        pResult.add(5);
-
-        assertEquals("1.0x^3 - 2.0x^2 + 3.0x + 1.0", pResult.toString());
-        String actualMessage = viewModel.getListLog().get(0);
-        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+pStart.toString()+" + 5 = "+pResult.toString());
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
-*/
-
 
 }
