@@ -27,8 +27,6 @@ public class ViewModelTest {
 
     @Test
     public void createViewModelWithDefaultFields() {
-        viewModel = new ViewModel();
-
         assertEquals("", viewModel.getFirstPolynomialStr());
         assertEquals("", viewModel.getSecondPolynomialStr());
         assertEquals("", viewModel.getResultStr());
@@ -36,8 +34,6 @@ public class ViewModelTest {
 
     @Test
     public void createViewModelWithDefaultFieldsProperty() {
-        viewModel = new ViewModel();
-
         assertEquals("", viewModel.firstPolynomialStrProperty().get());
         assertEquals("", viewModel.secondPolynomialStrProperty().get());
         assertEquals("", viewModel.resultStrProperty().get());
@@ -45,8 +41,6 @@ public class ViewModelTest {
 
     @Test
     public void canParsePolynomial() {
-        ViewModel viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("2.0x^3+4.0x^2+5.0x-42.0");
 
         assertEquals("2.0x^3 + 4.0x^2 + 5.0x - 42.0", polynomial.toString());
@@ -54,8 +48,6 @@ public class ViewModelTest {
 
     @Test
     public void canParsePolynomialWithZero() {
-        viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("2.0x^3+5.0x-42.0");
 
         assertEquals("2.0x^3 + 5.0x - 42.0", polynomial.toString());
@@ -63,8 +55,6 @@ public class ViewModelTest {
 
     @Test
     public void canParsePolynomialForZeroCoefficient() {
-        viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("1.0x^3-2.0x^2+3.0x");
 
         assertEquals("1.0x^3 - 2.0x^2 + 3.0x", polynomial.toString());
@@ -75,8 +65,6 @@ public class ViewModelTest {
 
     @Test
     public void canParseNumberWithZeroPolynomial() {
-        viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("3.0");
 
         assertEquals("3.0", polynomial.toString());
@@ -84,21 +72,16 @@ public class ViewModelTest {
 
     @Test
     public void canAddZeroPolynomial() {
-        viewModel = new ViewModel();
-
         viewModel.setFirstPolynomialStr("");
         viewModel.setSecondPolynomialStr("");
 
         viewModel.add();
 
         assertEquals(PolynomialParser.FORMAT_ERROR + "1", viewModel.getResultStr());
-
-
     }
 
     @Test
     public void canAddPolynomial() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("1.0x^3 - 2.0x^2 + 3.0x - 4.0");
         viewModel.setSecondPolynomialStr("-1.0x^3 - 2.0x^2 + 3.0x - 4.0");
 
@@ -114,7 +97,6 @@ public class ViewModelTest {
 
     @Test
     public void canMultiplyByNumber() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("1.0x^3 - 2.0x^2 + 3.0x - 4.0");
         viewModel.setSecondPolynomialStr("5.0");
 
@@ -131,7 +113,6 @@ public class ViewModelTest {
 
     @Test
     public void canSubtractPolynomial() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("1.0x^2 + 2.0x + 4.0");
         viewModel.setSecondPolynomialStr("1.0x^2 - 2.0x + 3.0");
 
@@ -148,8 +129,6 @@ public class ViewModelTest {
 
     @Test
     public void canParseFirstDegreeWithoutFreeCoeff() {
-        viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("1.0x");
 
         assertEquals("1.0x", polynomial.toString());
@@ -157,8 +136,6 @@ public class ViewModelTest {
 
     @Test
     public void canParseFirstDegreeWithFreeCoeffPlus() {
-        viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("1.0x+1.0");
 
         assertEquals("1.0x + 1.0", polynomial.toString());
@@ -166,8 +143,6 @@ public class ViewModelTest {
 
     @Test
     public void canParseFirstDegreeWithFreeCoeffMinus() {
-        viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("1.0x-1.0");
 
         assertEquals("1.0x - 1.0", polynomial.toString());
@@ -175,8 +150,6 @@ public class ViewModelTest {
 
     @Test
     public void canParseSecondDegreeWithoutFreeCoeff() {
-        viewModel = new ViewModel();
-
         Polynomial polynomial = viewModel.parsePolynomial("1.0x^2");
 
         assertEquals("1.0x^2", polynomial.toString());
@@ -184,7 +157,6 @@ public class ViewModelTest {
 
     @Test
     public void canSubtractWrongFormatPolynomial() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("1.0x^2+2.0x+4.0");
         viewModel.setSecondPolynomialStr("fghfg");
 
@@ -195,7 +167,6 @@ public class ViewModelTest {
 
     @Test
     public void canAddWrongFormatPolynomial() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("dfgdfg");
         viewModel.setSecondPolynomialStr("1.0x^2+2.0x+4.0");
         viewModel.add();
@@ -205,7 +176,6 @@ public class ViewModelTest {
 
     @Test
     public void canMultiplyWrongFormatPolynomial() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("fghfg");
         viewModel.setSecondPolynomialStr("fghfg");
 
@@ -216,7 +186,6 @@ public class ViewModelTest {
 
     @Test
     public void canMultiplyPolynomialWithTwoFreeCoeff() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("x + 2.0 + 4.0");
         viewModel.setSecondPolynomialStr("2.0x -2.0+4.0");
 
@@ -227,7 +196,6 @@ public class ViewModelTest {
 
     @Test
     public void canMultiplyWrongFormatPolynomialPoint() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("2.x -2.0+4.0");
         viewModel.setSecondPolynomialStr("2.0x^2 + 14.0x + 12.0");
 
@@ -238,7 +206,6 @@ public class ViewModelTest {
 
     @Test
     public void canSubtractDifficultPolynomial() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("5.9x^6-78x^5-9");
         viewModel.setSecondPolynomialStr("x+x+5");
 
@@ -249,7 +216,6 @@ public class ViewModelTest {
 
     @Test
     public void canMultiplyWrongFormatPolynomialXDetectedAfterDegree() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("2.0x^x -2.0+4.0");
         viewModel.setSecondPolynomialStr("2.0x^2 + 14.0x + 12.0");
 
@@ -260,7 +226,6 @@ public class ViewModelTest {
 
     @Test
     public void canAddPolynomialSymbolMinusBeforeX() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("-x -2.0");
         viewModel.setSecondPolynomialStr("2.0x^2 + 2.0x + 12.0");
 
@@ -271,7 +236,6 @@ public class ViewModelTest {
 
     @Test
     public void caAddWrongFormatPolynomialSymbolMinusAfterPlus() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("2.0x^2 + 14.0x + 12.0");
         viewModel.setSecondPolynomialStr("2.0x^2 +- 14.0x + 12.0");
 
@@ -282,7 +246,6 @@ public class ViewModelTest {
 
     @Test
     public void caAddWrongFormatPolynomialDigitAfterX() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("2.0x2 + 14.0x + 12.0");
         viewModel.setSecondPolynomialStr("2.0x^2 + 14.0x + 12.0");
 
@@ -293,7 +256,6 @@ public class ViewModelTest {
 
     @Test
     public void caAddWrongFormatPolynomialPointAfterX() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("2.0x. + 14.0x + 12.0");
         viewModel.setSecondPolynomialStr("2.0x^2 + 14.0x + 12.0");
 
@@ -304,7 +266,6 @@ public class ViewModelTest {
 
     @Test
     public void caAddWrongFormatPolynomialDegreeAfterPoint() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("2.^2 + 14.0x + 12.0");
         viewModel.setSecondPolynomialStr("2.0x^2 + 14.0x + 12.0");
 
@@ -315,7 +276,6 @@ public class ViewModelTest {
 
     @Test
     public void caAddWrongFormatPolynomialMinusAfterDegree() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("2x^-2 + 14.0x + 12.0");
         viewModel.setSecondPolynomialStr("2.0x^2 + 14.0x + 12.0");
 
@@ -326,7 +286,6 @@ public class ViewModelTest {
 
     @Test
     public void caAddWrongFormatPolynomialXAfterX() {
-        viewModel = new ViewModel();
         viewModel.setFirstPolynomialStr("xx+1");
         viewModel.setSecondPolynomialStr("2.0x^2 + 14.0x + 12.0");
 
@@ -336,10 +295,8 @@ public class ViewModelTest {
     }
     @Test
     public void checkInitLog() {
-        viewModel = new ViewModel();
         List<String> log = viewModel.getListLog();
 
         assertTrue(log.isEmpty());
     }
-
 }

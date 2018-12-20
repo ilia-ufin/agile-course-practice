@@ -4,17 +4,15 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.File;
 import java.util.List;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-
 public class TextLoggerTest {
+
     private static final String FILE_NAME = "./textLogger.log";
     private TextLogger textLogger;
     private static final String TEXT_1 = "Text 1";
@@ -77,4 +75,4 @@ public class TextLoggerTest {
         assertEquals(0, listLog.size());
     }
 
-    }
+}

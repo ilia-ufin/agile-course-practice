@@ -11,6 +11,7 @@ import ru.unn.agile.polynomial.infrastructure.TextLogger;
 public class PolynomialCalculator {
     @FXML
     private ViewModel viewModel;
+
     @FXML
     private TextField firstPolynomial;
     @FXML
@@ -18,10 +19,8 @@ public class PolynomialCalculator {
 
     @FXML
     private Button btnAdd;
-
     @FXML
     private Button btnSub;
-
     @FXML
     private Button btnMult;
 
@@ -51,20 +50,16 @@ public class PolynomialCalculator {
                 viewModel.multiply();
             }
         });
-
-
     }
 
     @FXML
     public void handleAddButtonAction(final ActionEvent event) {
         viewModel.add();
     }
-
     @FXML
     public void handleSubtractButtonAction(final ActionEvent event) {
         viewModel.subtract();
     }
-
     @FXML
     public void handleMultiplyButtonAction(final ActionEvent event) {
         viewModel.multiply();

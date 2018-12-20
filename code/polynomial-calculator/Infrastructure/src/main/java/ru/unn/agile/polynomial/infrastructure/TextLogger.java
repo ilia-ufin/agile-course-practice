@@ -1,16 +1,13 @@
 package ru.unn.agile.polynomial.infrastructure;
 
 import ru.unn.agile.polynomial.viewmodel.ILogger;
-
 import java.io.*;
 import java.util.*;
-
 
 public class TextLogger implements ILogger {
 
     private final String filename;
     private BufferedWriter writer;
-
 
     public TextLogger(final String filename) {
         this.filename = filename;
@@ -36,7 +33,6 @@ public class TextLogger implements ILogger {
             System.out.println(ex.getMessage());
         }
         return listLog;
-
     }
 
     @Override
@@ -50,8 +46,5 @@ public class TextLogger implements ILogger {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
-
-
 }
