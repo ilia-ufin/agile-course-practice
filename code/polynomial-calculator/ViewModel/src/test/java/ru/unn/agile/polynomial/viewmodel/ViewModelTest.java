@@ -71,17 +71,22 @@ public class ViewModelTest {
         viewModel.add();
 
         assertEquals(PolynomialParser.FORMAT_ERROR + "1", viewModel.getResultStr());
+
+
     }
 
     @Test
     public void canAddPolynomial() {
         ViewModel viewModel = new ViewModel();
-        viewModel.setFirstPolynomialStr("1.0x^3-2.0x^2+3.0x-4.0");
-        viewModel.setSecondPolynomialStr("-1.0x^3-2.0x^2+3.0x-4.0");
+        viewModel.setFirstPolynomialStr("1.0x^3 - 2.0x^2 + 3.0x - 4.0");
+        viewModel.setSecondPolynomialStr("-1.0x^3 - 2.0x^2 + 3.0x - 4.0");
 
         viewModel.add();
 
-        assertEquals("-4.0x^2 + 6.0x - 8.0", viewModel.getResultStr());
+        String actualMessage = viewModel.getListLog().get(0);
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+viewModel.getFirstPolynomialStr()+" + "+viewModel.getSecondPolynomialStr()+" = "+viewModel.resultStrProperty() );
+        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
@@ -301,19 +306,21 @@ public class ViewModelTest {
 
         assertTrue(log.isEmpty());
     }
-
+/*
     @Test
-    public void checkLogForFirstDegreeWithCoeffPlus() {
-        ViewModel viewModel = new ViewModel();
+    public void checkLogAddNumber() {
+        ViewModel viewModel = new ViewModel(new FakeLogger());
+        double[] toInit = {1.0, -2.0, 3.0, -4.0};
+        Polynomial pStart = new Polynomial(toInit);
+        Polynomial pResult = new Polynomial(toInit);
+        pResult.add(5);
 
-        double[] toInit = {1.0, 1.0};
-        Polynomial p = new Polynomial(toInit);
-        String expectedMessage = String.format(LogMessage.CONVERT_WAS_PRESSED,
-                viewModel.getConvertFrom(), "°C",
-                viewModel.getConvertTo(), TemperaturesUnit.FAHRENHEIT);
-        String actualMmessage = viewModel.getListLog().get(0);
-
-
-        assertEquals("1.0x + 1.0", p.toString());
+        assertEquals("1.0x^3 - 2.0x^2 + 3.0x + 1.0", pResult.toString());
+        String actualMessage = viewModel.getListLog().get(0);
+        String expectedMessage = String.format(LogMessage.OPERATION_PASSED+pStart.toString()+" + 5 = "+pResult.toString());
+        assertTrue(actualMessage.contains(expectedMessage));
     }
+*/
+
+
 }

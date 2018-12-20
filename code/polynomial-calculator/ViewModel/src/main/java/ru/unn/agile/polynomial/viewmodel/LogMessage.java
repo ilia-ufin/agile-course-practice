@@ -1,4 +1,9 @@
 package ru.unn.agile.polynomial.viewmodel;
 
-public enum LogMessage {
+public class LogMessage {
+    public static final String OPERATION_PASSED =
+            "Operation: ";
+
+    public static final String INCORRECT_VALUE =
+            "Incorect value";
 }

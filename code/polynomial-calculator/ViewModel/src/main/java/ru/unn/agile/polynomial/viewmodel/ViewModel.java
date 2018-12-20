@@ -11,6 +11,7 @@ public class ViewModel {
     private StringProperty firstPolynomialStr = new SimpleStringProperty();
     private StringProperty secondPolynomialStr = new SimpleStringProperty();
     private StringProperty resultStr = new SimpleStringProperty();
+    private final StringProperty log = new SimpleStringProperty();
     private Polynomial p1 = new Polynomial();
     private Polynomial p2 = new Polynomial();
 
@@ -58,6 +59,7 @@ public class ViewModel {
         if (logger != null) {
             this.logger = logger;
             initDefaultFields();
+
         } else {
             throw new IllegalArgumentException("Log error: logger cannot be null");
         }
@@ -88,6 +90,8 @@ public class ViewModel {
     public void add() {
         if (parseInput()) {
             setResultStr(p1.add(p2).toString());
+            addLog(String.format(LogMessage.OPERATION_PASSED+p1+" + "+p2+" = "+resultStrProperty()));
+
         } else {
             return;
         }
@@ -117,5 +121,14 @@ public class ViewModel {
 
     public List<String> getListLog() {
         return logger.getListLog();
+    }
+
+    private void addLog(final String message) {
+        logger.log(message);
+        StringBuilder logMsg = new StringBuilder();
+        for (String line : logger.getListLog()) {
+            logMsg.append(line).append("\n");
+        }
+        log.set(logMsg.toString());
     }
 }
