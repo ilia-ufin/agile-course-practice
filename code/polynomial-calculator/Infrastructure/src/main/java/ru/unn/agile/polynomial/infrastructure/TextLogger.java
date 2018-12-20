@@ -42,6 +42,15 @@ public class TextLogger implements ILogger {
 
     @Override
     public void log(final String message) {
+        try {
+            if (writer != null) {
+                writer.write(message);
+                writer.newLine();
+                writer.flush();
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }
 
