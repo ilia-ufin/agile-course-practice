@@ -150,4 +150,12 @@ public class ViewModel {
     public StringProperty logProperty() {
         return log;
     }
+
+    public static final class LogMessage {
+        public static final String OPERATION_PASSED =
+                "Operation: %s %s = %s";
+
+        public static final String PARSE_PASSED =
+                "Parse passed: %s";
+    }
 }
