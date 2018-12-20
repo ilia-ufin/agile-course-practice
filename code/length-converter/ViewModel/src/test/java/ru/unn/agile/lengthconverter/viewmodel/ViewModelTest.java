@@ -8,15 +8,19 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import ru.unn.agile.lengthconverter.model.LengthUnit;
+
+import java.util.List;
 
 public class ViewModelTest {
     private ViewModel viewModel;
 
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        FakeLogger fakeLogger = new FakeLogger();
+        viewModel = new ViewModel(fakeLogger);
     }
 
     @After
@@ -105,5 +109,55 @@ public class ViewModelTest {
         viewModel.convert();
 
         assertEquals(Status.ERROR.toString(), viewModel.getStatus());
+    }
+
+    @Test
+    public void canInitializeLog() {
+        List<String> log = viewModel.getLogList();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void logMessageCanConvertFromMToKM() {
+        viewModel.convertFromProperty().set("20.0");
+        viewModel.unitPropertyFrom().setValue(LengthUnit.METERS);
+        viewModel.unitPropertyTo().setValue(LengthUnit.KILOMETERS);
+
+        viewModel.convert();
+
+        String message = viewModel.getLogList().get(0);
+        String expectedMessage = String.format(LogMessages.CONVERT_IS_PRESSED,
+                viewModel.getConvertFrom(), LengthUnit.METERS,
+                viewModel.getConvertTo(), LengthUnit.KILOMETERS);
+        assertTrue(message.contains(expectedMessage));
+    }
+
+    @Test
+    public void logMessageSetIncorrectInputFormat() {
+        viewModel.convertFromProperty().set("a");
+        viewModel.unitPropertyFrom().setValue(LengthUnit.METERS);
+        viewModel.unitPropertyTo().setValue(LengthUnit.MILLIMETERS);
+
+        viewModel.convert();
+
+        String message = viewModel.getLogList().get(0);
+        String expectedMessage = String.format(LogMessages.INPUT_VALUE_IS_INCORRECT,
+                viewModel.getConvertFrom());
+        assertTrue(message.contains(expectedMessage));
+    }
+
+    @Test
+    public void logMessageSetIncorrectInputValue() {
+        viewModel.convertFromProperty().set("-20.0");
+        viewModel.unitPropertyFrom().setValue(LengthUnit.METERS);
+        viewModel.unitPropertyTo().setValue(LengthUnit.FEET);
+
+        viewModel.convert();
+
+        String message = viewModel.getLogList().get(0);
+        String expectedMessage = String.format(LogMessages.INPUT_VALUE_IS_INCORRECT,
+                viewModel.getConvertFrom());
+        assertTrue(message.contains(expectedMessage));
     }
 }
