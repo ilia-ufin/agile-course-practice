@@ -78,7 +78,7 @@ public class ViewModel {
     }
 
     public final boolean isCalculationDisabled() {
-        return calculationDisabled.get();
+        return calculationDisabledProperty().get();
     }
 
     public StringProperty number1Property() {
@@ -128,6 +128,17 @@ public class ViewModel {
         return log;
     }
 
+    public String getResult() {
+        return result.get();
+    }
+
+    public String getUserMessage() {
+        return userMessage.get();
+    }
+
+    public String getLog() {
+        return log.get();
+    }
 
     private class ValueChangeListener implements ChangeListener<String> {
         @Override

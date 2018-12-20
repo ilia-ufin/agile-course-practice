@@ -31,8 +31,8 @@ public class ViewModelTests {
     @Test
     public void canSetDefaultValues() {
         assertEquals(NumeralSystem.BINARY, viewModel.getOutputNumberSystem());
-        assertEquals("", viewModel.resultProperty().get());
-        assertEquals(UserMessages.WAIT_FOR_INPUT.toString(), viewModel.userMessageProperty().get());
+        assertEquals("", viewModel.getResult());
+        assertEquals(UserMessages.WAIT_FOR_INPUT.toString(), viewModel.getUserMessage());
         assertEquals(true, viewModel.isCalculationDisabled());
         assertEquals("", viewModel.number1Property().get());
         assertEquals("", viewModel.number2Property().get());
