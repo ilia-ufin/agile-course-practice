@@ -6,6 +6,10 @@ public final class LengthConverter {
     public static double convert(final LengthUnit sourceUnit,
                                  final double value,
                                  final LengthUnit targetUnit) {
-        return value * sourceUnit.getUnitToMeter() / targetUnit.getUnitToMeter();
+        if (value < 0) {
+            throw new LengthConverterExceptions("Value is negative");
+        } else {
+            return value * sourceUnit.getUnitToMeter() / targetUnit.getUnitToMeter();
+        }
     }
 }

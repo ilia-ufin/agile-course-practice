@@ -205,9 +205,13 @@ include "code/mortgage-calculator/Infrastructure"
 project(":code/mortgage-calculator/Infrastructure").name = "mortgage-calculator-Infrastructure"
 
 
-// Kochuev Andrey, Length Converter
-include "code/kochuev-andrey-length-converter"
-project(":code/kochuev-andrey-length-converter").name = "kochuev-andrey-length-converter"
+// Kochuev Andrey, Golovanova Tatyana Length Converter
+include "code/length-converter/Model"
+project(":code/length-converter/Model").name = "length-converter-Model"
+include "code/length-converter/View"
+project(":code/length-converter/View").name = "length-converter-View"
+include "code/length-converter/ViewModel"
+project(":code/length-converter/ViewModel").name = "length-converter-ViewModel"
 
 // Osechkin Sergey, DepositCalculator
 include "code/deposit-calculator/Model"
