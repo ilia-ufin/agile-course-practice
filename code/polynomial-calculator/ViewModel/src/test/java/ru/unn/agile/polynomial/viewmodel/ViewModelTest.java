@@ -62,6 +62,9 @@ public class ViewModelTest {
         Polynomial polynomial = viewModel.parsePolynomial("3.0");
 
         assertEquals("3.0", polynomial.toString());
+        String actualMessage = viewModel.getListLog().get(0);
+        String expectedMessage = String.format(LogMessage.PARSE_PASSED+polynomial.toString());
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
