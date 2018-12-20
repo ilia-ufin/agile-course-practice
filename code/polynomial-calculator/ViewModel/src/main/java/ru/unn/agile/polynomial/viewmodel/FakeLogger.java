@@ -3,7 +3,7 @@ package ru.unn.agile.polynomial.viewmodel;
 import java.util.List;
 import java.util.ArrayList;
 
-public class FakeLogger  implements ILogger{
+public class FakeLogger  implements ILogger {
     private final List<String> log = new ArrayList<>();
 
     @Override
@@ -12,7 +12,7 @@ public class FakeLogger  implements ILogger{
     }
 
     @Override
-    public void log( String s) {
+    public void log(final String s) {
         log.add(s);
     }
 }

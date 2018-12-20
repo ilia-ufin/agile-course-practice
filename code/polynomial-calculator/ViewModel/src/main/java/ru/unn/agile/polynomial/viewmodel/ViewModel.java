@@ -6,7 +6,7 @@ import ru.unn.agile.polynomial.model.Polynomial;
 import java.util.List;
 
 public class ViewModel {
-    private ILogger logger=new FakeLogger();;
+    private ILogger logger = new FakeLogger();;
 
     private StringProperty firstPolynomialStr = new SimpleStringProperty();
     private StringProperty secondPolynomialStr = new SimpleStringProperty();
@@ -55,7 +55,7 @@ public class ViewModel {
         initDefaultFields();
     }
 
-    public ViewModel( ILogger logger) {
+    public ViewModel(final ILogger logger) {
         if (logger != null) {
             this.logger = logger;
             initDefaultFields();
