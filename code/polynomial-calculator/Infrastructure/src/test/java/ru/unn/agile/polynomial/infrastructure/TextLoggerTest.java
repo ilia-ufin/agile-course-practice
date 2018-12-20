@@ -26,4 +26,9 @@ public class TextLoggerTest {
         assertNotNull(textLogger);
     }
 
+    @Test
+    public void initialWithInvalidFileName() {
+        textLogger = new TextLogger("");
+    }
+
     }
