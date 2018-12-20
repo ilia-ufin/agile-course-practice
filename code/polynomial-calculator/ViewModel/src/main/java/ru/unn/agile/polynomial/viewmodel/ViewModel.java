@@ -3,8 +3,11 @@ package ru.unn.agile.polynomial.viewmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ru.unn.agile.polynomial.model.Polynomial;
+import java.util.List;
 
 public class ViewModel {
+    private ILogger logger=new FakeLogger();;
+
     private StringProperty firstPolynomialStr = new SimpleStringProperty();
     private StringProperty secondPolynomialStr = new SimpleStringProperty();
     private StringProperty resultStr = new SimpleStringProperty();
@@ -49,6 +52,15 @@ public class ViewModel {
 
     public ViewModel() {
         initDefaultFields();
+    }
+
+    public ViewModel( ILogger logger) {
+        if (logger != null) {
+            this.logger = logger;
+            initDefaultFields();
+        } else {
+            throw new IllegalArgumentException("Log error: logger cannot be null");
+        }
     }
 
     public Polynomial parsePolynomial(final String polynomialStrSource) {
@@ -101,5 +113,9 @@ public class ViewModel {
         firstPolynomialStr.set("");
         secondPolynomialStr.set("");
         resultStr.set("");
+    }
+
+    public List<String> getListLog() {
+        return logger.getListLog();
     }
 }

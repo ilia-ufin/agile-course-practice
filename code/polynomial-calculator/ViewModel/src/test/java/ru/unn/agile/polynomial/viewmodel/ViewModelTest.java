@@ -2,8 +2,9 @@ package ru.unn.agile.polynomial.viewmodel;
 
 import org.junit.Test;
 import ru.unn.agile.polynomial.model.Polynomial;
-
+import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ViewModelTest {
     @Test
@@ -292,5 +293,27 @@ public class ViewModelTest {
         viewModel.add();
 
         assertEquals(PolynomialParser.FORMAT_ERROR + "1", viewModel.getResultStr());
+    }
+    @Test
+    public void checkInitLog() {
+        ViewModel viewModel = new ViewModel();
+        List<String> log = viewModel.getListLog();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void checkLogForFirstDegreeWithCoeffPlus() {
+        ViewModel viewModel = new ViewModel();
+
+        double[] toInit = {1.0, 1.0};
+        Polynomial p = new Polynomial(toInit);
+        String expectedMessage = String.format(LogMessage.CONVERT_WAS_PRESSED,
+                viewModel.getConvertFrom(), "°C",
+                viewModel.getConvertTo(), TemperaturesUnit.FAHRENHEIT);
+        String actualMmessage = viewModel.getListLog().get(0);
+
+
+        assertEquals("1.0x + 1.0", p.toString());
     }
 }
