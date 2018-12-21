@@ -225,6 +225,8 @@ include "code/binary-search/View"
 project(":code/binary-search/View").name = "binary-search-View"
 include "code/binary-search/ViewModel"
 project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
+include "code/binary-search/Infrastructure"
+project(":code/binary-search/Infrastructure").name = "binary-search-Infrastructure"
 
 // Kryukova Polina, caesar-cipher
 include "code/caesar-cipher"

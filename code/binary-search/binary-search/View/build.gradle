@@ -1,0 +1,6 @@
+apply from:   rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'
+
+dependencies {
+    compile project(':binary-search-ViewModel')
+    compile project(':binary-search-Infrastructure')
+}
