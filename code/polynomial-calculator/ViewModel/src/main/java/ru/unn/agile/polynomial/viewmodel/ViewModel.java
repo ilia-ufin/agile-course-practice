@@ -6,6 +6,12 @@ import ru.unn.agile.polynomial.model.Polynomial;
 import java.util.List;
 
 public class ViewModel {
+    public static final String OPERATION_PASSED =
+            "Operation: %s %s = %s";
+
+    public static final String PARSE_PASSED =
+            "Parse passed: %s";
+
     private ILogger logger = new FakeLogger();
     private StringProperty firstPolynomialStr = new SimpleStringProperty();
     private StringProperty secondPolynomialStr = new SimpleStringProperty();
@@ -65,7 +71,7 @@ public class ViewModel {
     public Polynomial parsePolynomial(final String polynomialStrSource) {
         PolynomialParser parser = new PolynomialParser(polynomialStrSource);
         Polynomial p = parser.parsePolynomial();
-        addLog(String.format(LogMessage.PARSE_PASSED, p.toString()));
+        addLog(String.format(PARSE_PASSED, p.toString()));
         return p;
     }
 
@@ -89,7 +95,7 @@ public class ViewModel {
     public void add() {
         if (parseInput()) {
             setResultStr(p1.add(p2).toString());
-            addLog(String.format(LogMessage.OPERATION_PASSED, p1, p2, getResultStr()));
+            addLog(String.format(OPERATION_PASSED, p1, p2, getResultStr()));
         } else {
             return;
         }
@@ -98,7 +104,7 @@ public class ViewModel {
     public void subtract() {
         if (parseInput()) {
             setResultStr(p1.subtract(p2).toString());
-            addLog(String.format(LogMessage.OPERATION_PASSED, p1, p2, getResultStr()));
+            addLog(String.format(OPERATION_PASSED, p1, p2, getResultStr()));
         } else {
             return;
         }
@@ -107,7 +113,7 @@ public class ViewModel {
     public void multiply() {
         if (parseInput()) {
             setResultStr(p1.multiply(p2).toString());
-            addLog(String.format(LogMessage.OPERATION_PASSED, p1, p2, getResultStr()));
+            addLog(String.format(OPERATION_PASSED, p1, p2, getResultStr()));
         } else {
             return;
         }
@@ -148,12 +154,8 @@ public class ViewModel {
         return log;
     }
 
-    public static final class LogMessage {
-        public static final String OPERATION_PASSED =
-                "Operation: %s %s = %s";
 
-        public static final String PARSE_PASSED =
-                "Parse passed: %s";
-    }
+
+
 
 }

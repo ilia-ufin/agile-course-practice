@@ -79,5 +79,4 @@ public class TextLoggerTest {
 
         assertEquals(0, listLog.size());
     }
-
 }
