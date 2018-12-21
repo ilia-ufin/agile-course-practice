@@ -1,6 +1,5 @@
 package ru.unn.agile.caesarcipher.infrastructure;
 
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.fail;
 
@@ -12,12 +11,6 @@ import static junit.framework.TestCase.assertNotNull;
 
 public class TxtLoggerTests {
     private static final String FILENAME = "./TxtLoggerTests.log";
-    private TxtLogger logger;
-
-    @Before
-    public void setUp() {
-        logger = new TxtLogger(FILENAME);
-    }
 
     @Test
     public void canGenerateLogFileOnDisk() {
@@ -30,7 +23,9 @@ public class TxtLoggerTests {
 
     @Test
     public void canGenerateLoggerWithFileName() {
+        TxtLogger logger;
+        logger = new TxtLogger(FILENAME);
+
         assertNotNull(logger);
     }
-
 }
