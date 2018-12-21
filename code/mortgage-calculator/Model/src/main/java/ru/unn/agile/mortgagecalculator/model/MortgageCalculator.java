@@ -3,7 +3,7 @@ package ru.unn.agile.mortgagecalculator.model;
 import java.util.Locale;
 
 public class MortgageCalculator {
-    private static final String NOT_CORRECT_DATA =  "Not correct data";
+    private static final String NOT_CORRECT_DATA = "Not correct data";
     private double fullCostOfApartment;
     private double initialPayment = 0;
     private double remainingPayment;
@@ -108,6 +108,7 @@ public class MortgageCalculator {
     public double[] getFullPriceArray() {
         return fullPriceAsArray;
     }
+
     private double round(final double roundedNum) {
         return Math.round(roundedNum * HUNDRED) / HUNDRED;
     }
@@ -119,7 +120,8 @@ public class MortgageCalculator {
         }
         return fullSum;
     }
-    public  String[] getFullPriceArrayStrings() {
+
+    public String[] getFullPriceArrayStrings() {
         String[] fullPriceArrayStrings = new String[dateOfMortgage];
         for (int i = 0; i < dateOfMortgage; i++) {
             fullPriceArrayStrings[i] = String.format(Locale.ROOT, "%.2f", fullPriceAsArray[i]);

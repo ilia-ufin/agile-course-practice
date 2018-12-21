@@ -217,4 +217,37 @@ public class SalaryCalculatorTests {
 
         assertEquals(14236.36, calculator.calculateSalaryWithNDS(), delta);
     }
+
+    @Test
+    public void noChangeWhenNewSalaryEqualOld() {
+        SalaryCalculator calculator = new SalaryCalculator();
+
+        calculator.setSalary(100);
+        calculator.setSalary(100);
+
+        assertEquals(100, calculator.getSalary(), delta);
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void salaryMoreThenMaxSalary() {
+        SalaryCalculator calculator = new SalaryCalculator();
+        calculator.setSalary(1000000001);
+    }
+
+    @Test
+    public void noChangeWhenNewWorkedHoursEqualOld() {
+        SalaryCalculator calculator = new SalaryCalculator();
+
+        calculator.setWorkedHourInMonth(40);
+        calculator.setSalary(40);
+
+        assertEquals(40, calculator.getWorkedHourInMonth(), delta);
+    }
+
+    @Test(expected = ArithmeticException.class)
+    public void isInputIncorrect() {
+        SalaryCalculator calculator = new SalaryCalculator();
+        calculator.setSalary(0);
+        calculator.calculateSalaryWithNDS();
+    }
 }

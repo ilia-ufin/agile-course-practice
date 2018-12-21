@@ -3,11 +3,12 @@ package ru.unn.agile.mortgagecalculator.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class MortgageCalculatorTests {
 
-    private static final double  EPSILON = 0.1;
+    private static final double EPSILON = 0.1;
     private static final double FULL_COST_OF_APARTMENT_FOR_TESTS = 1000;
     private static final double FULL_COST_OF_APARTMENT_FIVE_HUNDRED_FOR_TESTS = 500;
 

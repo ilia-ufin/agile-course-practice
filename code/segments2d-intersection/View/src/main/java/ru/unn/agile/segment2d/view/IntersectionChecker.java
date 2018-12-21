@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import ru.unn.agile.segment2d.viewmodel.ViewModel;
+import ru.unn.agile.segment2d.infrastructure.TxtLogger;
 
 public class IntersectionChecker {
     @FXML
@@ -35,6 +36,7 @@ public class IntersectionChecker {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./SegmentsChecker.log"));
         firstSegmentFirstPointCoordX.textProperty().bindBidirectional(
                 viewModel.firstSegmentFirstPointCoordXProperty());
         firstSegmentFirstPointCoordY.textProperty().bindBidirectional(

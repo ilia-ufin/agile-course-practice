@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':intersect-line-and-plane-ViewModel')
+    testCompile project(':intersect-line-and-plane-ViewModel').sourceSets.test.output
+}

@@ -2,4 +2,5 @@ apply from: "$rootDir/config/scripts/javafx.plugin"
 
 dependencies {
     compile project(':shape-3d-area-view-model')
+    compile project(':shape-3d-area-infrastructure')
 }

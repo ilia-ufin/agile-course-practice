@@ -3,16 +3,21 @@ package ru.unn.agile.salarycalculator.viewmodel.legacy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.List;
 import ru.unn.agile.salarycalculator.viewmodel.legacy.ViewModel.Status;
-
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    public void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUpEmptyExample() {
-        viewModel = new ViewModel();
+        MyFakeLogger logger = new MyFakeLogger();
+        viewModel = new ViewModel(logger);
         viewModel.setSalary("10000");
         viewModel.setWorkedHours("154");
         viewModel.setCountMonth("10");
@@ -26,7 +31,6 @@ public class ViewModelTests {
 
     @Test
     public void checkStatusInBegin() {
-        viewModel = new ViewModel();
         assertEquals(Status.COUNT_WAITING, viewModel.getStatus());
     }
 
@@ -112,6 +116,13 @@ public class ViewModelTests {
     }
 
     @Test
+    public void checkThatButtonEnabled() {
+        viewModel.checkCountFields();
+
+        assertTrue(viewModel.isCalculateButtonEnable());
+    }
+
+    @Test
     public void checkResultWithOvertime() {
         viewModel.setWorkedHours("200");
         viewModel.checkCountFields();
@@ -151,10 +162,147 @@ public class ViewModelTests {
     }
 
     @Test
+    public void checkResultWithIncorrectMonthCount() {
+        viewModel.setCountMonth("notNum");
+
+        viewModel.checkCountFields();
+
+        assertEquals(Status.BAD_MONTH_FORMAT, viewModel.getStatus());
+    }
+
+    @Test
+    public void checkResultSalaryNotNumber() {
+        viewModel.setSalary("abc");
+        viewModel.checkCountFields();
+
+        assertEquals(Status.BAD_COUNT_FORMAT, viewModel.getStatus());
+    }
+
+    @Test
     public void checkStatusAndButtonWhenIncorrectDate() {
         viewModel.setCountMonth("35");
         viewModel.checkCountFields();
 
         assertEquals(Status.BAD_MONTH_FORMAT, viewModel.getStatus());
+    }
+
+    @Test
+    public void canCreateViewModelWithLogger() {
+        MyFakeLogger logger = new MyFakeLogger();
+        ViewModel viewModelLogged = new ViewModel(logger);
+
+        assertNotNull(viewModelLogged);
+    }
+
+    @Test
+    public void viewModelConstructorThrowsExceptionWithNullLogger() {
+        try {
+            new ViewModel(null);
+            fail("Exception wasn't thrown");
+        } catch (IllegalArgumentException ex) {
+            assertEquals("Logger parameter can't be null", ex.getMessage());
+        } catch (Exception ex) {
+            fail("Invalid exception type");
+        }
+    }
+
+    @Test
+    public void isLogEmptyInTheBeginning() {
+        List<String> log = viewModel.getLog();
+
+        assertEquals(0, log.size());
+    }
+
+    @Test
+    public void isCalculatePuttingSomething() {
+        viewModel.calculateSalary();
+
+        List<String> log = viewModel.getLog();
+        assertNotEquals(0, log.size());
+    }
+
+    @Test
+    public void isLogContainsProperMessage() {
+        viewModel.calculateSalary();
+        String message = viewModel.getLog().get(0);
+
+        assertEquals(message, ViewModel.LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
+                + ": salary = " + viewModel.getSalary()
+                + "; workedHours = " + viewModel.getWorkedHours()
+                + "; countMonth = " + viewModel.getCountMonth()
+                + "; countYear = " + viewModel.getCountYear() + ".");
+    }
+
+    @Test
+    public void canPutSeveralLogMessages() {
+        viewModel.checkCountFields();
+        viewModel.calculateSalary();
+        viewModel.calculateSalary();
+        viewModel.calculateSalary();
+
+        assertEquals(3, viewModel.getLog().size());
+    }
+
+    @Test
+    public void isEditingFinishLogged() {
+        viewModel.setSalary("1000");
+        viewModel.focusLost();
+        String message = viewModel.getLog().get(0);
+
+        assertEquals(message, getLogTemplate());
+    }
+
+    @Test
+    public void doNotLogSameParametersTwice() {
+        viewModel.setCountYear("1000");
+        viewModel.setCountYear("1000");
+
+        viewModel.focusLost();
+
+        String message = viewModel.getLog().get(0);
+        assertEquals(message, getLogTemplate());
+    }
+
+    @Test
+    public void doNotLogSalaryParametersTwiceWithPartialInput() {
+        viewModel.setSalary("1000");
+        viewModel.setSalary("1000");
+
+        viewModel.focusLost();
+
+        viewModel.checkCountFields();
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void doNotLogCountMonthParametersTwiceWithPartialInput() {
+        viewModel.setCountMonth("12");
+        viewModel.setCountMonth("12");
+        viewModel.setCountMonth("12");
+
+        viewModel.focusLost();
+        viewModel.focusLost();
+        viewModel.focusLost();
+        viewModel.checkCountFields();
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void doNotLogCountWorkHoursParametersTwiceWithPartialInput() {
+        viewModel.setWorkedHours("40");
+        viewModel.setWorkedHours("40");
+        viewModel.focusLost();
+        viewModel.checkCountFields();
+
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    public String getLogTemplate() {
+        return ViewModel.LogMessages.EDITING_FINISHED
+                + "Input arguments are: ["
+                + viewModel.getSalary() + "; "
+                + viewModel.getWorkedHours() + "; "
+                + viewModel.getCountMonth() + "; "
+                + viewModel.getCountYear() + "]";
     }
 }

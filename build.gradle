@@ -91,12 +91,18 @@ subprojects {
     apply plugin: 'pmd'
 
     repositories {
-       mavenCentral()
+       maven {
+           url 'https://jitpack.io'
+           mavenCentral()
+       }
     }
 
     dependencies {
         testCompile 'junit:junit:4.11'
         testCompile "org.mockito:mockito-core:1.+"
+        testCompile 'com.github.OleasterFramework.Oleaster:oleaster-runner:v0.3.4'
+        testCompile 'com.github.OleasterFramework.Oleaster:oleaster-matcher:v0.3.4'
+
         compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.4.1'
         compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.4.1'
         compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.4.1'

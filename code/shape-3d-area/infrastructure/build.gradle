@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':shape-3d-area-view-model')
+    testCompile project(':shape-3d-area-view-model').sourceSets.test.output
+}
