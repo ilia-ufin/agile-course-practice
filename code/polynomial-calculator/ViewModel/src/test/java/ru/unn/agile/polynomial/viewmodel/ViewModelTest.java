@@ -232,7 +232,12 @@ public class ViewModelTest {
 
         viewModel.add();
 
+        String expectedFullLog = "Parse passed: -1.0x - 2.0\n"
+                + "Parse passed: 2.0x^2 + 2.0x + 12.0\n"
+                + "Operation: -1.0x - 2.0 2.0x^2 + 2.0x + 12.0 = 2.0x^2 + 1.0x + 10.0\n";
+        String actualFullLog = viewModel.getLog();
         assertEquals("2.0x^2 + 1.0x + 10.0", viewModel.getResultStr());
+        assertEquals(expectedFullLog, actualFullLog);
     }
 
     @Test
@@ -304,7 +309,17 @@ public class ViewModelTest {
     @Test(expected = IllegalArgumentException.class)
     public void initViewModelWithNullLogger() {
         ILogger logger = null;
+
         viewModel = new ViewModel(logger);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkExceptionSetLoggerNull() {
+        ILogger logger = null;
+
+        viewModel.setLogger(logger);
+    }
+
+
 
 }
