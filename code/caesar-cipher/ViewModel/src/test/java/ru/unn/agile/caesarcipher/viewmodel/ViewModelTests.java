@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public abstract class ViewModelTests {
+public class ViewModelTests {
     private ViewModel viewModel;
 
     public void setViewModel(final ViewModel viewModel) {
