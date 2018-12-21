@@ -60,7 +60,7 @@ public class ViewModelTest {
 
         assertEquals("1.0x^3 - 2.0x^2 + 3.0x", polynomial.toString());
         String actualMessage = viewModel.getListLog().get(0);
-        String expectedMessage = String.format(ViewModel.LogMessage.PARSE_PASSED,
+        String expectedMessage = String.format(ViewModel.PARSE_PASSED,
                 polynomial.toString());
         assertTrue(actualMessage.contains(expectedMessage));
     }
@@ -90,7 +90,7 @@ public class ViewModelTest {
         viewModel.add();
 
         String msg = viewModel.getListLog().get(2);
-        String expectMsg = String.format(ViewModel.LogMessage.OPERATION_PASSED,
+        String expectMsg = String.format(ViewModel.OPERATION_PASSED,
                 viewModel.getFirstPolynomialStr(), viewModel.getSecondPolynomialStr(),
                 viewModel.getResultStr());
         assertTrue(msg.contains(expectMsg));
@@ -105,7 +105,7 @@ public class ViewModelTest {
         viewModel.multiply();
 
         String actualMsg = viewModel.getListLog().get(2);
-        String expectedMsg = String.format(ViewModel.LogMessage.OPERATION_PASSED,
+        String expectedMsg = String.format(ViewModel.OPERATION_PASSED,
                 viewModel.getFirstPolynomialStr(), viewModel.getSecondPolynomialStr(),
                 viewModel.getResultStr());
         assertTrue(actualMsg.contains(expectedMsg));
@@ -120,7 +120,7 @@ public class ViewModelTest {
         viewModel.subtract();
 
         String actualMessage = viewModel.getListLog().get(2);
-        String expectedMessage = String.format(ViewModel.LogMessage.OPERATION_PASSED,
+        String expectedMessage = String.format(ViewModel.OPERATION_PASSED,
                 viewModel.getFirstPolynomialStr(),
                 viewModel.getSecondPolynomialStr(), viewModel.getResultStr());
         assertTrue(actualMessage.contains(expectedMessage));
