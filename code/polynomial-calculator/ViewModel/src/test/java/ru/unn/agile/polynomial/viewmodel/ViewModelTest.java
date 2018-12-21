@@ -299,4 +299,10 @@ public class ViewModelTest {
         assertTrue(log.isEmpty());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void initViewModelWithNullLogger() {
+        ILogger logger = null;
+        viewModel = new ViewModel(logger);
+    }
+
 }
