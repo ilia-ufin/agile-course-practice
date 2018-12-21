@@ -17,6 +17,7 @@ public class ViewModelTest {
 
     @Before
     public void initViewModel() {
+        viewModel = new ViewModel();
         viewModel = new ViewModel(new FakeLogger());
     }
 
@@ -168,6 +169,7 @@ public class ViewModelTest {
     public void canAddWrongFormatPolynomial() {
         viewModel.setFirstPolynomialStr("dfgdfg");
         viewModel.setSecondPolynomialStr("1.0x^2+2.0x+4.0");
+
         viewModel.add();
 
         assertEquals(PolynomialParser.FORMAT_ERROR + "1", viewModel.getResultStr());

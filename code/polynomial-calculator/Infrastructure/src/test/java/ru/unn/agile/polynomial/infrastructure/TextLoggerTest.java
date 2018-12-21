@@ -48,6 +48,7 @@ public class TextLoggerTest {
         textLogger.log(TEXT_1);
 
         String logMessage = textLogger.getListLog().get(0);
+
         assertTrue(logMessage.matches(TEXT_1));
     }
 
@@ -57,6 +58,7 @@ public class TextLoggerTest {
         textLogger.log(TEXT_2);
 
         String logMessage = textLogger.getListLog().get(1);
+
         assertFalse(logMessage.matches(TEXT_1));
         assertTrue(logMessage.matches(TEXT_2));
     }
@@ -64,6 +66,7 @@ public class TextLoggerTest {
     @Test
     public void checkLogFileCreated() {
         final File file = new File(FILE_NAME);
+
         Assert.assertTrue(file.exists());
         assertFalse(file.isDirectory());
     }
@@ -71,7 +74,9 @@ public class TextLoggerTest {
     @Test(expected = Test.None.class)
     public void noExceptionForLoggerWithIncorrectFileName() {
         TextLogger textLogger = new TextLogger("*/*/");
+
         List<String> listLog = textLogger.getListLog();
+
         assertEquals(0, listLog.size());
     }
 

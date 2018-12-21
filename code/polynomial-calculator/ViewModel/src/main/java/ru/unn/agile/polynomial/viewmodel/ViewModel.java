@@ -6,15 +6,13 @@ import ru.unn.agile.polynomial.model.Polynomial;
 import java.util.List;
 
 public class ViewModel {
-    private ILogger logger = new FakeLogger();;
-
+    private ILogger logger = new FakeLogger();
     private StringProperty firstPolynomialStr = new SimpleStringProperty();
     private StringProperty secondPolynomialStr = new SimpleStringProperty();
     private StringProperty resultStr = new SimpleStringProperty();
     private final StringProperty log = new SimpleStringProperty();
     private Polynomial p1 = new Polynomial();
     private Polynomial p2 = new Polynomial();
-
     public StringProperty firstPolynomialStrProperty() {
         return firstPolynomialStr;
     }
@@ -59,7 +57,6 @@ public class ViewModel {
         if (logger != null) {
             this.logger = logger;
             initDefaultFields();
-
         } else {
             throw new IllegalArgumentException("Log error: logger cannot be null");
         }
