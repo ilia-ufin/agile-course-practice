@@ -1,1 +1,4 @@
-dependencies { compile project(':numbers-in-words-ViewModel') }
+dependencies {
+    compile project(':numbers-in-words-ViewModel')
+    compile project(':numbers-in-words-Infrastructure')
+}

@@ -1,0 +1,6 @@
+apply from: rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'
+
+dependencies {
+    compile project(':converter-temperatures-ViewModel')
+    compile project(':converter-temperatures-Infrastructure')
+}

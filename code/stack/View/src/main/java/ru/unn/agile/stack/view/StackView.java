@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import ru.unn.agile.stack.infrastructure.TxtLogger;
 import ru.unn.agile.stack.viewmodel.ViewModel;
 
 public class StackView {
@@ -21,6 +22,8 @@ public class StackView {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./Stack.log"));
+
         inputNewElemField.textProperty().bindBidirectional(viewModel.addingElementProperty());
 
         addElementButton.setOnAction(new EventHandler<ActionEvent>() {
