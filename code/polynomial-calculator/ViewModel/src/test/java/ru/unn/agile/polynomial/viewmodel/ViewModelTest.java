@@ -321,6 +321,20 @@ public class ViewModelTest {
     }
 
     @Test
+    public void checkSetLoggerNotNull() {
+        ILogger logger = new FakeLogger();
+
+        boolean success = true;
+        try {
+            viewModel.setLogger(logger);
+        } catch (Exception e) {
+            success = false;
+        }
+
+        assertTrue(success);
+    }
+
+    @Test
     public void canGetLogProperty() {
         viewModel.logProperty().set("");
         String log = viewModel.logProperty().get();
