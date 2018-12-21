@@ -12,6 +12,14 @@ project(":code/intersect-line-and-plane/ViewModel").name = "intersect-line-and-p
 include "code/intersect-line-and-plane/Infrastructure"
 project(":code/intersect-line-and-plane/Infrastructure").name = "intersect-line-and-plane-Infrastructure"
 
+// Fibonacci Heap
+include "code/fibonacci-heap/Model"
+project(":code/fibonacci-heap/Model").name = "fibonacci-heap-Model"
+include "code/fibonacci-heap/ViewModel"
+project(":code/fibonacci-heap/ViewModel").name = "fibonacci-heap-ViewModel"
+include "code/fibonacci-heap/View"
+project(":code/fibonacci-heap/View").name = "fibonacci-heap-View"
+
 // Currency Converter
 include "code/currency-converter/Model"
 project(":code/currency-converter/Model").name = "currency-converter-Model"
