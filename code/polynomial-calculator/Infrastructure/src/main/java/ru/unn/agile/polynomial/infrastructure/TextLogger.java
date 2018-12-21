@@ -13,8 +13,8 @@ public class TextLogger implements ILogger {
         this.filename = filename;
         try {
             writer = new BufferedWriter(new FileWriter(filename));
-        } catch (IOException exc) {
-            System.out.println(exc.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
