@@ -320,6 +320,14 @@ public class ViewModelTest {
         viewModel.setLogger(logger);
     }
 
+    @Test
+    public void canGetLogProperty() {
+        viewModel.logProperty().set("");
+        String log = viewModel.logProperty().get();
+
+        assertTrue(log.isEmpty());
+    }
+
 
 
 }

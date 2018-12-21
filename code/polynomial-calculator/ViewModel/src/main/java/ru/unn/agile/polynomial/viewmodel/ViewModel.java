@@ -142,8 +142,8 @@ public class ViewModel {
         } else {
             throw new IllegalArgumentException("Logger cannot be null");
         }
-
     }
+
     public StringProperty logProperty() {
         return log;
     }
@@ -155,4 +155,5 @@ public class ViewModel {
         public static final String PARSE_PASSED =
                 "Parse passed: %s";
     }
+
 }
