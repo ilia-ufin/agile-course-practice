@@ -331,6 +331,8 @@ include "code/polynomial-calculator/ViewModel"
 project(":code/polynomial-calculator/ViewModel").name = "polynomial-calculator-ViewModel"
 include "code/polynomial-calculator/View"
 project(":code/polynomial-calculator/View").name = "polynomial-calculator-View"
+include "code/polynomial-calculator/Infrastructure"
+project(":code/polynomial-calculator/Infrastructure").name = "polynomial-calculator-Infrastructure"
 
 // Sheptunov Vladislav, BinarySearchTree
 include "code/binary-search-tree/Model"
