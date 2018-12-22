@@ -77,7 +77,7 @@ public final class Encoder {
         FocusAdapter focusLostListener = new FocusAdapter() {
             public void focusLost(final FocusEvent e) {
                 tie();
-                Encoder.this.viewModel.logInputParams();
+                viewModel.logInputParams();
                 loggerTextArea.setText(String.join("\r\n", viewModel.getLog()));
                 tieback();
             }

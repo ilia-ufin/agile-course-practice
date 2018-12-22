@@ -2,10 +2,7 @@ package ru.unn.agile.caesarcipher.infrastructure;
 
 import ru.unn.agile.caesarcipher.viewmodel.ILogger;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,8 +23,8 @@ public class TxtLogger implements ILogger {
         BufferedWriter logWriter = null;
         try {
             logWriter = new BufferedWriter(new FileWriter(filename));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
         writer = logWriter;
     }
@@ -37,8 +34,8 @@ public class TxtLogger implements ILogger {
             writer.write(getTimes() + message);
             writer.flush();
             writer.newLine();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
@@ -53,8 +50,8 @@ public class TxtLogger implements ILogger {
                 logger.add(lines);
                 lines = read.readLine();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (IOException exception) {
+            System.out.println(exception.getMessage());
         }
 
         return logger;
