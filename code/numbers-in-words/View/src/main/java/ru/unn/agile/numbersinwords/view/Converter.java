@@ -1,20 +1,32 @@
 package ru.unn.agile.numbersinwords.view;
 
 import ru.unn.agile.numbersinwords.viewmodel.NumbersInWordsViewModel;
+import ru.unn.agile.numbersinwords.infrastructure.TxtLogger;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.io.IOException;
 
 public class Converter {
-    private NumbersInWordsViewModel viewModel = new NumbersInWordsViewModel();
+    private static TxtLogger logger;
+    private static NumbersInWordsViewModel viewModel;
     private JPanel mainPanel;
     private JButton convertButton;
     private JTextField number;
     private JLabel errorStatus;
     private JLabel numbersInWords;
+    private JTextArea logArea;
+
+    private static final String LOG_NAME = "Converter.log";
 
     public static void main(final String[] args) {
+        try {
+            logger = new TxtLogger(LOG_NAME);
+            viewModel = new NumbersInWordsViewModel(logger);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         JFrame frame = new JFrame("Converter");
         frame.setContentPane(new Converter().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,5 +72,6 @@ public class Converter {
         convertButton.setEnabled(viewModel.isConvertButtonEnabled());
         numbersInWords.setText(viewModel.getNumberInWords());
         errorStatus.setText(viewModel.getErrorMessage());
+        logArea.setText(String.join("\r\n", viewModel.getLogMessages()));
     }
 }

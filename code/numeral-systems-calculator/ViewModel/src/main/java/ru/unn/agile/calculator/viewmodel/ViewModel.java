@@ -5,9 +5,9 @@ import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import ru.unn.agile.calculator.model.RadixCalculator;
-import ru.unn.agile.calculator.model.NumeralSystemConverter;
 import ru.unn.agile.calculator.model.NumeralSystem;
+import ru.unn.agile.calculator.model.NumeralSystemConverter;
+import ru.unn.agile.calculator.model.RadixCalculator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 
 
 public class ViewModel {
+    static final String LOG_CALCULATED = "Calculation success";
+    static final String LOG_VALUES_CHANGED = "Values changed: a = %s, b = %s";
+
     private final ObjectProperty<NumeralSystem> outputNumberSystem = new SimpleObjectProperty<>();
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty userMessage = new SimpleStringProperty();
@@ -25,9 +28,15 @@ public class ViewModel {
             FXCollections.observableList(Arrays.stream(NumeralSystem.values())
                     .filter(s -> !NumeralSystem.UNKNOWN.equals(s))
                     .collect(Collectors.toList()));
+    private final StringProperty log = new SimpleStringProperty();
+
+    private ILogger logger;
 
     public ViewModel() {
+        init();
+    }
 
+    private void init() {
         outputNumberSystem.setValue(NumeralSystem.BINARY);
         result.set("");
         userMessage.set(UserMessages.WAIT_FOR_INPUT.toString());
@@ -53,15 +62,18 @@ public class ViewModel {
             final ValueChangeListener listener = new ValueChangeListener();
             field.addListener(listener);
         }
-
     }
 
-    public String getResult() {
-        return result.get();
+    public void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger must be mot null");
+        }
+        this.logger = logger;
+        updateLog();
     }
 
-    public String getUserMessage() {
-        return userMessage.get();
+    private void updateLog() {
+        log.set(logger.getLog());
     }
 
     public BooleanProperty calculationDisabledProperty() {
@@ -69,7 +81,7 @@ public class ViewModel {
     }
 
     public final boolean isCalculationDisabled() {
-        return calculationDisabled.get();
+        return calculationDisabledProperty().get();
     }
 
     public StringProperty number1Property() {
@@ -94,6 +106,9 @@ public class ViewModel {
                 + buildUnaryMinusResult(currentSystem, a, b);
         result.set(composedResult);
         userMessage.set(UserMessages.SUCCESS.toString());
+
+        logger.log(LOG_CALCULATED);
+        updateLog();
     }
 
     public NumeralSystem getOutputNumberSystem() {
@@ -112,13 +127,20 @@ public class ViewModel {
         return userMessage;
     }
 
+    public StringProperty logProperty() {
+        return log;
+    }
 
-    private class ValueChangeListener implements ChangeListener<String> {
-        @Override
-        public void changed(final ObservableValue<? extends String> observable,
-                            final String oldValue, final String newValue) {
-            userMessage.set(checkInput().toString());
-        }
+    public String getResult() {
+        return result.get();
+    }
+
+    public String getUserMessage() {
+        return userMessage.get();
+    }
+
+    public String getLog() {
+        return log.get();
     }
 
     private String buildUnaryMinusResult(final NumeralSystem currentSystem,
@@ -161,5 +183,16 @@ public class ViewModel {
         }
 
         return UserMessages.READY;
+    }
+
+    private class ValueChangeListener implements ChangeListener<String> {
+        @Override
+        public void changed(final ObservableValue<? extends String> observable,
+                            final String oldValue, final String newValue) {
+            userMessage.set(checkInput().toString());
+
+            logger.log(String.format(LOG_VALUES_CHANGED, number1.get(), number2.get()));
+            updateLog();
+        }
     }
 }

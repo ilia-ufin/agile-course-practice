@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':segments2d-intersection-ViewModel')
+    testCompile project(':segments2d-intersection-ViewModel').sourceSets.test.output
+}

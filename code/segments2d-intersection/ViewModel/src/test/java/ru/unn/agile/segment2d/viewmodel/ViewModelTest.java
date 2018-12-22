@@ -1,23 +1,103 @@
 package ru.unn.agile.segment2d.viewmodel;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ViewModelTest {
     private ViewModel viewModel;
 
+    private String getCheckIntersectionLogMessage() {
+        return String.format(
+                ViewModel.LogMessages.CHECK_WAS_PRESSED,
+                viewModel.firstSegmentFirstPointCoordXProperty().get(),
+                viewModel.firstSegmentFirstPointCoordYProperty().get(),
+                viewModel.firstSegmentSecondPointCoordXProperty().get(),
+                viewModel.firstSegmentSecondPointCoordYProperty().get(),
+                viewModel.secondSegmentFirstPointCoordXProperty().get(),
+                viewModel.secondSegmentFirstPointCoordYProperty().get(),
+                viewModel.secondSegmentSecondPointCoordXProperty().get(),
+                viewModel.secondSegmentSecondPointCoordYProperty().get());
+    }
+
+    protected void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void createViewModel() {
-        viewModel = new ViewModel();
+        viewModel = new ViewModel(new FakeLogger());
     }
 
     @After
     public void deleteViewModel() {
         viewModel = null;
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void viewModelConstructorThrowsExceptionWithNullLogger() {
+        new ViewModel(null);
+    }
+
+    @Test
+    public void isLogInit() {
+        List<String> log = viewModel.getLogList();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void canInitViewModel() {
+        viewModel = new ViewModel();
+
+        assertNotEquals(viewModel, null);
+    }
+
+    @Test
+    public void canGetLog() {
+        String fullLog = viewModel.getLog();
+
+        assertTrue(fullLog.isEmpty());
+    }
+
+    @Test
+    public void canGetLogProperty() {
+        String log = viewModel.logProperty().get();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void canCreateLogMessages() {
+        ViewModel.LogMessages logMessages = new ViewModel.LogMessages();
+
+        assertNotNull(logMessages);
+    }
+
+    @Test
+    public void logContainsMessageWhenCheckedIntersection() {
+        viewModel.setFirstSegmentFirstPointCoordX("1");
+        viewModel.setFirstSegmentFirstPointCoordY("2");
+        viewModel.setFirstSegmentSecondPointCoordX("0");
+        viewModel.setFirstSegmentSecondPointCoordY("0");
+        viewModel.setSecondSegmentFirstPointCoordX("3");
+        viewModel.setSecondSegmentFirstPointCoordY("4");
+        viewModel.setSecondSegmentSecondPointCoordX("1");
+        viewModel.setSecondSegmentSecondPointCoordY("0");
+
+        viewModel.checkIntersection();
+
+        List<String> logList = viewModel.getLogList();
+        String message = getCheckIntersectionLogMessage();
+
+        assertTrue(logList.get(0).contains(message));
     }
 
     @Test

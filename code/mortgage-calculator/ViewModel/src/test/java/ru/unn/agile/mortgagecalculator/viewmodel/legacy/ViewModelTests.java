@@ -1,12 +1,17 @@
 package ru.unn.agile.mortgagecalculator.viewmodel.legacy;
-import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ViewModel.Status;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.unn.agile.mortgagecalculator.viewmodel.legacy.ViewModel.Status;
 
 import javax.swing.table.DefaultTableModel;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
 
 public class ViewModelTests {
 
@@ -28,9 +33,18 @@ public class ViewModelTests {
 
     private ViewModel viewModel;
 
+    public void setViewModel(final ViewModel modelView) {
+        viewModel = modelView;
+    }
+
     @Before
     public void setUpEmptyExample() {
-        viewModel = new ViewModel();
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
+        setDefaultSettings();
+    }
+
+    public void setDefaultSettings() {
         viewModel.setApartmentPrice(APARTMENT_PRICE_EXAMPLE);
         viewModel.setInitialPayment(INITIAL_PAYMENT_EXAMPLE);
         viewModel.setInterestRate(INTEREST_RATE_EXAMPLE);
@@ -44,7 +58,8 @@ public class ViewModelTests {
 
     @Test
     public void checkStatusInBegin() {
-        viewModel = new ViewModel();
+        FakeLogger logger = new FakeLogger();
+        viewModel = new ViewModel(logger);
         assertEquals(Status.COUNT_WAITING, viewModel.getStatus());
     }
 
@@ -119,7 +134,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void  checkResultWithNegativeInitialRate() {
+    public void checkResultWithNegativeInitialRate() {
         viewModel.setInterestRate(NEGATIVE_VALUE_FOR_TESTS);
         viewModel.checkCountFields();
 
@@ -127,7 +142,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void  checkResultWithNegativeTermMortgage() {
+    public void checkResultWithNegativeTermMortgage() {
         viewModel.setTermMortgage(NEGATIVE_VALUE_FOR_TESTS);
         viewModel.checkCountFields();
 
@@ -285,5 +300,19 @@ public class ViewModelTests {
             assertEquals(expectedFullPriceStrings[indexMonth],
                     tableModel.getValueAt(indexMonth, 2));
         }
+    }
+
+    @Test
+    public void checkGetLog() {
+        assertNotNull(viewModel.getLog());
+    }
+
+    @Test
+    public void isNotEmptyLog() {
+        viewModel.checkCountFields();
+
+        List<String> res = viewModel.getLog();
+
+        assertFalse(res.isEmpty());
     }
 }

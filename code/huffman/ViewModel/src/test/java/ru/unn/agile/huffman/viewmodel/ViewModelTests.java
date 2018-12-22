@@ -6,6 +6,7 @@ import org.junit.Test;
 import ru.unn.agile.huffman.model.*;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ViewModelTests {
     private ViewModel viewModel;
@@ -98,5 +99,39 @@ public class ViewModelTests {
         viewModel.txtProperty().set("");
 
         assertTrue(viewModel.encodingDisabledProperty().get());
+    }
+
+    @Test
+    public void canCreateViewModelWithLogger() {
+        ILogger logger = new DummyLoger();
+
+        viewModel = new ViewModel(logger);
+
+        assertEquals(logger, viewModel.getLogger());
+    }
+
+    @Test
+    public void canSetLogger() {
+        ILogger logger = new DummyLoger();
+        viewModel.setLogger(logger);
+
+        assertEquals(logger, viewModel.getLogger());
+    }
+
+    @Test
+    public void canGetLog() {
+        ILogger logger = new DummyLoger();
+        viewModel.setLogger(logger);
+
+        viewModel.txtProperty().set("Text");
+        viewModel.encode();
+
+        assertEquals(logger.getLog().get(0) + "\n", viewModel.getLog());
+        assertEquals(logger.getLog().get(0) + "\n", viewModel.logProperty().get());
+
+    }
+
+    protected void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 }

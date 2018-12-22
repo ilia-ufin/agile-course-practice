@@ -30,6 +30,10 @@ public class SalaryCalculator {
     }
 
     public void setSalary(final double inSalary) {
+        if (inSalary == this.salary) {
+            return;
+        }
+
         if (inSalary < 0) {
             throw new NumberFormatException("Negative salary");
         }
@@ -39,14 +43,17 @@ public class SalaryCalculator {
         this.salary = inSalary;
     }
 
-    public void setWorkedHourInMonth(final int inWorkedHourInMonth) {
-        if (inWorkedHourInMonth < 0) {
+    public void setWorkedHourInMonth(final int tmpWorkedHourInMonth) {
+        if (tmpWorkedHourInMonth == this.workedHourInMonth) {
+            return;
+        }
+        if (tmpWorkedHourInMonth < 0) {
             throw new NumberFormatException("Negative meaning");
         }
-        if (inWorkedHourInMonth > MAX_HOUR_IN_MONTH) {
+        if (tmpWorkedHourInMonth > MAX_HOUR_IN_MONTH) {
             throw new NumberFormatException("Maximum value exceeded");
         }
-        this.workedHourInMonth = inWorkedHourInMonth;
+        this.workedHourInMonth = tmpWorkedHourInMonth;
     }
 
     public void setLengthOfVacation(final int inLengthOfVacation) {
