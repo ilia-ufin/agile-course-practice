@@ -20,16 +20,16 @@ public class TxtLogger implements ILogger {
         return sdf.format(cal.getTime());
     }
 
-    public TxtLogger(final String filename) {
-        this.file = filename;
+    public TxtLogger(final String file) {
+        this.file = file;
 
-        BufferedWriter logWriter = null;
+        BufferedWriter logsWriter = null;
         try {
-            logWriter = new BufferedWriter(new FileWriter(filename));
+            logsWriter = new BufferedWriter(new FileWriter(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        writer = logWriter;
+        writer = logsWriter;
     }
 
     @Override

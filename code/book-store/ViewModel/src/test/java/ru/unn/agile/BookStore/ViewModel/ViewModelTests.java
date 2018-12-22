@@ -136,13 +136,13 @@ public class ViewModelTests {
     @Test
     public void canCreateViewModelWithLogger() {
         FakeLogger logger = new FakeLogger();
-        ViewModel viewModelLogged = new ViewModel(logger);
+        ViewModel myViewModel = new ViewModel(logger);
 
-        assertNotNull(viewModelLogged);
+        assertNotNull(myViewModel);
     }
 
     @Test
-    public void viewModelConstructorThrowsExceptionWithNullLogger() {
+    public void viewModelThrowsExceptionWithNullLogger() {
         try {
             new ViewModel(null);
             fail("Exception wasn't thrown");

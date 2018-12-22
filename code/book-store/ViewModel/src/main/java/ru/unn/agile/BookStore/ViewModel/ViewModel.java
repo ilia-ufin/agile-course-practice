@@ -28,7 +28,7 @@ public class ViewModel {
 
     private ILogger logger;
     private boolean isInputChanged;
-    private List<ValueCachingChangeListener> valueChangedListeners;
+    private List<ValueListener> valueChangedListeners;
 
     public final void setLogger(final ILogger logger) {
         if (logger == null) {
@@ -71,7 +71,7 @@ public class ViewModel {
         } };
         valueChangedListeners = new ArrayList<>();
         for (StringProperty field : fields) {
-            final ValueCachingChangeListener listener = new ValueCachingChangeListener();
+            final ValueListener listener = new ValueListener();
             field.addListener(listener);
             valueChangedListeners.add(listener);
         }
@@ -117,7 +117,7 @@ public class ViewModel {
             return;
         }
 
-        for (ValueCachingChangeListener listener : valueChangedListeners) {
+        for (ValueListener listener : valueChangedListeners) {
             if (listener.isChanged()) {
                 String message = String.format(LOG_PATTERN_EDIT, books1.get(), books2.get(),
                         books3.get(), books4.get(), books5.get());
@@ -252,9 +252,9 @@ public class ViewModel {
         logs.set(line.toString());
     }
 
-    private class ValueCachingChangeListener implements ChangeListener<String> {
-        private String prevValue = new String("");
-        private String curValue = new String("");
+    private class ValueListener implements ChangeListener<String> {
+        private String lastValue = new String("");
+        private String actualValue = new String("");
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
@@ -262,13 +262,13 @@ public class ViewModel {
                 return;
             }
             status.set(getStatusForInput().toString());
-            curValue = newValue;
+            actualValue = newValue;
         }
         public boolean isChanged() {
-            return !prevValue.equals(curValue);
+            return !lastValue.equals(actualValue);
         }
         public void cache() {
-            prevValue = curValue;
+            lastValue = actualValue;
         }
     }
 }
