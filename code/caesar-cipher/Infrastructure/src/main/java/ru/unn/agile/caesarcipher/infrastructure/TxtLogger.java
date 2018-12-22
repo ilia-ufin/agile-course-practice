@@ -40,10 +40,9 @@ public class TxtLogger implements ILogger {
     }
 
     public List<String> getLog() {
-        BufferedReader read;
         ArrayList<String> logger = new ArrayList<String>();
         try {
-            read = new BufferedReader(new FileReader(filename));
+            BufferedReader read = new BufferedReader(new FileReader(filename));
             String lines = read.readLine();
 
             while (lines != null) {
