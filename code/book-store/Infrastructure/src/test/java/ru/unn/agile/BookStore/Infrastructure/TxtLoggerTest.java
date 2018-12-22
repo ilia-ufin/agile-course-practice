@@ -3,9 +3,6 @@ package ru.unn.agile.BookStore.Infrastructure;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.List;
 import static org.junit.Assert.*;
 
@@ -21,15 +18,6 @@ public class TxtLoggerTest {
     @Test
     public void canCreateLoggerWithFileName() {
         assertNotNull(txtLogger);
-    }
-
-    @Test
-    public void canWriteLogFileOnDisk() {
-        try {
-            new BufferedReader(new FileReader(FILENAME));
-        } catch (FileNotFoundException e) {
-            fail("Can not find " + FILENAME + "file!");
-        }
     }
 
     @Test

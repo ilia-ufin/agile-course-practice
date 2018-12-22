@@ -197,14 +197,7 @@ public class ViewModelTests {
         viewModel.calculate();
 
         String message = viewModel.getLog().get(0);
-
-        assertTrue(message.matches(".*Books"
-                + ": #1 = " + viewModel.getBooks1()
-                + "; #2 = " + viewModel.getBooks2()
-                + "; #3 = " + viewModel.getBooks3()
-                + "; #4 = " + viewModel.getBooks4()
-                + "; #5 = " + viewModel.getBooks5() + ".*"
-        ));
+        assertTrue(message.matches(".*" + viewModel.getLogPatternCalculate()));
     }
 
     @Test
@@ -223,14 +216,7 @@ public class ViewModelTests {
 
         viewModel.focusLost();
         String message = viewModel.getLog().get(0);
-
-        assertTrue(message.matches(".*" + LogMessages.EDITING_FINISHED
-                + "Input arguments are: \\["
-                + viewModel.getBooks1() + "; "
-                + viewModel.getBooks2() + "; "
-                + viewModel.getBooks3() + "; "
-                + viewModel.getBooks4() + "; "
-                + viewModel.getBooks5() + "\\]"));
+        assertTrue(message.matches(".*" + "Updated input: Input arguments are: \\[1; 2; 3; 4\\]"));
     }
 
     @Test

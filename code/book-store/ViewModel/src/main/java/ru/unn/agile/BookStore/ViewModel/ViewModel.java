@@ -21,6 +21,11 @@ public class ViewModel {
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
+    private static final String LOG_PATTERN_CALCULATE = LogMessages.CALCULATE_WAS_PRESSED
+            + "Books" + ": #1 = %s" + "; #2 = %s" + "; #3 = %s" + "; #4 = %s" + "; #5 = %s";
+    private static final String LOG_PATTERN_EDIT = LogMessages.EDITING_FINISHED
+            + "Input arguments are: [%s; %s; %s; %s]";
+
     private ILogger logger;
     private boolean isInputChanged;
     private List<ValueCachingChangeListener> valueChangedListeners;
@@ -73,6 +78,16 @@ public class ViewModel {
 
     }
 
+    public final String getLogPatternCalculate() {
+        return String.format(LOG_PATTERN_CALCULATE, books1.get(), books2.get(),
+                books3.get(), books4.get(), books5.get());
+    }
+
+    public final String getLogPatternEdit() {
+        return String.format(LOG_PATTERN_EDIT, books1.get(), books2.get(),
+                books3.get(), books4.get(), books5.get());
+    }
+
     public List<String> getLog() {
         return logger.getLog();
     }
@@ -94,12 +109,7 @@ public class ViewModel {
     }
 
     private String createLogMessage() {
-        return LogMessages.CALCULATE_WAS_PRESSED + "Books"
-                + ": #1 = " + books1.get()
-                + "; #2 = " + books2.get()
-                + "; #3 = " + books3.get()
-                + "; #4 = " + books4.get()
-                + "; #5 = " + books5.get() + ".";
+        return getLogPatternCalculate();
     }
 
     public void onFocusChanged(final Boolean oldValue, final Boolean newValue) {
@@ -109,14 +119,9 @@ public class ViewModel {
 
         for (ValueCachingChangeListener listener : valueChangedListeners) {
             if (listener.isChanged()) {
-                StringBuilder message = new StringBuilder(LogMessages.EDITING_FINISHED.toString());
-                message.append("Books: [")
-                        .append(books1.get()).append("; ")
-                        .append(books2.get()).append("; ")
-                        .append(books3.get()).append("; ")
-                        .append(books4.get()).append("; ")
-                        .append(books5.get()).append("]");
-                logger.log(message.toString());
+                String message = String.format(LOG_PATTERN_EDIT, books1.get(), books2.get(),
+                        books3.get(), books4.get(), books5.get());
+                logger.log(message);
                 updateLogs();
 
                 listener.cache();
@@ -136,13 +141,7 @@ public class ViewModel {
     }
 
     private String editingFinishedLogMessage() {
-        return LogMessages.EDITING_FINISHED
-                + "Input arguments are: ["
-                + books1.get() + "; "
-                + books2.get() + "; "
-                + books3.get() + "; "
-                + books4.get() + "; "
-                + books5.get() + "]";
+        return getLogPatternEdit();
     }
 
     public void focusLost() {
@@ -246,11 +245,11 @@ public class ViewModel {
 
     private void updateLogs() {
         List<String> wholeLog = logger.getLog();
-        String line = new String("");
+        StringBuilder line = new StringBuilder("");
         for (String log : wholeLog) {
-            line += log + "\n";
+            line.append(log).append("\n");
         }
-        logs.set(line);
+        logs.set(line.toString());
     }
 
     private class ValueCachingChangeListener implements ChangeListener<String> {
@@ -289,15 +288,9 @@ enum Status {
     }
 }
 
-enum LogMessages {
-    CALCULATE_WAS_PRESSED("Calculate "),
-    EDITING_FINISHED("Updated input ");
+final class LogMessages {
+    public static final String CALCULATE_WAS_PRESSED = "Calculate: ";
+    public static final String EDITING_FINISHED = "Updated input: ";
 
-    private final String message;
-    LogMessages(final String message) {
-        this.message = message;
-    }
-    public String toString() {
-        return message;
-    }
+    private LogMessages() { }
 }
