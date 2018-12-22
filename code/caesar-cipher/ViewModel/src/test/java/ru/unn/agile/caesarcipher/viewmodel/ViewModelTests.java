@@ -107,6 +107,24 @@ public class ViewModelTests {
     }
 
     @Test
+    public void canShowCorrectLogMessagesInput() {
+        viewModel.setTextBoxInput("ABC");
+
+        viewModel.logInputParams();
+        viewModel.logInputParams();
+
+        assertEquals(" Input value to characters: ABC, encoder digit: ",
+                viewModel.editingInputMessage());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void exceptionWhenLoggerIsNull() {
+        ILogger logger = null;
+
+        viewModel = new ViewModel(logger);
+    }
+
+    @Test
     public void canRecognizeThatButtonIsDisabled() {
         assertFalse(viewModel.isCodeButtonEnabled());
     }
