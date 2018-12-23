@@ -20,6 +20,7 @@ public final class Encoder {
     private JTextArea loggerTextArea;
     private static TxtLogger logger;
     private static ViewModel viewModel;
+    private static final String ENTER = "\r\n";
 
     public static void main(final String[] args) {
         logger = new TxtLogger("Encoder.log");
@@ -36,7 +37,7 @@ public final class Encoder {
         code.addActionListener(e -> {
             tieback();
             viewModel.codeCaesar();
-            loggerTextArea.setText(String.join("\r\n", viewModel.getLog()));
+            loggerTextArea.setText(String.join(ENTER, viewModel.getLog()));
             tie();
         });
         offsetTextBox.getDocument().addDocumentListener(new DocumentListener() {
@@ -78,7 +79,7 @@ public final class Encoder {
             public void focusLost(final FocusEvent e) {
                 tie();
                 viewModel.logInputParams();
-                loggerTextArea.setText(String.join("\r\n", viewModel.getLog()));
+                loggerTextArea.setText(String.join(ENTER, viewModel.getLog()));
                 tieback();
             }
         };
