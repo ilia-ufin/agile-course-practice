@@ -27,17 +27,17 @@ public class ViewModelTests {
     }
 
     @Test
-    public void canCreateLogMessage() {
-        LogMessage.Message message = LogMessage.Message.INPUT;
+    public void isStatusMessageNotNull() {
+        StatusMessage statusMessage = new StatusMessage();
 
-        assertEquals(LogMessage.Message.INPUT, message);
+        assertNotNull(statusMessage);
     }
 
     @Test
-    public void canCreateStatusMessage() {
-        StatusMessage.Status status = StatusMessage.Status.WAITING;
+    public void isLogMessageNotNull1() {
+        LogMessage logMessage = new LogMessage();
 
-        assertEquals(StatusMessage.Status.WAITING, status);
+        assertNotNull(logMessage);
     }
 
     @Test
