@@ -27,20 +27,6 @@ public class ViewModelTests {
     }
 
     @Test
-    public void isStatusMessageNotNull() {
-        StatusMessage statusMessage = new StatusMessage();
-
-        assertNotNull(statusMessage);
-    }
-
-    @Test
-    public void isLogMessageNotNull1() {
-        LogMessage logMessage = new LogMessage();
-
-        assertNotNull(logMessage);
-    }
-
-    @Test
     public void isLoggerEmptyInBegin() {
         List<String> log = viewModel.getLog();
 
@@ -67,7 +53,7 @@ public class ViewModelTests {
         viewModel.logInputParams();
         String logMessage = viewModel.getLog().toString();
 
-        assertTrue(logMessage.contains(String.format(LogMessage.Message.INPUT.getDescription(),
+        assertTrue(logMessage.contains(String.format(LogMessage.INPUT.getDescription(),
                 viewModel.getInputTextBoxValue(), viewModel.getOffsetTextBoxValue())));
     }
 
@@ -78,7 +64,7 @@ public class ViewModelTests {
         viewModel.logInputParams();
         String logMessage = viewModel.getLog().toString();
 
-        assertFalse(!logMessage.contains(String.format(LogMessage.Message.INPUT.getDescription(),
+        assertFalse(!logMessage.contains(String.format(LogMessage.INPUT.getDescription(),
                 viewModel.getInputTextBoxValue(), viewModel.getOffsetTextBoxValue())));
     }
 
@@ -90,7 +76,7 @@ public class ViewModelTests {
         viewModel.codeCaesar();
         String logMessage = viewModel.getLog().toString();
 
-        assertTrue(logMessage.contains(String.format(LogMessage.Message.FINISHED.getDescription(),
+        assertTrue(logMessage.contains(String.format(LogMessage.FINISHED.getDescription(),
                 viewModel.getInputTextBoxValue(), viewModel.getOffsetTextBoxValue(),
                 viewModel.getCaesarCipher())));
     }
@@ -102,7 +88,7 @@ public class ViewModelTests {
 
         viewModel.codeCaesar();
 
-        assertEquals(String.format(LogMessage.Message.FINISHED.getDescription(),
+        assertEquals(String.format(LogMessage.FINISHED.getDescription(),
                 viewModel.getInputTextBoxValue(), viewModel.getOffsetTextBoxValue(),
                 viewModel.getCaesarCipher()), viewModel.editingFinishMessage());
     }
@@ -112,7 +98,7 @@ public class ViewModelTests {
         viewModel.setTextBoxOffset("1");
         viewModel.logInputParams();
 
-        assertEquals(String.format(LogMessage.Message.INPUT.getDescription(),
+        assertEquals(String.format(LogMessage.INPUT.getDescription(),
                 viewModel.getInputTextBoxValue(), viewModel.getOffsetTextBoxValue()),
                 viewModel.editingInputMessage());
     }
@@ -122,7 +108,7 @@ public class ViewModelTests {
         viewModel.setTextBoxInput("ABC");
         viewModel.logInputParams();
 
-        assertEquals(String.format(LogMessage.Message.INPUT.getDescription(),
+        assertEquals(String.format(LogMessage.INPUT.getDescription(),
                 viewModel.getInputTextBoxValue(), viewModel.getOffsetTextBoxValue()),
                 viewModel.editingInputMessage());
     }
@@ -134,7 +120,7 @@ public class ViewModelTests {
         viewModel.logInputParams();
         viewModel.logInputParams();
 
-        assertEquals(String.format(LogMessage.Message.INPUT.getDescription(),
+        assertEquals(String.format(LogMessage.INPUT.getDescription(),
                 viewModel.getInputTextBoxValue(), viewModel.getOffsetTextBoxValue()),
                 viewModel.editingInputMessage());
     }

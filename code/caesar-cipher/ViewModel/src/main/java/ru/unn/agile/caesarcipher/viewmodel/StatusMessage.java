@@ -1,8 +1,6 @@
 package ru.unn.agile.caesarcipher.viewmodel;
 
-public class StatusMessage {
-
-   public enum Status {
+public enum StatusMessage {
        READY("Correct input"),
        BAD_INPUT("Input correct value"),
        SUCCESSFUL("Successful"),
@@ -11,12 +9,11 @@ public class StatusMessage {
 
    private final String description;
 
-   Status(final String description) {
+   StatusMessage(final String description) {
        this.description = description;
    }
 
    public String getDescription() {
        return description;
    }
-   };
-}
+};

@@ -23,7 +23,7 @@ public class ViewModel {
         inputTextBoxValue = "";
         offsetTextBoxValue = "";
         caesarCipher = "";
-        status = StatusMessage.Status.WAITING.getDescription();
+        status = StatusMessage.WAITING.getDescription();
         codeButtonEnabled = false;
         isInputChanged = true;
     }
@@ -43,26 +43,26 @@ public class ViewModel {
 
         if ("".equals(offsetValue)) {
             codeButtonEnabled = false;
-            status = StatusMessage.Status.BAD_INPUT.getDescription();
+            status = StatusMessage.BAD_INPUT.getDescription();
             return;
         }
         if (!offsetValue.matches(DIGITS_ONLY_REGEX)) {
             codeButtonEnabled = false;
-            status = StatusMessage.Status.BAD_INPUT.getDescription();
+            status = StatusMessage.BAD_INPUT.getDescription();
             return;
         }
         if (offsetValue.length() > LIMITED) {
             codeButtonEnabled = false;
-            status = StatusMessage.Status.LIMITED_DIGIT.getDescription();
+            status = StatusMessage.LIMITED_DIGIT.getDescription();
             return;
         }
         codeButtonEnabled = true;
-        status = StatusMessage.Status.READY.getDescription();
+        status = StatusMessage.READY.getDescription();
     }
 
     public void codeCaesar() {
         caesarCipher = CaesarCipher.encode(inputTextBoxValue, Integer.parseInt(offsetTextBoxValue));
-        status = StatusMessage.Status.SUCCESSFUL.getDescription();
+        status = StatusMessage.SUCCESSFUL.getDescription();
         logger.log(editingFinishMessage());
     }
 
@@ -93,12 +93,12 @@ public class ViewModel {
     }
 
     public String editingInputMessage() {
-        return String.format(LogMessage.Message.INPUT.getDescription(), inputTextBoxValue,
+        return String.format(LogMessage.INPUT.getDescription(), inputTextBoxValue,
                 offsetTextBoxValue);
     }
 
     public String editingFinishMessage() {
-        return String.format(LogMessage.Message.FINISHED.getDescription(), inputTextBoxValue,
+        return String.format(LogMessage.FINISHED.getDescription(), inputTextBoxValue,
                 offsetTextBoxValue, caesarCipher);
     }
 }
