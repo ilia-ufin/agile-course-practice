@@ -4,9 +4,9 @@ import ru.unn.agile.caesarcipher.model.CaesarCipher;
 import java.util.List;
 
 public class ViewModel {
-    private String inputTextBoxValue;
-    private String offsetTextBoxValue;
-    private String status;
+    private String inputTextBoxValue = "";
+    private String offsetTextBoxValue = "";
+    private String status = "";
     private String caesarCipher = "";
 
     private static final String DIGITS_ONLY_REGEX = "\\d+";
@@ -70,6 +70,12 @@ public class ViewModel {
         return caesarCipher;
     }
 
+    public String getInputTextBoxValue() {
+        return inputTextBoxValue; }
+
+    public String getOffsetTextBoxValue() {
+        return offsetTextBoxValue; }
+
     public List<String> getLog() {
         return logger.getLog();
     }
@@ -87,10 +93,12 @@ public class ViewModel {
     }
 
     public String editingInputMessage() {
-        return LogMessage.Message.INPUT.getDescription();
+        return String.format(LogMessage.Message.INPUT.getDescription(), inputTextBoxValue,
+                offsetTextBoxValue);
     }
 
     public String editingFinishMessage() {
-        return LogMessage.Message.FINISHED.getDescription();
+        return String.format(LogMessage.Message.FINISHED.getDescription(), inputTextBoxValue,
+                offsetTextBoxValue, caesarCipher);
     }
 }

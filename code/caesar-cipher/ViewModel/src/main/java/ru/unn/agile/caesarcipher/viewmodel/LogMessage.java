@@ -10,6 +10,7 @@ public class LogMessage {
 
     Message(final String description) {
         this.description = description;
+
     }
 
     public String getDescription() {
