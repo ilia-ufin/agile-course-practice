@@ -27,6 +27,20 @@ public class ViewModelTests {
     }
 
     @Test
+    public void canCreateLogMessage() {
+        LogMessage.Message message = LogMessage.Message.INPUT;
+
+        assertEquals(LogMessage.Message.INPUT, message);
+    }
+
+    @Test
+    public void canCreateStatusMessage() {
+        StatusMessage.Status status = StatusMessage.Status.WAITING;
+
+        assertEquals(StatusMessage.Status.WAITING, status);
+    }
+
+    @Test
     public void isLoggerEmptyInBegin() {
         List<String> log = viewModel.getLog();
 
