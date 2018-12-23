@@ -31,11 +31,13 @@ public class TxtLogger implements ILogger {
 
     public void log(final String message) {
         try {
-            writer.write(getTimes() + message);
-            writer.flush();
-            writer.newLine();
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+            if (writer != null) {
+                writer.write(getTimes() + message);
+                writer.flush();
+                writer.newLine();
+            }
+        } catch (IOException exception) {
+                System.out.println(exception.getMessage());
         }
     }
 

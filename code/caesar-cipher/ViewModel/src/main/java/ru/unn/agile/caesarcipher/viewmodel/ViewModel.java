@@ -10,13 +10,6 @@ public class ViewModel {
     private String caesarCipher = "";
 
     private static final String DIGITS_ONLY_REGEX = "\\d+";
-    private static final String STATUS_READY = "Correct input";
-    private static final String STATUS_BAD_INPUT = "Input correct value";
-    private static final String STATUS_SUCCESSFUL = "Successful";
-    private static final String STATUS_LIMITED_DIGIT = "You can enter up to 12 digits";
-    public static final String LOG_INPUT = " Input value to ";
-    public static final String LOG_FINISHED = " Encoded: ";
-
     private static final int LIMITED = 12;
     private boolean codeButtonEnabled = false;
     private boolean isInputChanged = true;
@@ -30,7 +23,7 @@ public class ViewModel {
         inputTextBoxValue = "";
         offsetTextBoxValue = "";
         caesarCipher = "";
-        status = "Waiting";
+        status = StatusMessage.Status.WAITING.getDescription();
         codeButtonEnabled = false;
         isInputChanged = true;
     }
@@ -50,26 +43,26 @@ public class ViewModel {
 
         if ("".equals(offsetValue)) {
             codeButtonEnabled = false;
-            status = STATUS_BAD_INPUT;
+            status = StatusMessage.Status.BAD_INPUT.getDescription();
             return;
         }
         if (!offsetValue.matches(DIGITS_ONLY_REGEX)) {
             codeButtonEnabled = false;
-            status = STATUS_BAD_INPUT;
+            status = StatusMessage.Status.BAD_INPUT.getDescription();
             return;
         }
         if (offsetValue.length() > LIMITED) {
             codeButtonEnabled = false;
-            status = STATUS_LIMITED_DIGIT;
+            status = StatusMessage.Status.LIMITED_DIGIT.getDescription();
             return;
         }
         codeButtonEnabled = true;
-        status = STATUS_READY;
+        status = StatusMessage.Status.READY.getDescription();
     }
 
     public void codeCaesar() {
         caesarCipher = CaesarCipher.encode(inputTextBoxValue, Integer.parseInt(offsetTextBoxValue));
-        status = STATUS_SUCCESSFUL;
+        status = StatusMessage.Status.SUCCESSFUL.getDescription();
         logger.log(editingFinishMessage());
     }
 
@@ -94,12 +87,10 @@ public class ViewModel {
     }
 
     public String editingInputMessage() {
-        return LOG_INPUT + "characters: " + inputTextBoxValue
-               + ", encoder digit: " + offsetTextBoxValue;
+        return LogMessage.Message.INPUT.getDescription();
     }
 
     public String editingFinishMessage() {
-        return LOG_FINISHED + "characters: " + inputTextBoxValue + ", encoder digit: "
-                + offsetTextBoxValue + ", result: " + caesarCipher;
+        return LogMessage.Message.FINISHED.getDescription();
     }
 }

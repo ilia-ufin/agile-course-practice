@@ -53,7 +53,7 @@ public class ViewModelTests {
         viewModel.logInputParams();
         String logMessage = viewModel.getLog().toString();
 
-        assertTrue(logMessage.contains(ViewModel.LOG_INPUT));
+        assertTrue(logMessage.contains(LogMessage.Message.INPUT.getDescription()));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ViewModelTests {
         viewModel.logInputParams();
         String logMessage = viewModel.getLog().toString();
 
-        assertTrue(logMessage.contains(ViewModel.LOG_INPUT));
+        assertTrue(logMessage.contains(LogMessage.Message.INPUT.getDescription()));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ViewModelTests {
         viewModel.codeCaesar();
         String logMessage = viewModel.getLog().toString();
 
-        assertTrue(logMessage.contains(ViewModel.LOG_FINISHED));
+        assertTrue(logMessage.contains(LogMessage.Message.FINISHED.getDescription()));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class ViewModelTests {
 
         viewModel.codeCaesar();
 
-        assertEquals(" Encoded: characters: , encoder digit: 1, result: ",
+        assertEquals(LogMessage.Message.FINISHED.getDescription(),
                 viewModel.editingFinishMessage());
     }
 
@@ -93,7 +93,7 @@ public class ViewModelTests {
         viewModel.setTextBoxOffset("1");
         viewModel.logInputParams();
 
-        assertEquals(" Input value to characters: , encoder digit: 1",
+        assertEquals(LogMessage.Message.INPUT.getDescription(),
                 viewModel.editingInputMessage());
     }
 
@@ -102,7 +102,7 @@ public class ViewModelTests {
         viewModel.setTextBoxInput("ABC");
         viewModel.logInputParams();
 
-        assertEquals(" Input value to characters: ABC, encoder digit: ",
+        assertEquals(LogMessage.Message.INPUT.getDescription(),
                 viewModel.editingInputMessage());
     }
 
@@ -113,7 +113,7 @@ public class ViewModelTests {
         viewModel.logInputParams();
         viewModel.logInputParams();
 
-        assertEquals(" Input value to characters: ABC, encoder digit: ",
+        assertEquals(LogMessage.Message.INPUT.getDescription(),
                 viewModel.editingInputMessage());
     }
 
