@@ -373,15 +373,17 @@ include "code/segments2d-intersection/Infrastructure"
 project(":code/segments2d-intersection/Infrastructure").name = "segments2d-intersection-Infrastructure"
 
 
-// Harry Potter Book Store
+// Harry Potter Book Store. Mitrokhina Julia, Akhmedzhanov Dmitry, Beresneva Julia
 include "code/book-store/Model"
 project(":code/book-store/Model").name = "book-store-Model"
 include "code/book-store/view"
 project(":code/book-store/view").name = "book-store-view"
 include "code/book-store/ViewModel"
 project(":code/book-store/ViewModel").name = "book-store-ViewModel"
+include "code/book-store/Infrastructure"
+project(":code/book-store/Infrastructure").name = "book-store-Infrastructure"
 
-// Conway Game of Life
+// Conway Game of Life. Akhmedzhanov Dmitry, Beresneva Julia
 include "code/conway-game/View"
 project(":code/conway-game/View").name = "conway-game-View"
 include "code/conway-game/Model"

@@ -17,13 +17,30 @@ public class ViewModel {
     private final StringProperty books5 = new SimpleStringProperty();
 
     private final BooleanProperty calculationDisabled = new SimpleBooleanProperty();
+    private final StringProperty logs = new SimpleStringProperty();
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
-    private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
+    private static final String LOG_PATTERN_CALCULATE = LogMessages.CALCULATE_WAS_PRESSED
+            + "Books" + ": #1 = %s" + "; #2 = %s" + "; #3 = %s" + "; #4 = %s" + "; #5 = %s";
+    private static final String LOG_PATTERN_EDIT = LogMessages.EDITING_FINISHED
+            + "Input arguments are: [%s; %s; %s; %s]";
+
+    private ILogger logger;
+    private boolean isInputChanged;
+    private List<ValueListener> valueChangedListeners;
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
 
     // FXML needs default c-tor for binding
-    public ViewModel() {
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+
         books1.set("");
         books2.set("");
         books3.set("");
@@ -31,6 +48,7 @@ public class ViewModel {
         books5.set("");
         result.set("");
         status.set(Status.WAITING.toString());
+        isInputChanged = true;
 
         BooleanBinding couldCalculate = new BooleanBinding() {
             {
@@ -51,15 +69,32 @@ public class ViewModel {
             add(books4);
             add(books5);
         } };
-
+        valueChangedListeners = new ArrayList<>();
         for (StringProperty field : fields) {
-            final ValueChangeListener listener = new ValueChangeListener();
+            final ValueListener listener = new ValueListener();
             field.addListener(listener);
             valueChangedListeners.add(listener);
         }
+
+    }
+
+    public final String getLogPatternCalculate() {
+        return String.format(LOG_PATTERN_CALCULATE, books1.get(), books2.get(),
+                books3.get(), books4.get(), books5.get());
+    }
+
+    public final String getLogPatternEdit() {
+        return String.format(LOG_PATTERN_EDIT, books1.get(), books2.get(),
+                books3.get(), books4.get(), books5.get());
+    }
+
+    public List<String> getLog() {
+        return logger.getLog();
     }
 
     public void calculate() {
+        logger.log(createLogMessage());
+
         if (calculationDisabled.get()) {
             return;
         }
@@ -73,35 +108,99 @@ public class ViewModel {
         status.set(Status.SUCCESS.toString());
     }
 
+    private String createLogMessage() {
+        return getLogPatternCalculate();
+    }
+
+    public void onFocusChanged(final Boolean oldValue, final Boolean newValue) {
+        if (!oldValue && newValue) {
+            return;
+        }
+
+        for (ValueListener listener : valueChangedListeners) {
+            if (listener.isChanged()) {
+                String message = String.format(LOG_PATTERN_EDIT, books1.get(), books2.get(),
+                        books3.get(), books4.get(), books5.get());
+                logger.log(message);
+                updateLogs();
+
+                listener.cache();
+                break;
+            }
+        }
+    }
+
+
+    private void logInputParams() {
+        if (!isInputChanged) {
+            return;
+        }
+
+        logger.log(editingFinishedLogMessage());
+        isInputChanged = false;
+    }
+
+    private String editingFinishedLogMessage() {
+        return getLogPatternEdit();
+    }
+
+    public void focusLost() {
+        logInputParams();
+    }
+
     public StringProperty books1Property() {
         return books1;
     }
     public final String getBooks1() {
         return books1.get();
     }
+    public void setBooks1(final String books) {
+        books1.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books2Property() {
         return books2;
     }
     public final String getBooks2() {
         return books2.get();
     }
+    public void setBooks2(final String books) {
+        books2.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books3Property() {
         return books3;
     }
     public final String getBooks3() {
         return books3.get();
     }
+    public void setBooks3(final String books) {
+        books3.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books4Property() {
         return books4;
     }
     public final String getBooks4() {
         return books4.get();
     }
+    public void setBooks4(final String books) {
+        books4.set(books);
+        isInputChanged = true;
+    }
+
     public StringProperty books5Property() {
         return books5;
     }
     public final String getBooks5() {
         return books5.get();
+    }
+    public void setBooks5(final String books) {
+        books5.set(books);
+        isInputChanged = true;
     }
 
     public final String getResult() {
@@ -144,12 +243,32 @@ public class ViewModel {
         return inputStatus;
     }
 
-    private class ValueChangeListener implements ChangeListener<String> {
+    private void updateLogs() {
+        List<String> wholeLog = logger.getLog();
+        StringBuilder line = new StringBuilder("");
+        for (String log : wholeLog) {
+            line.append(log).append("\n");
+        }
+        logs.set(line.toString());
+    }
+
+    private class ValueListener implements ChangeListener<String> {
+        private String lastValue = new String("");
+        private String actualValue = new String("");
         @Override
         public void changed(final ObservableValue<? extends String> observable,
-                            final String oldValue,
-                            final String newValue) {
+                            final String oldValue, final String newValue) {
+            if (oldValue.equals(newValue)) {
+                return;
+            }
             status.set(getStatusForInput().toString());
+            actualValue = newValue;
+        }
+        public boolean isChanged() {
+            return !lastValue.equals(actualValue);
+        }
+        public void cache() {
+            lastValue = actualValue;
         }
     }
 }
@@ -167,4 +286,11 @@ enum Status {
     public String toString() {
         return name;
     }
+}
+
+final class LogMessages {
+    public static final String CALCULATE_WAS_PRESSED = "Calculate: ";
+    public static final String EDITING_FINISHED = "Updated input: ";
+
+    private LogMessages() { }
 }
