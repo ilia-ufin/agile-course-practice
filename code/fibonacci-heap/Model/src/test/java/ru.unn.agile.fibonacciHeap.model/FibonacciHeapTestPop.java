@@ -14,9 +14,7 @@ public class FibonacciHeapTestPop {
     private Node secondNode;
     private Node thirdNode;
     private double delta = 0.00001;
-
     {
-        //BEGIN BDD CODE
         describe("pop method", () -> {
             beforeEach(() -> {
                 heap = new FibonacciHeap();
@@ -108,5 +106,4 @@ public class FibonacciHeapTestPop {
             });
         });
     }
-    //END BDD CODE
 };

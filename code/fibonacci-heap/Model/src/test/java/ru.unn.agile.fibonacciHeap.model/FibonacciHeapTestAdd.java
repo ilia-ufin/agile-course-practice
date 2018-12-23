@@ -14,8 +14,6 @@ public class FibonacciHeapTestAdd {
     private Node thirdNode;
     private double delta = 0.00001;
     {
-        //BEGIN BDD CODE
-        //Чекстайл не умеет в BDD фреймворки тестирования
         describe("add method", () -> {
             beforeEach(() -> {
                 heap = new FibonacciHeap();
@@ -123,5 +121,4 @@ public class FibonacciHeapTestAdd {
             });
         });
     }
-    //END BDD CODE
 }

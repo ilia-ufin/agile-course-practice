@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':fibonacci-heap-ViewModel')
+    testCompile project(':fibonacci-heap-ViewModel').sourceSets.test.output
+}
