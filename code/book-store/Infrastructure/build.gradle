@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':book-store-ViewModel')
+    testCompile project(':book-store-ViewModel').sourceSets.test.output
+}

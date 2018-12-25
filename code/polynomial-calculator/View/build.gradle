@@ -1,3 +1,6 @@
+apply from: rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'
+
 dependencies {
     compile project(':polynomial-calculator-ViewModel')
+    compile project(':polynomial-calculator-Infrastructure')
 }

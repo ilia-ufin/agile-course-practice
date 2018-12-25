@@ -1,0 +1,6 @@
+apply from: rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'
+
+dependencies {
+    compile project(':fibonacci-heap-ViewModel')
+    compile project(':fibonacci-heap-Infrastructure')
+}

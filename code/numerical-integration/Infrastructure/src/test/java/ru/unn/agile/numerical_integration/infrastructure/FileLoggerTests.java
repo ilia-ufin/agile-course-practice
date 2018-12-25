@@ -62,17 +62,6 @@ public class FileLoggerTests {
     }
 
     @Test
-    public void canLogMessageIfFileAlreadyExists() throws IOException {
-        logger.close();
-        logger = null;
-        logger = new FileLogger(LOG_NAME);
-
-        logger.log("Ololo");
-
-        assertTrue(getLineFromLog().contains("Ololo"));
-    }
-
-    @Test
     public void canGetLog() {
         logger.log("Ololo");
         assertTrue(logger.getLog().get(0).contains("Ololo"));
