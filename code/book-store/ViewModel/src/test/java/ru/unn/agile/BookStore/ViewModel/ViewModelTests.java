@@ -4,19 +4,31 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        if (viewModel == null) {
+            FakeLogger fakeLogger = new FakeLogger();
+            viewModel = new ViewModel(fakeLogger);
+        }
     }
 
     @After
     public void tearDown() {
         viewModel = null;
+    }
+
+    public void setViewModel(final ViewModel vM) {
+        this.viewModel = vM;
     }
 
     private void setInputData() {
@@ -80,7 +92,7 @@ public class ViewModelTests {
 
     @Test
     public void calculateButtonIsDisabledWithIncompleteInput() {
-        viewModel.books1Property().set("1");
+        viewModel.setBooks1("1");
 
         assertTrue(viewModel.isCalculationDisabled());
     }
@@ -103,11 +115,11 @@ public class ViewModelTests {
 
     @Test
     public void calculationHasCorrectResult() {
-        viewModel.books1Property().set("1");
-        viewModel.books2Property().set("3");
-        viewModel.books3Property().set("2");
-        viewModel.books4Property().set("1");
-        viewModel.books5Property().set("5");
+        viewModel.setBooks1("1");
+        viewModel.setBooks2("3");
+        viewModel.setBooks3("2");
+        viewModel.setBooks4("1");
+        viewModel.setBooks5("5");
 
         viewModel.calculate();
 
@@ -116,8 +128,144 @@ public class ViewModelTests {
 
     @Test
     public void canSetBadFormatMessage() {
-        viewModel.books5Property().set("#selfie");
+        viewModel.setBooks5("#selfie");
 
         assertEquals(Status.BAD_FORMAT.toString(), viewModel.getStatus());
+    }
+
+    @Test
+    public void canCreateViewModelWithLogger() {
+        FakeLogger logger = new FakeLogger();
+        ViewModel myViewModel = new ViewModel(logger);
+
+        assertNotNull(myViewModel);
+    }
+
+    @Test
+    public void viewModelThrowsExceptionWithNullLogger() {
+        try {
+            new ViewModel(null);
+            fail("Exception wasn't thrown");
+        } catch (IllegalArgumentException ex) {
+            assertEquals("Logger parameter can't be null", ex.getMessage());
+        } catch (Exception ex) {
+            fail("Invalid exception type");
+        }
+    }
+
+    @Test
+    public void logIsEmptyAtTheBeginning() {
+        List<String> log = viewModel.getLog();
+
+        assertEquals(0, log.size());
+    }
+
+    @Test
+    public void isCalculatePuttingSomething() {
+        viewModel.calculate();
+
+        List<String> log = viewModel.getLog();
+
+        assertNotEquals(0, log.size());
+    }
+
+    @Test
+    public void isLogContainsProperMessage() {
+        viewModel.calculate();
+        String message = viewModel.getLog().get(0);
+
+        assertTrue(message.matches(".*" + LogMessages.CALCULATE_WAS_PRESSED + ".*"));
+    }
+
+    @Test
+    public void canLogContainInputParameters() {
+        setInputData();
+        viewModel.calculate();
+
+        String message = viewModel.getLog().get(0);
+
+        assertTrue(message.matches(".*" + viewModel.getBooks1()
+                + ".*" + viewModel.getBooks2()
+                + ".*" + viewModel.getBooks3()
+                + ".*" + viewModel.getBooks4() + ".*"
+        ));
+    }
+
+    @Test
+    public void isProperlyFormattingInfoAboutArguments() {
+        setInputData();
+        viewModel.calculate();
+
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(".*" + viewModel.getLogPatternCalculate()));
+    }
+
+    @Test
+    public void isEditingFinishLogged() {
+        viewModel.setBooks1("1");
+
+        viewModel.focusLost();
+
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(".*" + LogMessages.EDITING_FINISHED + ".*"));
+    }
+
+    @Test
+    public void canParametersLogOnEditingProperly() {
+        setInputData();
+
+        viewModel.focusLost();
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(".*" + "Updated input: Input arguments are: \\[1; 2; 3; 4\\]"));
+    }
+
+    @Test
+    public void canNotLogTheSameArgumentsTwice() {
+        setInputData();
+        setInputData();
+        viewModel.focusLost();
+        viewModel.focusLost();
+
+        String message = viewModel.getLog().get(0);
+
+        assertTrue(message.matches(".*" + LogMessages.EDITING_FINISHED + ".*"));
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void canNotLogTheSameArgumentsTwiceWithPartialInput() {
+        viewModel.setBooks1("2");
+        viewModel.setBooks1("2");
+        viewModel.setBooks1("2");
+
+        viewModel.focusLost();
+        viewModel.focusLost();
+        viewModel.focusLost();
+
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+
+    @Test
+    public void canLogWhenCalculateButtonIsDisabledWhenFormatIsBad() {
+        viewModel.setBooks1("trash");
+        viewModel.focusLost();
+        viewModel.setBooks2("2");
+        viewModel.focusLost();
+
+        String message = viewModel.getLog().get(0);
+
+        assertTrue(message.matches(".*" + LogMessages.EDITING_FINISHED + ".*"));
+        assertEquals(2, viewModel.getLog().size());
+    }
+
+    @Test
+    public void doNotLogEqualParametersTwice() {
+        viewModel.setBooks4("2");
+        viewModel.onFocusChanged(Boolean.TRUE, Boolean.FALSE);
+        viewModel.setBooks4("2");
+        viewModel.onFocusChanged(Boolean.TRUE, Boolean.FALSE);
+
+        assertEquals(1, viewModel.getLog().size());
     }
 }

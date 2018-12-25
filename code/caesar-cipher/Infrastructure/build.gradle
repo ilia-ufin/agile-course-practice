@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':caesar-cipher-ViewModel')
+    testCompile project(':caesar-cipher-ViewModel').sourceSets.test.output
+}

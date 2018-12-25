@@ -1,4 +1,4 @@
-package ru.unn.agile.BookStore.View;
+package ru.unn.agile.BookStore.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

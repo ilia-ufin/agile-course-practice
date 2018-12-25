@@ -4,14 +4,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ru.unn.agile.fibonacciHeap.model.FibonacciHeap;
 
+import java.util.List;
+
 public class ViewModel {
     private FibonacciHeap model;
+    private static final String INPUT_ERROR = "Ошибка ввода";
     private final StringProperty inputValue = new SimpleStringProperty();
     private final StringProperty minElem = new SimpleStringProperty();
     private final StringProperty heapLength = new SimpleStringProperty();
     private final StringProperty errorLabel = new SimpleStringProperty();
+    private ILogger logger;
 
-    public ViewModel() {
+    public ViewModel(final ILogger logger) {
+        this.logger = logger;
         model = new FibonacciHeap();
         heapLength.set("");
         inputValue.set("");
@@ -19,14 +24,22 @@ public class ViewModel {
         errorLabel.set("");
     }
 
-    public void fetchMinElement() {
-        String length = String.valueOf(model.getRootNode().getValue());
+    public List<String> getLog() {
+        return logger.getLog();
+    }
 
-        minElem.set(length);
+    public void fetchMinElement() {
+        String value = String.valueOf(model.getRootNode().getValue());
+
+        logger.log("Минимальный элемент стал " + value);
+
+        minElem.set(value);
     }
 
     public void fetchHeapLength() {
         String length = String.valueOf(model.getRootAmount());
+
+        logger.log("Кол-во узлов в куче стало " + length);
 
         heapLength.set(length);
     }
@@ -48,11 +61,14 @@ public class ViewModel {
 
                 model.add(elem);
 
+                logger.log("Добавлен элемент " + inputValue.get());
+
                 fetchData();
                 clear();
             }
         } catch (NumberFormatException nfe) {
-            errorLabel.set("Ошибка ввода");
+            logger.log(INPUT_ERROR);
+            errorLabel.set(INPUT_ERROR);
         }
     }
 

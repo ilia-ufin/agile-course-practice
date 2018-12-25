@@ -9,12 +9,8 @@ import static org.junit.Assert.*;
 @RunWith(OleasterRunner.class)
 public class FibonacciHeapTestUtils {
     private FibonacciHeap heap;
-    private Node firstNode;
-    private Node secondNode;
-    private Node thirdNode;
     private double delta = 0.00001;
     {
-        //BEGIN BDD CODE
         describe("Constructor", () -> {
             beforeEach(() -> {
                 heap = new FibonacciHeap();
@@ -31,5 +27,4 @@ public class FibonacciHeapTestUtils {
             });
         });
     }
-    //END BDD CODE
 }
