@@ -158,7 +158,6 @@ project(":code/huffman/View").name = "huffman-View"
 include "code/huffman/Infrastructure"
 project(":code/huffman/Infrastructure").name = "huffman-Infrastructure"
 
-
 // Polyakov Igor & Podolov Kirill & Flegontov Alexander, sort
 include "code/sort/Model"
 project(":code/sort/Model").name = "sort-Model"
@@ -219,7 +218,6 @@ project(":code/mortgage-calculator/ViewModel").name = "mortgage-calculator-ViewM
 include "code/mortgage-calculator/Infrastructure"
 project(":code/mortgage-calculator/Infrastructure").name = "mortgage-calculator-Infrastructure"
 
-
 // Kochuev Andrey, Golovanova Tatyana Length Converter
 include "code/length-converter/Model"
 project(":code/length-converter/Model").name = "length-converter-Model"
@@ -259,16 +257,6 @@ include "code/salary-calculator/ViewModel"
 project(":code/salary-calculator/ViewModel").name = "salary-calculator-ViewModel"
 include "code/salary-calculator/Infrastructure"
 project(":code/salary-calculator/Infrastructure").name = "salary-calculator-Infrastructure"
-
-// Gladkova Tatiana, Binary Search
-include "code/binary-search/Model"
-project(":code/binary-search/Model").name = "binary-search-Model"
-include "code/binary-search/View"
-project(":code/binary-search/View").name = "binary-search-View"
-include "code/binary-search/ViewModel"
-project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
-include "code/binary-search/Infrastructure""
-project(":code/binary-search/Infrastructure"").name = "binary-search-ViewModel-Infrastructure"
 
 // Podolov Kirill & Flegontov Alexander, Queue
 include "code/queue/Model"
@@ -431,3 +419,13 @@ include "code/caesar-cipher/View"
 project(":code/caesar-cipher/View").name = "caesar-cipher-View"
 include "code/caesar-cipher/Infrastructure"
 project(":code/caesar-cipher/Infrastructure").name = "caesar-cipher-Infrastructure"
+
+// Gladkova Tatiana, Binary Search
+include "code/binary-search/Model"
+project(":code/binary-search/Model").name = "binary-search-Model"
+include "code/binary-search/View"
+project(":code/binary-search/View").name = "binary-search-View"
+include "code/binary-search/ViewModel"
+project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
+include "code/binary-search/Infrastructure""
+project(":code/binary-search/Infrastructure"").name = "binary-search-ViewModel-Infrastructure"
