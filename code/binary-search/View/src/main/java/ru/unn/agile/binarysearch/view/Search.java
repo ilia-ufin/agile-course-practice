@@ -14,7 +14,7 @@ import ru.unn.agile.binarysearch.infrastructure.TxtLogger;
 import java.io.IOException;
 
 public class Search {
-    private static final String LOG_PATH = "real.log";
+    private static final String LOG_PATH = "log";
 
     @FXML
     private ViewModel viewModel;
