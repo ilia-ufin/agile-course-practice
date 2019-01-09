@@ -403,10 +403,6 @@ project(":code/ryabov-avl-tree").name = "ryabov-avl-tree"
 include "code/pipikin-oleg-matrix"
 project(":code/pipikin-oleg-matrix").name = "pipikin-oleg-matrix"
 
-// Nakhimovich Dmitry, Segments2D
-include "code/nakhimovich-dmitry-segments2d"
-project(":code/nakhimovich-dmitry-segments2d").name = "nakhimovich-dmitry-segments2d"
-
 // Krutoberezskaya Irina, numbers-in-words
 include "code/numbers-in-words/Model"
 project(":code/numbers-in-words/Model").name = "numbers-in-words-Model"
