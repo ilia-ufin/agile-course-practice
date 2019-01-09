@@ -262,7 +262,7 @@ project(":code/salary-calculator/Infrastructure").name = "salary-calculator-Infr
 
 // Gladkova Tatiana, Binary Search
 include "code/binary-search/Model"
-project(":code/binary-search/Model").name = "binary-search"
+project(":code/binary-search/Model").name = "binary-search-Model"
 include "code/binary-search/View"
 project(":code/binary-search/View").name = "binary-search-View"
 include "code/binary-search/ViewModel"
