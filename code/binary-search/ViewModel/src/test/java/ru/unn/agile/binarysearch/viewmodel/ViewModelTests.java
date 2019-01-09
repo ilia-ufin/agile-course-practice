@@ -47,7 +47,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void canSetElementsValue() {
+    public void canSetElementValue() {
         String expected = "2";
 
         viewModel.setElementInputProperty("2");
