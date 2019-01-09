@@ -28,7 +28,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void canInitializeElementValue() {
+    public void canInitializeElementsValue() {
        assertEquals("", viewModel.getElementInputProperty());
     }
 
