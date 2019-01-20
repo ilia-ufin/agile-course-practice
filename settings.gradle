@@ -411,8 +411,8 @@ include "code/numbers-in-words/Infrastructure"
 project(":code/numbers-in-words/Infrastructure").name = "numbers-in-words-Infrastructure"
 
 // Ryabov Vladislav, AVLTree
-include "code/ryabov-avl-tree"
-project(":code/ryabov-avl-tree").name = "ryabov-avl-tree"
+include "code/ryabov-avl-tree/Model"
+project(":code/ryabov-avl-tree/Model").name = "ryabov-avl-tree-Model"
 
 // Kryukova Polina, caesar-cipher
 include "code/caesar-cipher/Model"

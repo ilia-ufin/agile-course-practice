@@ -1,4 +1,4 @@
-package ru.unn.agile.AVL.Model;
+package ru.unn.agile.AVL.model;
 
 import org.junit.Test;
 

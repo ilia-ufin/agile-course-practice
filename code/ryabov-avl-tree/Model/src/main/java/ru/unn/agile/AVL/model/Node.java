@@ -1,4 +1,4 @@
-package ru.unn.agile.AVL.Model;
+package ru.unn.agile.AVL.model;
 
 public class Node<K extends Comparable<K>, V extends Comparable<V>> {
 
