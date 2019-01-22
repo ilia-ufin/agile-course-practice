@@ -1,0 +1,1 @@
+apply from: rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'

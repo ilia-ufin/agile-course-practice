@@ -413,6 +413,8 @@ project(":code/numbers-in-words/Infrastructure").name = "numbers-in-words-Infras
 // Ryabov Vladislav, AVLTree
 include "code/ryabov-avl-tree/Model"
 project(":code/ryabov-avl-tree/Model").name = "ryabov-avl-tree-Model"
+include "code/ryabov-avl-tree/View"
+project(":code/ryabov-avl-tree/View").name = "ryabov-avl-tree-View"
 
 // Kryukova Polina, caesar-cipher
 include "code/caesar-cipher/Model"
