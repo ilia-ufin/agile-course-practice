@@ -5,7 +5,8 @@ import static org.junit.Assert.*;
 
 public class MashaevArtemTest {
     @Test
-    public void canAddComplexNumbers() {
+    public void plusCmlxNmbrs() 
+    {
         // Arrange
         ComplexNumber z1 = new ComplexNumber(6, 0);
         ComplexNumber z2 = new ComplexNumber(0, 6);
@@ -18,7 +19,8 @@ public class MashaevArtemTest {
     }
 
     @Test
-    public void canMultiplyComplexNumbers() {
+    public void MultiplyCmplxNmbrs() 
+    {
         // Arrange
         ComplexNumber z1 = new ComplexNumber(6, 2);
         ComplexNumber z2 = new ComplexNumber(2, 6);
@@ -31,8 +33,8 @@ public class MashaevArtemTest {
     }
 
     @Test
-    public void areComplexNumbersEqual() 
- {
+    public void EqualCmplxNmbrs() 
+    {
         // Arrange
         ComplexNumber z1 = new ComplexNumber(2, 2);
         ComplexNumber z2 = new ComplexNumber(2, 2);
@@ -43,7 +45,8 @@ public class MashaevArtemTest {
     }
 
     @Test
-    public void areComplexNumbersNotEqual() {
+    public void NotEqialCmplxNmbrs() 
+    {
         // Arrange
         ComplexNumber z1 = new ComplexNumber(4, 2);
         ComplexNumber z2 = new ComplexNumber(2, 2);
