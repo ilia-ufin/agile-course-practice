@@ -32,7 +32,7 @@ public class MashaevArtemTest {
 
     @Test
     public void areComplexNumbersEqual() 
-{
+ {
         // Arrange
         ComplexNumber z1 = new ComplexNumber(2, 2);
         ComplexNumber z2 = new ComplexNumber(2, 2);
