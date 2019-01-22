@@ -389,13 +389,15 @@ project(":code/conway-game/Model").name = "conway-game-Model"
 include "code/conway-game/ViewModel"
 project(":code/conway-game/ViewModel").name = "conway-game-ViewModel"
 
-// Lcd Digits. Beresneva Julia, Mitrokhina Julia
+// Lcd Digits. Beresneva Julia, Mitrokhina Julia, Akhmedzhanov Dmitry
 include "code/lcd-digits/View"
 project(":code/lcd-digits/View").name = "lcd-digits-View"
 include "code/lcd-digits/Model"
 project(":code/lcd-digits/Model").name = "lcd-digits-Model"
 include "code/lcd-digits/ViewModel"
 project(":code/lcd-digits/ViewModel").name = "lcd-digits-ViewModel"
+include "code/lcd-digits/Infrastructure"
+project(":code/lcd-digits/Infrastructure").name = "lcd-digits-Infrastructure"
 
 // Numeral Systems and Radix Calculator
 include "code/numeral-systems-calculator/Model"
