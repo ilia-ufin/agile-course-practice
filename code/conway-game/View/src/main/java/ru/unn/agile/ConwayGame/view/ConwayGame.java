@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import ru.unn.agile.ConwayGame.viewmodel.ViewModel;
+import ru.unn.agile.ConwayGame.infrastructure.*;
 
 public class ConwayGame {
     @FXML
@@ -26,6 +27,7 @@ public class ConwayGame {
         txtColumns.textProperty().bindBidirectional(viewModel.columnsNumberProperty());
         txtFirstGeneration.textProperty().bindBidirectional(viewModel.firstGenerationProperty());
 
+        viewModel.setLogger(new TxtLogger("./ConwayGame.log"));
         btnSubmit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {

@@ -370,13 +370,15 @@ project(":code/book-store/ViewModel").name = "book-store-ViewModel"
 include "code/book-store/Infrastructure"
 project(":code/book-store/Infrastructure").name = "book-store-Infrastructure"
 
-// Conway Game of Life. Akhmedzhanov Dmitry, Beresneva Julia
+// Conway Game of Life. Akhmedzhanov Dmitry, Beresneva Julia, Mitrokhina Julia
 include "code/conway-game/View"
 project(":code/conway-game/View").name = "conway-game-View"
 include "code/conway-game/Model"
 project(":code/conway-game/Model").name = "conway-game-Model"
 include "code/conway-game/ViewModel"
 project(":code/conway-game/ViewModel").name = "conway-game-ViewModel"
+include "code/conway-game/Infrastructure"
+project(":code/conway-game/Infrastructure").name = "conway-game-Infrastructure"
 
 // Lcd Digits. Beresneva Julia, Mitrokhina Julia
 include "code/lcd-digits/View"
