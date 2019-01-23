@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':numeral-systems-calculator-ViewModel')
+
+    testCompile project(':numeral-systems-calculator-ViewModel').sourceSets.test.output
+}

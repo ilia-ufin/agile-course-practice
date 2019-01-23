@@ -19,17 +19,43 @@ public class ViewModel {
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
+    private final StringProperty areaLog = new SimpleStringProperty();
+
     private final BooleanProperty calculationDisabled = new SimpleBooleanProperty();
 
     private final ObjectProperty<Operation> operation = new SimpleObjectProperty<>();
     private final ObjectProperty<ObservableList<Operation>> operations =
             new SimpleObjectProperty<>(FXCollections.observableArrayList(Operation.values()));
 
+    private ILogger logger;
+    private CachingChangeListener changedListener;
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+
+    public final List<String> getLog() {
+        return logger.getLog();
+    }
+
     public ViewModel() {
+        init();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        init();
+    }
+
+    private void init() {
         inputData.set("");
         operation.set(Operation.ADD);
 
-        inputData.addListener(new ValueChangeListener());
+        changedListener = new CachingChangeListener();
+        inputData.addListener(changedListener);
 
         initCalculateButtonState();
 
@@ -56,12 +82,16 @@ public class ViewModel {
         return status.get();
     }
 
-    public ObjectProperty<Operation> operationProperty() {
-        return operation;
+    public StringProperty areaLogProperty() {
+        return areaLog;
     }
 
-    public BooleanProperty calculationDisabledProperty() {
-        return calculationDisabled;
+    public String getAreaLog() {
+        return areaLog.get();
+    }
+
+    public ObjectProperty<Operation> operationProperty() {
+        return operation;
     }
 
     public Operation getOperation() {
@@ -70,6 +100,10 @@ public class ViewModel {
 
     public final ObservableList<Operation> getOperations() {
         return operations.get();
+    }
+
+    public BooleanProperty calculationDisabledProperty() {
+        return calculationDisabled;
     }
 
     public boolean isCalculationDisabled() {
@@ -92,6 +126,17 @@ public class ViewModel {
 
         result.set(Integer.toString(resultExpression));
         status.set(Status.SUCCESS.toString());
+
+        if (logger == null) {
+            return;
+        }
+
+        StringBuilder logStr = new StringBuilder(LogMessages.CALCULATE_WAS_PRESSED.toString());
+        logStr.append("String: ").append(inputData.get())
+                .append("; Default operation ").append(operation.get().toString())
+                .append("; Result: ").append(result.get());
+        logger.log(logStr.toString());
+        updateLogs();
     }
 
     private Status getInputDataStatus() {
@@ -110,11 +155,36 @@ public class ViewModel {
         return inputStatus;
     }
 
+    private void updateLogs() {
+        List<String> fullLog = logger.getLog();
+        String record = new String("");
+        for (String log : fullLog) {
+            record += log + "\n";
+        }
+        areaLog.set(record);
+    }
+
+    public void subsChanged(final Boolean oldValue, final Boolean newValue) {
+        if (!oldValue && newValue) {
+            return;
+        }
+
+        if (changedListener.isChanged()) {
+            StringBuilder logStr = new StringBuilder(LogMessages.EDITING_FINISHED.toString());
+            logStr.append("Input string: [ ").append(inputData.get()).append(" ]");
+            logger.log(logStr.toString());
+            updateLogs();
+
+            changedListener.cache();
+        }
+    }
+
     private void initCalculateButtonState() {
         BooleanBinding couldCalculate = new BooleanBinding() {
             {
                 super.bind(inputData);
             }
+
             @Override
             protected boolean computeValue() {
                 return getInputDataStatus() == Status.READY;
@@ -123,11 +193,22 @@ public class ViewModel {
         calculationDisabled.bind(couldCalculate.not());
     }
 
-    private class ValueChangeListener implements ChangeListener<String> {
+    private class CachingChangeListener implements ChangeListener<String> {
+        private String prevValue = new String("");
+        private String curValue = new String("");
+
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
             status.set(getInputDataStatus().toString());
+            curValue = newValue;
+        }
+
+        public boolean isChanged() {
+            return !prevValue.equals(curValue);
+        }
+        public void cache() {
+            prevValue = curValue;
         }
     }
 
@@ -142,6 +223,21 @@ enum Status {
     private final String name;
 
     Status(final String name) {
+        this.name = name;
+    }
+
+    public String toString() {
+        return name;
+    }
+}
+
+enum LogMessages {
+    CALCULATE_WAS_PRESSED("Calculate. "),
+    EDITING_FINISHED("Updated input. ");
+
+    private final String name;
+
+    LogMessages(final String name) {
         this.name = name;
     }
 

@@ -7,20 +7,107 @@ import org.junit.Test;
 import ru.unn.agile.vectordistance.model.VectorDistance;
 import ru.unn.agile.vectordistance.model.VectorDistance.Distance;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
+import static ru.unn.agile.vectordistance.viewmodel.ViewModel.CALCULATE_RESULT_ERROR_MESSAGE;
+import static ru.unn.agile.vectordistance.viewmodel.ViewModel.CALCULATE_RESULT_SUCCESS_MESSAGE;
+import static ru.unn.agile.vectordistance.viewmodel.ViewModel.CALCULATE_STATUS_MESSAGE;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    private static final String TEST_MESSAGE = "Test message";
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        viewModel = new ViewModel(new FakeLogger());
     }
 
     @After
     public void tearDown() {
         viewModel = null;
     }
+
+    public void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    @Test
+    public void canCreateViewModel() {
+        ViewModel viewModel = new ViewModel();
+
+        assertNotNull(viewModel);
+    }
+
+    @Test
+    public void canCreateViewModelWithLogger() {
+        FakeLogger logger = new FakeLogger();
+        ViewModel viewModelLogged = new ViewModel(logger);
+
+        assertNotNull(viewModelLogged);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsWhenCreateViewModelWithNullLogger() {
+        new ViewModel(null);
+    }
+
+    @Test
+    public void doesLogContainInfoAboutSuccessfulResult() {
+        setInputData();
+        viewModel.calculate();
+
+        List<String> log = viewModel.getLogList();
+
+        assertTrue(log.get(0).matches(".*"
+                + CALCULATE_RESULT_SUCCESS_MESSAGE + "9.0" + ".*"));
+    }
+
+    @Test
+    public void doesLogContainInfoAboutSuccessfulStatus() {
+        setInputData();
+        viewModel.calculate();
+
+        List<String> log = viewModel.getLogList();
+
+        assertTrue(log.get(1).matches(".*"
+                + CALCULATE_STATUS_MESSAGE + Status.SUCCESS.toString() + ".*"));
+    }
+
+    @Test
+    public void doesLogContainInfoExceptionWhileCalculating() {
+        setInputData();
+        viewModel.vectorXProperty().set("1 2");
+
+        viewModel.calculate();
+
+        List<String> log = viewModel.getLogList();
+
+        assertTrue(log.get(0).matches(".*"
+                + CALCULATE_RESULT_ERROR_MESSAGE
+                + VectorDistance.EXPECTED_VECTORS_OF_SAME_LENGTH_EXCEPTION_MESSAGE + ".*"));
+    }
+
+    @Test
+    public void canSetLogProperty() {
+        setInputData();
+
+        viewModel.logProperty().set(TEST_MESSAGE);
+
+        assertTrue(viewModel.logProperty().get().matches(".*" + TEST_MESSAGE + ".*"));
+    }
+
+    @Test
+    public void canSetLogger() {
+        setInputData();
+        ILogger logger = new FakeLogger();
+
+        viewModel.setLogger(logger);
+
+        assertEquals(logger, viewModel.getLogger());
+    }
+
 
     @Test
     public void canSetDefaultValues() {
@@ -30,6 +117,7 @@ public class ViewModelTests {
         assertEquals("", viewModel.getResultProperty());
         assertEquals(Status.WAITING.toString(), viewModel.getStatusProperty());
         assertTrue(viewModel.isCalculationDisabledProperty());
+        assertTrue(viewModel.isCalculationDisabled());
     }
 
     @Test

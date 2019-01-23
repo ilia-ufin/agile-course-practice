@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':conway-game-ViewModel')
+    testCompile project(':conway-game-ViewModel').sourceSets.test.output
+}

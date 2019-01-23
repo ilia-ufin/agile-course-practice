@@ -6,19 +6,28 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ViewModelTests {
+
     private ViewModel viewModel;
 
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        FakeLogger fakeLogger = new FakeLogger();
+        viewModel = new ViewModel(fakeLogger);
     }
 
     @After
     public void tearDown() {
         viewModel = null;
+    }
+
+    public void setViewModel(final ViewModel vM) {
+        this.viewModel = vM;
     }
 
     @Test
@@ -105,7 +114,7 @@ public class ViewModelTests {
     public void isWaitingStateWhenAddAndDelElemEmptyField() {
         viewModel.setInputValue("");
 
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(Status.WAITING, viewModel.getCurrentState());
     }
@@ -114,7 +123,7 @@ public class ViewModelTests {
     public void isReadyStateWhenAddElemFieldIsWriteIn() {
         viewModel.setInputValue("6.1");
 
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(Status.READY, viewModel.getCurrentState());
     }
@@ -123,7 +132,7 @@ public class ViewModelTests {
     public void canSetBadFormatMessage() {
         viewModel.setInputValue("b");
 
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(Status.BAD_FORMAT, viewModel.getCurrentState());
     }
@@ -159,7 +168,7 @@ public class ViewModelTests {
     @Test
     public void isAddButtonEnabledAddElemFieldIsCorrect() {
         viewModel.setInputValue("1.2");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(true, viewModel.isAddButtonEnabled());
     }
@@ -167,7 +176,7 @@ public class ViewModelTests {
     @Test
     public void isAddButtonDisabledWhenAddElemFieldIsEmpty() {
         viewModel.setInputValue("");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(false, viewModel.isAddButtonEnabled());
     }
@@ -175,7 +184,7 @@ public class ViewModelTests {
     @Test
     public void isAddButtonDisabledWhenAddElemIsInvalid() {
         viewModel.setInputValue("ijijfdf");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(false, viewModel.isAddButtonEnabled());
     }
@@ -242,9 +251,9 @@ public class ViewModelTests {
     @Test
     public void canChangeStateIfAddElemFieldIsCorrect() {
         viewModel.setInputValue("test");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
         viewModel.setInputValue("12.1");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(Status.READY, viewModel.getCurrentState());
     }
@@ -252,9 +261,9 @@ public class ViewModelTests {
     @Test
     public void canChangeStateIfAddElemFieldIsInvalid() {
         viewModel.setInputValue("12.1");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
         viewModel.setInputValue("test");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(Status.BAD_FORMAT, viewModel.getCurrentState());
     }
@@ -262,10 +271,75 @@ public class ViewModelTests {
     @Test
     public void canChangeStateIfAddElemFieldIsEmpty() {
         viewModel.setInputValue("12.1");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
         viewModel.setInputValue("");
-        viewModel.processingAddField(1);
+        viewModel.processingAddField();
 
         assertEquals(Status.WAITING, viewModel.getCurrentState());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsViewModelWhenLoggerIsNull() {
+        FakeLogger logger = null;
+
+        new ViewModel(logger);
+    }
+
+    @Test
+    public void canConstructViewModelWhenLoggerIsNotNull() {
+        FakeLogger logger = new FakeLogger();
+
+        new ViewModel(logger);
+    }
+
+    @Test
+    public void isLoggerEmptyWhenStartup() {
+        final int expected = 0;
+        List<String> log = viewModel.getLog();
+
+        assertEquals(expected, log.size());
+    }
+
+    @Test
+    public void isLogUpdatedWhenAddToArray() {
+        viewModel.setInputValue("10");
+
+        viewModel.addProcess();
+
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(".*" + ViewModel.ADD_LOG + viewModel.getElemArray() + ".*"));
+    }
+
+    @Test
+    public void isLogUpdatedWhenClearArray() {
+        viewModel.clearProcess();
+
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(".*" + ViewModel.CLEAR_LOG + ".*"));
+    }
+
+    @Test
+    public void isLogUpdatedWhenSortArray() {
+        viewModel.setInputValue("10");
+        viewModel.addProcess();
+        viewModel.setInputValue("-3.4");
+        viewModel.addProcess();
+        viewModel.setInputValue("9");
+        viewModel.addProcess();
+
+        viewModel.sort();
+
+        List<String> log = viewModel.getLog();
+        String message = log.get(log.size() - 1);
+        assertTrue(message.matches(".*" + viewModel.getSortedArrayStringRepresentation() + ".*"));
+    }
+
+    @Test
+    public void isLogUpdatedWhenNewInputElemHasBadFormat() {
+        viewModel.setInputValue("hello");
+        viewModel.processingAddField();
+
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.matches(".*" + Status.BAD_FORMAT + ".*"));
     }
 }

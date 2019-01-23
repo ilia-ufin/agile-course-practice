@@ -11,21 +11,22 @@ import static org.junit.Assert.*;
 import static ru.unn.agile.ComplexNumber.viewmodel_lab3_legacy.RegexMatcher.matchesPattern;
 
 public class ViewModelTests {
-    private ViewModel viewModel;
 
-    public void setViewModel(final ViewModel viewModel) {
-        this.viewModel = viewModel;
-    }
+    private ViewModel viewModel;
 
     @Before
     public void setUp() {
-        FakeLogger logger = new FakeLogger();
-        viewModel = new ViewModel(logger);
+        FakeLogger fakeLogger = new FakeLogger();
+        viewModel = new ViewModel(fakeLogger);
     }
 
     @After
     public void tearDown() {
         viewModel = null;
+    }
+
+    public void setViewModel(final ViewModel vM) {
+        this.viewModel = vM;
     }
 
     @Test

@@ -1,13 +1,19 @@
-package ru.unn.agile.numerical_integration.ViewModel.legacy;
+package ru.unn.agile.numerical_integration.viewmodel.legacy;
 
-import ru.unn.agile.numerical_integration.Model.BaseDefinition;
-import ru.unn.agile.numerical_integration.Model.Expression;
+import ru.unn.agile.numerical_integration.model.BaseDefinition;
+import ru.unn.agile.numerical_integration.model.Expression;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class ViewModel {
+    public static final String LOG_COMPUTE_BUTTON_CLICKED = "Compute button clicked";
+    public static final String LOG_INPUT_EXPRESSION_CHANGED = "input changed";
+    public static final String LOG_FUNCTION_INPUT = "Function";
+    public static final String LOG_LEFT_BORDER_INPUT = "Left Border";
+    public static final String LOG_RIGHT_BORDER_INPUT = "Right Border";
+    public static final String LOG_SPLITS_NUMBER_INPUT = "Splits Number";
+
+
     private static final String FLOAT_NUMBER_REGEX =
             "[+-]?((\\d+\\.?\\d*)|(\\d*\\.\\d+))";
 
@@ -36,6 +42,7 @@ public class ViewModel {
     private String splitsNumberText;
     private String outputMessage;
     private AbstractMap<ErrorKind, String> errorsList;
+    private ILogger logger;
 
 
     public ViewModel() {
@@ -45,7 +52,16 @@ public class ViewModel {
         splitsNumberText = "1";
         outputMessage = "";
         errorsList = new HashMap<>();
+        logger = null;
         checkErrors();
+    }
+
+    public void setLogger(final ILogger logger) {
+        this.logger = logger;
+    }
+
+    public List<String> getLogMessages() {
+        return logger.getLog();
     }
 
     public String getFunctionText() {
@@ -68,24 +84,43 @@ public class ViewModel {
         return outputMessage;
     }
 
+    private String buildInputFieldChangedMessage(final String field,
+                                                 final String newValue,
+                                                 final String oldValue) {
+        StringBuilder message = new StringBuilder(field).append(" ")
+                .append(LOG_INPUT_EXPRESSION_CHANGED)
+                .append(". Previous Value: ").append(oldValue)
+                .append(", New value: ").append(newValue)
+                .append(", Status: ").append(outputMessage);
+        return message.toString();
+    }
+
     public void setLeftBorderValue(final String value) {
+        String oldValue = leftBorderText;
         leftBorderText = value;
         checkErrors();
+        log(buildInputFieldChangedMessage(LOG_LEFT_BORDER_INPUT, value, oldValue));
     }
 
     public void setRightBorderValue(final String value) {
+        String oldValue = rightBorderText;
         rightBorderText = value;
         checkErrors();
+        log(buildInputFieldChangedMessage(LOG_RIGHT_BORDER_INPUT, value, oldValue));
     }
 
     public void setSplitsNumber(final String value) {
+        String oldValue = splitsNumberText;
         splitsNumberText = value;
         checkErrors();
+        log(buildInputFieldChangedMessage(LOG_SPLITS_NUMBER_INPUT, value, oldValue));
     }
 
     public void setFunction(final String value) {
+        String oldValue = functionText;
         functionText = value;
         checkErrors();
+        log(buildInputFieldChangedMessage(LOG_FUNCTION_INPUT, value, oldValue));
     }
 
     public boolean canComputeFunction() {
@@ -96,7 +131,6 @@ public class ViewModel {
         if (!canComputeFunction()) {
             return;
         }
-
         MathExpression parser = new MathExpression(functionText);
         final Expression f = x -> {
             final boolean success = parser.eval(x);
@@ -113,6 +147,19 @@ public class ViewModel {
         } catch (Exception e) {
             addError(ErrorKind.Computation, e.toString());
             checkErrors();
+        }
+        StringBuilder logMessage = new StringBuilder(LOG_COMPUTE_BUTTON_CLICKED)
+                .append(". Expression: ").append(functionText)
+                .append(", Left Border: ").append(leftBorderText)
+                .append(", Right Border: ").append(rightBorderText)
+                .append(", Split Numbers: ").append(splitsNumberText)
+                .append(", Result: ").append(outputMessage);
+        log(logMessage.toString());
+    }
+
+    private void log(final String message) {
+        if (logger != null) {
+            logger.log(message);
         }
     }
 

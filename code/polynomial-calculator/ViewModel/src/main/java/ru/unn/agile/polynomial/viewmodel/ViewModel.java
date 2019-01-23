@@ -3,14 +3,22 @@ package ru.unn.agile.polynomial.viewmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ru.unn.agile.polynomial.model.Polynomial;
+import java.util.List;
 
 public class ViewModel {
+    public static final String OPERATION_PASSED =
+            "Operation: %s %s = %s";
+
+    public static final String PARSE_PASSED =
+            "Parse passed: %s";
+
+    private ILogger logger = new FakeLogger();
     private StringProperty firstPolynomialStr = new SimpleStringProperty();
     private StringProperty secondPolynomialStr = new SimpleStringProperty();
     private StringProperty resultStr = new SimpleStringProperty();
+    private final StringProperty log = new SimpleStringProperty();
     private Polynomial p1 = new Polynomial();
     private Polynomial p2 = new Polynomial();
-
     public StringProperty firstPolynomialStrProperty() {
         return firstPolynomialStr;
     }
@@ -51,9 +59,20 @@ public class ViewModel {
         initDefaultFields();
     }
 
+    public ViewModel(final ILogger logger) {
+        if (logger != null) {
+            this.logger = logger;
+            initDefaultFields();
+        } else {
+            throw new IllegalArgumentException("Log error: logger cannot be null");
+        }
+    }
+
     public Polynomial parsePolynomial(final String polynomialStrSource) {
         PolynomialParser parser = new PolynomialParser(polynomialStrSource);
-        return parser.parsePolynomial();
+        Polynomial p = parser.parsePolynomial();
+        addLog(String.format(PARSE_PASSED, p.toString()));
+        return p;
     }
 
 
@@ -76,6 +95,7 @@ public class ViewModel {
     public void add() {
         if (parseInput()) {
             setResultStr(p1.add(p2).toString());
+            addLog(String.format(OPERATION_PASSED, p1, p2, getResultStr()));
         } else {
             return;
         }
@@ -84,6 +104,7 @@ public class ViewModel {
     public void subtract() {
         if (parseInput()) {
             setResultStr(p1.subtract(p2).toString());
+            addLog(String.format(OPERATION_PASSED, p1, p2, getResultStr()));
         } else {
             return;
         }
@@ -92,6 +113,7 @@ public class ViewModel {
     public void multiply() {
         if (parseInput()) {
             setResultStr(p1.multiply(p2).toString());
+            addLog(String.format(OPERATION_PASSED, p1, p2, getResultStr()));
         } else {
             return;
         }
@@ -102,4 +124,38 @@ public class ViewModel {
         secondPolynomialStr.set("");
         resultStr.set("");
     }
+
+    public List<String> getListLog() {
+        return logger.getListLog();
+    }
+
+    private void addLog(final String message) {
+        logger.log(message);
+        StringBuilder logMsg = new StringBuilder();
+        for (String line : logger.getListLog()) {
+            logMsg.append(line).append("\n");
+        }
+        log.set(logMsg.toString());
+    }
+
+    public String getLog() {
+        return log.get();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger != null) {
+            this.logger = logger;
+        } else {
+            throw new IllegalArgumentException("Logger cannot be null");
+        }
+    }
+
+    public StringProperty logProperty() {
+        return log;
+    }
+
+
+
+
+
 }

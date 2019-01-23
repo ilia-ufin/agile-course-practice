@@ -15,10 +15,16 @@ import java.util.List;
 
 public class ViewModel {
 
+    private ILogger logger;
+    public static final String LOG_MESSAGE_INPUT_ARRAY = "Input array: ";
+    public static final String LOG_MESSAGE_INPUT_VALUE = "Input value: ";
+    public static final String LOG_MESSAGE_RESULT = "Result: ";
+
     private final StringProperty arrayInput = new SimpleStringProperty();
     private final StringProperty elementInput = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty result = new SimpleStringProperty();
+    private final StringProperty log = new SimpleStringProperty();
     private final BooleanProperty searchDisabled = new SimpleBooleanProperty();
     private BinarySearch search;
     private int key;
@@ -31,6 +37,7 @@ public class ViewModel {
         elementInput.set("");
         status.set("");
         result.set("");
+        log.set("");
         arrayCorrect = false;
         elementCorrect = false;
         BooleanBinding couldSearch = new BooleanBinding() {
@@ -54,6 +61,14 @@ public class ViewModel {
             valueChangedListeners.add(listener);
         }
     }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+
     private class ValueChangeListener implements ChangeListener<String> {
         @Override
         public void changed(final ObservableValue<? extends String> observable,
@@ -73,6 +88,11 @@ public class ViewModel {
     public StringProperty resultProperty() {
         return result;
     }
+    public StringProperty logProperty() {
+        return log;
+    }
+
+
     public String getArrayInputProperty() {
         return arrayInput.get();
     }
@@ -86,6 +106,8 @@ public class ViewModel {
     }
 
     public void setArrayInputProperty(final String input) {
+        logger.log(LOG_MESSAGE_INPUT_ARRAY + input);
+        log.set(String.join(";", logger.getLog()));
         arrayInput.set(input);
     }
 
@@ -94,17 +116,25 @@ public class ViewModel {
     }
 
     public void setElementInputProperty(final String input) {
+        logger.log(LOG_MESSAGE_INPUT_VALUE + input);
+        log.set(String.join(";", logger.getLog()));
         elementInput.set(input);
     }
+    private void setResultProperty(final String res) {
+        logger.log(LOG_MESSAGE_RESULT + res);
+        log.set(String.join(";", logger.getLog()));
+        result.set(res);
+    }
+
     public void search() {
         if (searchDisabled.get()) {
             return;
         }
         int index = search.search(key);
         if (index == -1) {
-            result.set("Key not found");
+            setResultProperty("Key not found");
         } else {
-            result.set("Found key, index " + Integer.toString(index));
+            setResultProperty("Found key, index " + Integer.toString(index));
         }
     }
 

@@ -2,6 +2,8 @@ package ru.unn.agile.numbersinwords.viewmodel;
 
 import ru.unn.agile.numbersinwords.model.NumbersInWords;
 
+import java.util.List;
+
 public class NumbersInWordsViewModel {
     private String errorMessage = "";
     private String number = "";
@@ -9,11 +11,23 @@ public class NumbersInWordsViewModel {
     private boolean convertButtonEnabled = false;
     private static final int LIMITED = 12;
 
+    public static final String LOG_MESSAGE_INPUT = "Input string set to: ";
+    public static final String LOG_MESSAGE_CONVERT = "Convert button clicked with result: ";
+    private ILogger logger;
+
+    public NumbersInWordsViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+
     public boolean isConvertButtonEnabled() {
         return convertButtonEnabled;
     }
 
     public void setNumber(final String numbers) {
+        logger.log(LOG_MESSAGE_INPUT + numbers);
         if (!isInputValid(numbers)) {
             return;
         }
@@ -51,6 +65,11 @@ public class NumbersInWordsViewModel {
 
     public void convert() {
         numberInWords = NumbersInWords.convert(Long.parseLong(number));
+        logger.log(LOG_MESSAGE_CONVERT + numberInWords);
+    }
+
+    public List<String> getLogMessages() {
+        return logger.getLog();
     }
 
     public String getErrorMessage() {

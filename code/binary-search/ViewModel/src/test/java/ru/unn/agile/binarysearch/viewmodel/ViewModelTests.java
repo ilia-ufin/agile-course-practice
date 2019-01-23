@@ -1,35 +1,44 @@
 package ru.unn.agile.binarysearch.viewmodel;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
+    private ViewModel viewModel;
+    private ILogger logger;
+
+    public void createViewModelWithLogger(final ILogger logger) {
+        viewModel = new ViewModel();
+        viewModel.setLogger(logger);
+    }
+
+    @Before
+    public void  setUp() throws IOException {
+        logger = new FakeLogger();
+        this.createViewModelWithLogger(logger);
+    }
 
     @Test
     public void canInitializeArrayValue() {
-        ViewModel viewModel = new ViewModel();
-
         assertEquals("", viewModel.getArrayInputProperty());
     }
 
     @Test
     public void canInitializeElementValue() {
-        ViewModel viewModel = new ViewModel();
-
-        assertEquals("", viewModel.getElementInputProperty());
+       assertEquals("", viewModel.getElementInputProperty());
     }
 
     @Test
     public void canInitializeStatus() {
-        ViewModel viewModel = new ViewModel();
-
         assertEquals("", viewModel.getStatusProperty());
     }
 
     @Test
     public void canSetArrayValue() {
-        ViewModel viewModel = new ViewModel();
         int[] expected = new int[] {1, 2, 3};
 
         viewModel.setArrayInputProperty("1,2,3");
@@ -39,7 +48,6 @@ public class ViewModelTests {
 
     @Test
     public void canSetElementValue() {
-        ViewModel viewModel = new ViewModel();
         String expected = "2";
 
         viewModel.setElementInputProperty("2");
@@ -49,7 +57,6 @@ public class ViewModelTests {
 
     @Test
     public void canFindExistingKey() {
-        ViewModel viewModel = new ViewModel();
         String expected = "Found key, index 1";
 
         viewModel.setArrayInputProperty("1,2,3");
@@ -61,8 +68,6 @@ public class ViewModelTests {
 
     @Test
     public void isSearchEnabledWithCorrectInput() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("1,2,3");
         viewModel.setElementInputProperty("2");
 
@@ -71,8 +76,6 @@ public class ViewModelTests {
 
     @Test
     public void isStatusSetToBadArrayFormatWithIncorrectArrayInput() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("1yh,p2,_0w3");
         viewModel.setElementInputProperty("2");
 
@@ -81,8 +84,6 @@ public class ViewModelTests {
 
     @Test
     public void isStatusSetToBadElementFormatWithIncorrectElementInput() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("1,2,3");
         viewModel.setElementInputProperty("h");
 
@@ -91,8 +92,6 @@ public class ViewModelTests {
 
     @Test
     public void isSearchEnabledWithEmptyInput() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("");
         viewModel.setElementInputProperty("");
 
@@ -101,8 +100,6 @@ public class ViewModelTests {
 
     @Test
     public void isStatusSetToBadArraySortWithUnsortedArray() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("3,2,1");
         viewModel.setElementInputProperty("1");
 
@@ -111,8 +108,8 @@ public class ViewModelTests {
 
     @Test
     public void isSearchSkippedWhenDisabled() {
-        ViewModel viewModel = new ViewModel();
-
+        viewModel.setArrayInputProperty("");
+        viewModel.setElementInputProperty("");
         viewModel.search();
 
         assertEquals("", viewModel.getResultProperty());
@@ -120,8 +117,6 @@ public class ViewModelTests {
 
     @Test
     public void canSearchFindMissingKey() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("1,2,3");
         viewModel.setElementInputProperty("4");
         viewModel.search();
@@ -131,8 +126,6 @@ public class ViewModelTests {
 
     @Test
     public void canGetArrayInputProperty() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("1,2,3");
 
         assertEquals(viewModel.getArrayInputProperty(), viewModel.arrayInputProperty().get());
@@ -140,8 +133,6 @@ public class ViewModelTests {
 
     @Test
     public void canGetElementInputProperty() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setElementInputProperty("1");
 
         assertEquals(viewModel.getElementInputProperty(), viewModel.elementInputProperty().get());
@@ -149,8 +140,6 @@ public class ViewModelTests {
 
     @Test
     public void canGetStatusProperty() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setElementInputProperty("bad string");
 
         assertEquals(viewModel.getStatusProperty(), viewModel.statusProperty().get());
@@ -158,8 +147,6 @@ public class ViewModelTests {
 
     @Test
     public void canGetResultProperty() {
-        ViewModel viewModel = new ViewModel();
-
         viewModel.setArrayInputProperty("1,2,3");
         viewModel.setElementInputProperty("3");
         viewModel.search();

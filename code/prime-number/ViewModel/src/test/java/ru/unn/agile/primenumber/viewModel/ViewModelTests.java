@@ -3,6 +3,8 @@ package ru.unn.agile.primenumber.viewModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.unn.agile.primenumber.infrastructure.InMemoryLogger;
+import ru.unn.agile.primenumber.infrastructure.LoggerFactory;
 import ru.unn.agile.primenumber.model.PrimeNumber;
 
 import java.lang.reflect.Constructor;
@@ -10,13 +12,18 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
     @Before
     public void setUp() {
+        LoggerFactory factory = mock(LoggerFactory.class);
+        when(factory.getLogger()).thenReturn(new InMemoryLogger());
         viewModel = new ViewModel();
+        viewModel.setLogger(factory);
     }
 
     @After

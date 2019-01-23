@@ -1,4 +1,4 @@
-package ru.unn.agile.numerical_integration.ViewModel.legacy;
+package ru.unn.agile.numerical_integration.viewmodel.legacy;
 
 import org.junit.Test;
 

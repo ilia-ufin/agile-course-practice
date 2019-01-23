@@ -1,5 +1,8 @@
 package ru.unn.agile.dijkstra.viewModel;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.dijkstra.model.Vertex;
 
@@ -8,14 +11,33 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ViewModelTest {
+    private ViewModel viewModel;
 
-    public  String getResourceAsString(final String path) {
+    @Before
+    public void init() {
+        viewModel = new ViewModel(new FakeLogger());
+    }
+
+    @After
+    public void destroy() {
+        viewModel = null;
+    }
+
+    protected void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    public String getResourceAsString(final String path) {
         try {
             URL url = getClass().getResource(path);
+
             return new String(Files.readAllBytes(Paths.get(url.toURI())));
         } catch (IOException e) {
             e.printStackTrace();
@@ -27,7 +49,6 @@ public class ViewModelTest {
 
     @Test
     public void validateSimpleMatrix() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString("SimpleGraph.json"));
 
         viewModel.graphInit();
@@ -37,7 +58,6 @@ public class ViewModelTest {
 
     @Test
     public void validateNonNumericMatrix() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue("qq");
 
         viewModel.graphInit();
@@ -47,7 +67,6 @@ public class ViewModelTest {
 
     @Test
     public void validateEmptyNumericMatrix() {
-        ViewModel viewModel = new ViewModel();
 
         viewModel.graphInit();
 
@@ -56,7 +75,6 @@ public class ViewModelTest {
 
     @Test
     public void validateGraphWithNegativeEdgesMatrix() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString("JsonWithNegativeEdge.json"));
 
         viewModel.graphInit();
@@ -66,7 +84,6 @@ public class ViewModelTest {
 
     @Test
     public void validateGraphWithoutEdges() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString("JsonWithoutEdges.json"));
 
         viewModel.graphInit();
@@ -76,7 +93,6 @@ public class ViewModelTest {
 
     @Test
     public void validateGraphWithoutWeightInEdge() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString(
                 "JsonWithoutMandatoryParameterInEdge.json"));
 
@@ -87,7 +103,6 @@ public class ViewModelTest {
 
     @Test
     public void validateStartVertex() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString("SimpleGraph.json"));
         viewModel.startVertexProperty().setValue("1");
 
@@ -98,7 +113,6 @@ public class ViewModelTest {
 
     @Test
     public void validateInvalidStartVertex() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString("SimpleGraph.json"));
         viewModel.startVertexProperty().setValue("asd");
 
@@ -109,7 +123,6 @@ public class ViewModelTest {
 
     @Test
     public void canCalculateGraph() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString("SimpleGraph.json"));
         viewModel.startVertexProperty().setValue("1");
         viewModel.finishVertexProperty().setValue("3");
@@ -121,7 +134,6 @@ public class ViewModelTest {
 
     @Test
     public void canCalculateGraphByVertexOutOfGraph() {
-        ViewModel viewModel = new ViewModel();
         viewModel.matrixProperty().setValue(getResourceAsString("SimpleGraph.json"));
         viewModel.startVertexProperty().setValue("1");
         viewModel.finishVertexProperty().setValue("6");
@@ -129,5 +141,85 @@ public class ViewModelTest {
         viewModel.calculate();
 
         assertEquals("Vertex id = 6 not contains in graph", viewModel.getStatus());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canGetExceptionForViewModelConstructorWithNullLogger() {
+        new ViewModel(null);
+    }
+
+    @Test
+    public void canGetLogIsEmptyAfterInitializations() {
+        List<String> log = viewModel.getLoggerList();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void canGetLogMessageOnSingleFieldChange() {
+        viewModel.matrixProperty().setValue(getResourceAsString("SimpleGraph.json"));
+
+        String message = viewModel.getLoggerList().get(0);
+        String expectedMessage = changedMessage();
+        Assert.assertTrue(message.contains(expectedMessage));
+    }
+
+    @Test
+    public void canGetLogContainsMultipleVectorChangedMessages() {
+        inputData();
+
+        List<String> log = viewModel.getLoggerList();
+        assertEquals(log.size(), 3);
+
+        String message = viewModel.getLoggerList().get(2);
+        String expectedMessage = changedMessage();
+        assertTrue(message.contains(expectedMessage));
+    }
+
+    @Test
+    public void canGetLogContainsCalculateMessage() {
+        inputData();
+
+        viewModel.calculate();
+
+        String message = viewModel.getLoggerList().get(viewModel.getLoggerList().size() - 1);
+        String expectedMessage = String.format(ViewModel.LogMessages.CALCULATED_DISTANCE,
+                viewModel.getMatrixProperty(),
+                viewModel.getStartVertexProperty(),
+                viewModel.getFinishVertexProperty());
+        assertTrue(message.contains(expectedMessage));
+    }
+
+    @Test
+    public void canGetLogPropertyIsEmptyAfterInit() {
+        assertEquals("", viewModel.getLog());
+        assertEquals("", viewModel.logProperty().get());
+    }
+
+    @Test
+    public void canGetViewModelWithoutLogger() {
+        ViewModel viewModel = new ViewModel();
+
+        assertNotNull(viewModel);
+    }
+
+    @Test
+    public void canGetLogMessage() {
+        ViewModel.LogMessages log = new ViewModel.LogMessages();
+
+        assertNotNull(log);
+    }
+
+    private String changedMessage() {
+        return String.format(ViewModel.LogMessages.VALUE_CHANGE,
+                viewModel.matrixProperty().get(),
+                viewModel.startVertexProperty().get(),
+                viewModel.finishVertexProperty().get());
+    }
+
+    private void inputData() {
+        viewModel.matrixProperty().setValue(getResourceAsString("SimpleGraph.json"));
+        viewModel.startVertexProperty().setValue("1");
+        viewModel.finishVertexProperty().setValue("2");
     }
 }

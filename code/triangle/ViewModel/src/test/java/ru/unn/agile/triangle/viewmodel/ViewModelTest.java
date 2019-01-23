@@ -4,15 +4,21 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 public class ViewModelTest {
     private final double delta = 0.001;
     private ViewModel viewModel;
 
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
         viewModel = new ViewModel();
+        viewModel.setLogger(new FakeLog());
     }
 
     @After
@@ -265,4 +271,27 @@ public class ViewModelTest {
 
         assertEquals(Status.READY.toString(), viewModel.getStatus());
     }
+
+    @Test
+    public void statusIsButtonDisableInit() {
+        assertFalse(viewModel.isBtnDisabled());
+    }
+
+    @Test
+    public void canChangeFocus() {
+        viewModel.checkOnFocusChanged(false, false);
+    }
+
+    @Test
+    public void canNotChangeFocus() {
+        viewModel.checkOnFocusChanged(false, true);
+    }
+
+    @Test
+    public void canSetXProperty() {
+        viewModel.aXProperty().set("");
+
+        assertFalse(viewModel.isBtnDisabled());
+    }
+
 }
