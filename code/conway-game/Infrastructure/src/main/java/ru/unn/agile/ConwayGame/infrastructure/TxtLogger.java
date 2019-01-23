@@ -31,7 +31,7 @@ public class TxtLogger implements ILogger {
     @Override
     public void log(final String str) {
         try {
-            writer.write(getCurrentDate() + " > " + str);
+            writer.write(getCurrentDate() + " - " + str);
             writer.newLine();
             writer.flush();
         } catch (IOException e) {
