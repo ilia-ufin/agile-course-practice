@@ -1,16 +1,11 @@
 package ru.unn.agile.hashmap.viewmodel;
 
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import ru.unn.agile.hashmap.model.HashMap;
 
-package ru.unn.agile.HashMap.Model;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class ViewModel {
 
