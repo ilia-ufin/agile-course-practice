@@ -1,4 +1,4 @@
 apply from:   rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'
 dependencies {
-    compile project(':hashmap-ViewModel')
+    compile project(':HashMap-ViewModel')
 }
