@@ -305,3 +305,10 @@ project(":code/numbers-in-words/ViewModel").name = "numbers-in-words-ViewModel"
 include "code/numbers-in-words/View"
 project(":code/numbers-in-words/View").name = "numbers-in-words-View"
 
+// Zharikov, hashmap
+include "code/HashMapModel"
+project(":code/HashMap/Model").name = "HashMap-Model"
+include "code/HashMap/ViewModel"
+project(":code/HashMap/ViewModel").name = "HashMap-ViewModel"
+include "code/HashMap/View"
+project(":code/HashMap/View").name = "HashMap-View"
