@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':lcd-digits-ViewModel')
+    testCompile project(':lcd-digits-ViewModel').sourceSets.test.output
+}
