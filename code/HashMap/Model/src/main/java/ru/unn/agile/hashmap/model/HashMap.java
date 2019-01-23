@@ -2,9 +2,8 @@ package ru.unn.agile.HashMap.Model;
 
 import java.util.*;
 
-public static final int SIZE_MAP_MAP = 128;
-
 public class HashMap {
+    public static final int SIZE_MAP_MAP = 128;
     private int size;
     private ArrayList<LinkedList<Element>> array;
 
