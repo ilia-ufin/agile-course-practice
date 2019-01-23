@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import ru.unn.agile.quadraticequation.infrastructure.TxtLogger;
 import ru.unn.agile.quadraticequation.viewmodel.ViewModel;
 
 public class QuadraticEquation {
@@ -23,6 +24,8 @@ public class QuadraticEquation {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./QuadraticEquation.log"));
+
         a.textProperty().bindBidirectional(viewModel.aProperty());
         b.textProperty().bindBidirectional(viewModel.bProperty());
         c.textProperty().bindBidirectional(viewModel.cProperty());

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import ru.unn.agile.vectordistance.infrastructure.TextLogger;
 import ru.unn.agile.vectordistance.model.VectorDistance.Distance;
 import ru.unn.agile.vectordistance.viewmodel.ViewModel;
 
@@ -28,6 +29,8 @@ public class VectorDistance {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TextLogger("./TextLogger.log"));
+
         txtVectorX.textProperty().bindBidirectional(viewModel.vectorXProperty());
         txtVectorY.textProperty().bindBidirectional(viewModel.vectorYProperty());
         lbResult.textProperty().bindBidirectional(viewModel.resultProperty());

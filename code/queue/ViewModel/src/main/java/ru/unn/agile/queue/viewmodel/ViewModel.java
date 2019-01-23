@@ -2,6 +2,7 @@ package ru.unn.agile.queue.viewmodel;
 
 import ru.unn.agile.queue.model.*;
 
+import java.util.List;
 
 public class ViewModel {
     private Queue<Double> queue;
@@ -14,8 +15,14 @@ public class ViewModel {
     private boolean isRemoveButtonEnabled;
     private boolean isClearButtonEnabled;
 
+    private ILogger logger;
 
-    public ViewModel() {
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger should be initialized");
+        }
+        this.logger = logger;
+
         queue = new Queue<Double>();
 
         inputElem = "";
@@ -43,7 +50,7 @@ public class ViewModel {
         this.inputElem = inputElem;
     }
 
-    public void addProcess() {
+    public void pushProcess() {
         if (!parseInput()) {
             return;
         }
@@ -51,44 +58,30 @@ public class ViewModel {
         queue.push(Double.parseDouble(inputElem));
         queueStringRepresentation = queue.toString();
         changeButtonsEnabling();
+
+        logger.log("Push " + inputElem + " element to queue");
     }
 
-    public void removeProcess() {
-        queue.pop();
+    public void popProcess() {
+        Double head = queue.pop();
+
         queueStringRepresentation = queue.toString();
         changeButtonsEnabling();
+
+        logger.log("Pop " + head + " head element from queue");
     }
 
     public void clear() {
         queue.clear();
         queueStringRepresentation = queue.toString();
         changeButtonsEnabling();
-    }
 
-    private boolean parseInput() {
-        if (inputElem.isEmpty()) {
-            statusMessage = State.WAITING_FOR_INPUT;
-            isAddButtonEnabled = false;
-            return isAddButtonEnabled;
-        }
-
-        try {
-            Double.parseDouble(inputElem);
-        } catch (Exception e) {
-            statusMessage = State.INVALID_FORMAT;
-            isAddButtonEnabled = false;
-            return isAddButtonEnabled;
-        }
-
-        statusMessage = State.READY_TO_ADD;
-        isAddButtonEnabled = true;
-        return isAddButtonEnabled;
+        logger.log("Queue has been cleared");
     }
 
     public void processingAddField() {
         parseInput();
     }
-
 
     public String getCurrentState() {
         return statusMessage;
@@ -113,6 +106,35 @@ public class ViewModel {
         return isClearButtonEnabled;
     }
 
+    public List<String> getLog() {
+        return logger.getLog();
+    }
+
+    private boolean parseInput() {
+        if (inputElem.isEmpty()) {
+            statusMessage = State.WAITING_FOR_INPUT;
+            isAddButtonEnabled = false;
+
+            return isAddButtonEnabled;
+        }
+
+        try {
+            Double.parseDouble(inputElem);
+        } catch (Exception e) {
+            statusMessage = State.INVALID_FORMAT;
+            isAddButtonEnabled = false;
+
+            logger.log(inputElem + " input value is incorrect. Should be Double");
+
+            return isAddButtonEnabled;
+        }
+
+        statusMessage = State.READY_TO_ADD;
+        isAddButtonEnabled = true;
+
+        return isAddButtonEnabled;
+    }
+
     private void changeButtonsEnabling() {
         if (queue.isEmpty()) {
             isRemoveButtonEnabled = false;
@@ -122,5 +144,4 @@ public class ViewModel {
             isClearButtonEnabled = true;
         }
     }
-
 }

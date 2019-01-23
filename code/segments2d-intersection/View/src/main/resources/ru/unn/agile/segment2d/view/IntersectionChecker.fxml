@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import ru.unn.agile.segment2d.viewmodel.*?>
 
-<AnchorPane prefHeight="247.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.segment2d.view.IntersectionChecker">
+<AnchorPane prefHeight="400.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.segment2d.view.IntersectionChecker">
     <fx:define>
         <ViewModel fx:id="viewModel"/>
     </fx:define>
@@ -90,12 +90,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="15.0" layoutY="208.0" text="Result:">
+      <Label layoutX="15.0" layoutY="370.0" text="Result:">
          <font>
             <Font name="System Bold Italic" size="17.0" />
          </font>
       </Label>
-      <Label id="resultLabel" layoutX="75.0" layoutY="208.0" prefHeight="26.0" prefWidth="451.0" text="${viewModel.result}">
+      <Label id="resultLabel" layoutX="75.0" layoutY="370.0" prefHeight="26.0" prefWidth="451.0" text="${viewModel.result}">
          <font>
             <Font name="System Italic" size="17.0" />
          </font>
@@ -120,5 +120,14 @@
             <Font name="System Italic" size="11.0" />
          </font>
       </Label>
-   </children>
+      <ScrollPane layoutX="15.0" layoutY="216.0" prefHeight="133.0" prefWidth="512.0">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                <children>
+                    <TextArea prefHeight="133.0" prefWidth="512.0" text="${viewModel.log}" wrapText="true" />
+                </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+    </children>
 </AnchorPane>

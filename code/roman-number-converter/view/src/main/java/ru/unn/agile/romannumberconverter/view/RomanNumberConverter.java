@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import ru.unn.agile.romannumberconverter.viewmodel.ViewModel;
+import ru.unn.agile.romannumberconverter.infrastructure.TxtLogger;
 
 public class RomanNumberConverter {
     @FXML
@@ -23,6 +24,8 @@ public class RomanNumberConverter {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./RomanNumberConverter.log"));
+
         romanNumber.textProperty().bindBidirectional(viewModel.romanValueStrProperty());
         arabicNumber.textProperty().bindBidirectional(viewModel.arabicValueStrProperty());
 

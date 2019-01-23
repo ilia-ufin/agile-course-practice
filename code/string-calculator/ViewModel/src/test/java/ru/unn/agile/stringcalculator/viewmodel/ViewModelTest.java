@@ -1,19 +1,27 @@
 package ru.unn.agile.stringcalculator.viewmodel;
 
 import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class ViewModelTest {
     private ViewModel viewModel;
 
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        if (viewModel == null) {
+            viewModel = new ViewModel();
+        }
     }
 
     @After
@@ -30,22 +38,21 @@ public class ViewModelTest {
 
     @Test
     public void canSetAddOperation() {
-        assertEquals(Operation.ADD, viewModel.operationProperty().get());
+        assertEquals(Operation.ADD, viewModel.getOperation());
     }
-
 
     @Test
     public void hasAddOperationCorrectResultWhenInputDataIsCorrect() {
-        viewModel.inputDataProperty().set("31,8");
+        setInputData("31,8");
 
         viewModel.calculate();
 
-        assertEquals("39", viewModel.resultProperty().get());
+        assertEquals("39", viewModel.getResult());
     }
 
     @Test
     public void isItImpossibleToCalculateWhenButtonInActive() {
-        viewModel.inputDataProperty().set("31.8");
+        setInputData("21.8");
 
         viewModel.calculate();
 
@@ -53,62 +60,64 @@ public class ViewModelTest {
     }
 
     @Test
-    public void operationsListContainsOnlyAddOperation() {
-        ObservableList operationsList = viewModel.getOperations();
+    public void operationsListIsNotNull() {
+        assertNotNull(viewModel.operationProperty());
+    }
 
-        assertEquals(Operation.ADD, operationsList.get(0));
+    @Test
+    public void operationsListContainsOnlyAddOperation() {
+        assertEquals(Operation.ADD, viewModel.getOperations().get(0));
     }
 
     @Test
     public void statusIsWaitingWhenInputFieldIsEmpty() {
-        StringProperty expectedStatus = viewModel.statusProperty();
-
-        assertEquals(Status.WAITING.toString(), expectedStatus.get());
+        assertEquals(Status.WAITING.toString(), viewModel.getStatus());
     }
 
     @Test
     public void statusIsBadFormatWhenInputDataIsNotCorrect() {
-        viewModel.inputDataProperty().set("31.8,5");
+        setInputData("31.8,5");
 
-        StringProperty expectedStatus = viewModel.statusProperty();
-        assertEquals(Status.BAD_FORMAT.toString(), expectedStatus.get());
+        assertEquals(Status.BAD_FORMAT.toString(), viewModel.statusProperty().get());
     }
 
     @Test
     public void statusIsReadyWhenInputDataIsCorrect() {
-        viewModel.inputDataProperty().set("31,8");
+        setInputData("66,8");
 
-        StringProperty expectedStatus = viewModel.statusProperty();
-        assertEquals(Status.READY.toString(), expectedStatus.get());
+        assertEquals(Status.READY.toString(), viewModel.statusProperty().get());
     }
 
     @Test
-    public void statusIsSuccesWhenCalculationPerformedSuccessfully() {
-        viewModel.inputDataProperty().set("31,8");
+    public void statusIsSuccessWhenCalculationPerformedSuccessfully() {
+        setInputData("71,8");
 
         viewModel.calculate();
 
-        StringProperty expectedStatus = viewModel.statusProperty();
-        assertEquals(Status.SUCCESS.toString(), expectedStatus.get());
+        assertEquals(Status.SUCCESS.toString(), viewModel.statusProperty().get());
     }
 
     @Test
     public void isCalculateButtonNotActiveWhenStatusIsWaiting() {
-        assertTrue(viewModel.calculationDisabledProperty().get());
+        assertTrue(viewModel.isCalculationDisabled());
     }
 
     @Test
     public void isCalculateButtonNotActiveWhenStatusIsBadFormat() {
-        viewModel.inputDataProperty().set("31.8,5");
+        setInputData("31.8,5");
 
         assertTrue(viewModel.calculationDisabledProperty().get());
     }
 
     @Test
     public void isCalculateButtonActiveWhenStatusIsReady() {
-        viewModel.inputDataProperty().set("31,8");
+        setInputData("31,8");
 
-        assertFalse(viewModel.calculationDisabledProperty().get());
+        assertFalse(viewModel.isCalculationDisabled());
+    }
+
+    protected void setInputData(final String str) {
+        viewModel.inputDataProperty().set(str);
     }
 
 }

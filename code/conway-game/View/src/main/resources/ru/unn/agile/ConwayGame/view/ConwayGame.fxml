@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import ru.unn.agile.ConwayGame.viewmodel.*?>
 
-<AnchorPane prefHeight="360.0" prefWidth="386.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.ConwayGame.view.ConwayGame">
+<AnchorPane prefHeight="528.0" prefWidth="386.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.ConwayGame.view.ConwayGame">
     <fx:define>
-        <ViewModel fx:id="viewModel" />
+        <ViewModel fx:id="viewModel"/>
     </fx:define>
-   <children>
-      <TextField fx:id="txtRows" layoutX="14.0" layoutY="42.0" prefHeight="25.0" prefWidth="160.0" />
-      <TextField fx:id="txtColumns" layoutX="210.0" layoutY="42.0" prefHeight="25.0" prefWidth="160.0" />
-      <TextField fx:id="txtFirstGeneration" disable="${viewModel.creationGridDisabled}" layoutX="14.0" layoutY="95.0" prefHeight="25.0" prefWidth="355.0" />
-      <Label layoutX="14.0" layoutY="18.0" text="Rows:" />
-      <Label layoutX="209.0" layoutY="18.0" prefHeight="17.0" prefWidth="77.0" text="Columns:" />
-      <Label layoutX="188.0" layoutY="42.0" prefHeight="25.0" prefWidth="17.0" text="X" />
-      <Label layoutX="14.0" layoutY="73.0" text="First Generation:" />
-      <Label fx:id="lbStatus" layoutX="14.0" layoutY="128.0" prefHeight="25.0" prefWidth="241.0" text="${viewModel.status}" />
-      <Label layoutX="18.0" layoutY="165.0" prefHeight="25.0" prefWidth="160.0" text="Input:" />
-      <Label layoutX="209.0" layoutY="165.0" prefHeight="25.0" prefWidth="160.0" text="Output:" />
-      <Label fx:id="lbInput" alignment="TOP_LEFT" layoutX="18.0" layoutY="200.0" prefHeight="148.0" prefWidth="160.0" text="${viewModel.input}" />
-      <Label fx:id="lbOutput" alignment="TOP_LEFT" layoutX="209.0" layoutY="200.0" prefHeight="148.0" prefWidth="160.0" text="${viewModel.output}" />
-      <Button fx:id="btnSubmit" defaultButton="true" disable="${viewModel.submitionDisabled}" layoutX="269.0" layoutY="128.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Submit!" />
-   </children>
+    <children>
+        <TextField fx:id="txtRows" layoutX="14.0" layoutY="42.0" prefHeight="25.0" prefWidth="160.0" />
+        <TextField fx:id="txtColumns" layoutX="210.0" layoutY="42.0" prefHeight="25.0" prefWidth="160.0" />
+        <TextField fx:id="txtFirstGeneration" disable="${viewModel.creationGridDisabled}" layoutX="14.0" layoutY="95.0" prefHeight="25.0" prefWidth="355.0" />
+        <Label layoutX="14.0" layoutY="18.0" text="Rows:" />
+        <Label layoutX="209.0" layoutY="18.0" prefHeight="17.0" prefWidth="77.0" text="Columns:" />
+        <Label layoutX="188.0" layoutY="42.0" prefHeight="25.0" prefWidth="17.0" text="X" />
+        <Label layoutX="14.0" layoutY="73.0" text="First Generation:" />
+        <Label fx:id="lbStatus" layoutX="14.0" layoutY="128.0" prefHeight="25.0" prefWidth="241.0" text="${viewModel.status}" />
+        <Label layoutX="18.0" layoutY="165.0" prefHeight="25.0" prefWidth="160.0" text="Input:" />
+        <Label layoutX="209.0" layoutY="165.0" prefHeight="25.0" prefWidth="160.0" text="Output:" />
+        <Label fx:id="lbInput" alignment="TOP_LEFT" layoutX="18.0" layoutY="200.0" prefHeight="148.0" prefWidth="160.0" text="${viewModel.input}" />
+        <Label fx:id="lbOutput" alignment="TOP_LEFT" layoutX="209.0" layoutY="200.0" prefHeight="148.0" prefWidth="160.0" text="${viewModel.output}" />
+        <Button fx:id="btnSubmit" defaultButton="true" disable="${viewModel.submitionDisabled}" layoutX="269.0" layoutY="128.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Submit!" />
+        <ScrollPane layoutX="18.0" layoutY="358.0" prefHeight="156.0" prefWidth="355.0">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="352.0">
+               <children>
+                  <TextArea layoutX="6.0" layoutY="5.0" prefHeight="137.0" prefWidth="329.0" />
+               </children></AnchorPane>
+            </content>
+        </ScrollPane>
+    </children>
 </AnchorPane>

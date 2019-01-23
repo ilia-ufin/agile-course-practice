@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.beans.binding.BooleanBinding;
@@ -21,10 +22,48 @@ public class ViewModel {
     private final StringProperty input = new SimpleStringProperty();
     private final StringProperty output = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+    private final StringProperty log = new SimpleStringProperty();
 
     private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
 
+    private ILogger logger;
+    private boolean isInputChanged;
+
+    private static final String LOG_PATTERN_SUBMIT = LogMessages.SUBMIT_WAS_PRESSED
+            + "Arguments: "
+            + "Rows = " + "%s"
+            + "; Columns = " + "%s"
+            + "; First generation: " + "%s";
+    private static final String LOG_PATTERN_PARAM_EDIT =
+            LogMessages.PARAMETERS_EDITING_FINISHED
+                    + "Matrix size: [%s; %s], First generation: " + "%s";
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can not be null");
+        }
+        this.logger = logger;
+    }
+
     public ViewModel() {
+        log.set("");
+        isInputChanged = true;
+
+        columnsNumber.set("");
+        rowsNumber.set("");
+        firstGeneration.set("");
+
+        input.set("");
+        status.set(Status.WAITING.toString());
+        output.set("");
+
+        bindingCreationGrid();
+        bindingSubmition();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+
         rowsNumber.set("");
         columnsNumber.set("");
         firstGeneration.set("");
@@ -32,9 +71,49 @@ public class ViewModel {
         input.set("");
         output.set("");
         status.set(Status.WAITING.toString());
+        log.set("");
+        isInputChanged = true;
 
         bindingCreationGrid();
         bindingSubmition();
+    }
+
+    public String getLog() {
+        return log.get();
+    }
+
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
+    public final String getLogPatternSubmit() {
+        return String.format(LOG_PATTERN_SUBMIT,
+                rowsNumber.get(),
+                columnsNumber.get(),
+                firstGeneration.get());
+    }
+
+    public final String getLogPatternParamEdit() {
+        return String.format(LOG_PATTERN_PARAM_EDIT, rowsNumber.get(),
+                columnsNumber.get(),
+                firstGeneration.get());
+    }
+
+    private void logInputParameters() {
+        if (!isInputChanged) {
+            return;
+        }
+
+        logger.log(paramEditingFinishedLogMessage());
+        isInputChanged = false;
+    }
+
+    private String paramEditingFinishedLogMessage() {
+        return getLogPatternParamEdit();
+    }
+
+    public void focusLost() {
+        logInputParameters();
     }
 
     private void bindingCreationGrid() {
@@ -42,6 +121,7 @@ public class ViewModel {
             {
                 super.bind(rowsNumber, columnsNumber);
             }
+
             @Override
             protected boolean computeValue() {
                 return getInputStatus() == Status.READY_TO_SET;
@@ -49,10 +129,12 @@ public class ViewModel {
         };
         creationGridDisabled.bind(couldCreateGrid.not());
 
-        final List<StringProperty> sizes = new ArrayList<StringProperty>() { {
-            add(rowsNumber);
-            add(columnsNumber);
-        } };
+        final List<StringProperty> sizes = new ArrayList<StringProperty>() {
+            {
+                add(rowsNumber);
+                add(columnsNumber);
+            }
+        };
 
         additionListener(sizes);
     }
@@ -62,6 +144,7 @@ public class ViewModel {
             {
                 super.bind(firstGeneration);
             }
+
             @Override
             protected boolean computeValue() {
                 return getInputStatus() == Status.READY;
@@ -69,9 +152,11 @@ public class ViewModel {
         };
         submitionDisabled.bind(couldSubmit.not());
 
-        final List<StringProperty> fields = new ArrayList<StringProperty>() { {
-            add(firstGeneration);
-        } };
+        final List<StringProperty> fields = new ArrayList<StringProperty>() {
+            {
+                add(firstGeneration);
+            }
+        };
 
         additionListener(fields);
     }
@@ -85,6 +170,7 @@ public class ViewModel {
     }
 
     public void calculateNextGeneration() {
+        createLogMessage(getLogPatternSubmit());
         if (submitionDisabled.get()) {
             return;
         }
@@ -101,6 +187,17 @@ public class ViewModel {
         status.set(Status.SUCCESS.toString());
         input.set(format(incomingGeneration));
         output.set(newGeneration);
+    }
+
+    private void createLogMessage(final String msg) {
+        logger.log(msg);
+        StringBuilder strLogMessages = new StringBuilder();
+
+        for (String line : getLogList()) {
+            strLogMessages.append(line).append("\n");
+        }
+
+        log.set(strLogMessages.toString());
     }
 
     private String format(final String incomingStr) {
@@ -123,22 +220,42 @@ public class ViewModel {
     public StringProperty rowsNumberProperty() {
         return rowsNumber;
     }
+
+    public void setRowsNumber(final String rNumber) {
+        rowsNumber.set(rNumber);
+        isInputChanged = true;
+    }
+
     public StringProperty columnsNumberProperty() {
         return columnsNumber;
     }
+
+    public void setColumnsNumber(final String cNumber) {
+        columnsNumber.set(cNumber);
+        isInputChanged = true;
+    }
+
     public StringProperty firstGenerationProperty() {
         return firstGeneration;
+    }
+
+    public void setFirstGeneration(final String fGeneration) {
+        firstGeneration.set(fGeneration);
+        isInputChanged = true;
     }
 
     public BooleanProperty creationGridDisabledProperty() {
         return creationGridDisabled;
     }
+
     public final boolean isCreationGridDisabled() {
         return creationGridDisabled.get();
     }
+
     public BooleanProperty submitionDisabledProperty() {
         return submitionDisabled;
     }
+
     public final boolean isSubmitionDisabled() {
         return submitionDisabled.get();
     }
@@ -146,12 +263,15 @@ public class ViewModel {
     public StringProperty inputProperty() {
         return input;
     }
+
     public final String getInput() {
         return input.get();
     }
+
     public StringProperty outputProperty() {
         return output;
     }
+
     public final String getOutput() {
         return output.get();
     }
@@ -159,6 +279,7 @@ public class ViewModel {
     public StringProperty statusProperty() {
         return status;
     }
+
     public final String getStatus() {
         return status.get();
     }
@@ -221,6 +342,14 @@ public class ViewModel {
             status.set(getInputStatus().toString());
         }
     }
+
+    public final class LogMessages {
+        public static final String SUBMIT_WAS_PRESSED = "Submit. ";
+        public static final String PARAMETERS_EDITING_FINISHED = "Input is updated: ";
+
+        private LogMessages() {
+        }
+    }
 }
 
 enum Status {
@@ -231,9 +360,11 @@ enum Status {
     SUCCESS("Success");
 
     private final String name;
+
     Status(final String name) {
         this.name = name;
     }
+
     public String toString() {
         return name;
     }

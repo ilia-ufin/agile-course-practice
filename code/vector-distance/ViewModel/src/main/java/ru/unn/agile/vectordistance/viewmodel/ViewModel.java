@@ -23,12 +23,22 @@ public class ViewModel {
     private final ObjectProperty<ObservableList<Distance>> distances =
             new SimpleObjectProperty<>(FXCollections.observableArrayList(Distance.values()));
     private final BooleanProperty calculationDisabled = new SimpleBooleanProperty();
+    private final ObjectProperty<Distance> distance = new SimpleObjectProperty<>();
+
+    private final StringProperty log = new SimpleStringProperty();
+
+    private ILogger logger;
+
+    public static final String CALCULATE_RESULT_SUCCESS_MESSAGE =
+            "Result was successfully set to ";
+    public static final String CALCULATE_RESULT_ERROR_MESSAGE =
+            "Exception was thrown with message: ";
+    public static final String CALCULATE_STATUS_MESSAGE =
+            "Status was set to ";
 
     public final ObservableList<Distance> getDistances() {
         return distances.get();
     }
-
-    private final ObjectProperty<Distance> distance = new SimpleObjectProperty<>();
 
     public Distance getDistanceProperty() {
         return distanceProperty().get();
@@ -55,6 +65,21 @@ public class ViewModel {
     }
 
     public ViewModel() {
+        init();
+    }
+
+    public ViewModel(final ILogger logger) {
+
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger should be initialized");
+        }
+
+        this.logger = logger;
+
+        init();
+    }
+
+    private void init() {
         vectorX.set("");
         vectorY.set("");
         result.set("");
@@ -62,6 +87,23 @@ public class ViewModel {
         distance.set(Distance.L1);
         setCouldCalculateBinding();
         addListenersToInputData();
+        log.set("");
+    }
+
+    public StringProperty logProperty() {
+        return log;
+    }
+
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
+    public void setLogger(final ILogger logger) {
+        this.logger = logger;
+    }
+
+    public ILogger getLogger() {
+        return this.logger;
     }
 
     public void calculate() {
@@ -72,11 +114,23 @@ public class ViewModel {
         FloatVector a = getVectorFromInputString(vectorX.get());
         FloatVector b = getVectorFromInputString(vectorY.get());
         try {
-            result.set(String.valueOf(distance.get().apply(a, b)));
+            String value = String.valueOf(distance.get().apply(a, b));
+
+            result.set(String.valueOf(value));
+            logger.log(CALCULATE_RESULT_SUCCESS_MESSAGE + value);
         } catch (Exception e) {
             result.set(e.getMessage());
+            logger.log(CALCULATE_RESULT_ERROR_MESSAGE + e.getMessage());
         }
         status.set(Status.SUCCESS.toString());
+        logger.log(CALCULATE_STATUS_MESSAGE + Status.SUCCESS.toString());
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String line : logger.getLog()) {
+            stringBuilder.append(line).append("\n");
+        }
+
+        log.set(stringBuilder.toString());
     }
 
     public ObjectProperty<Distance> distanceProperty() {

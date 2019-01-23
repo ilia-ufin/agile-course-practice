@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':abstract-set-ViewModel')
+    testCompile project(':abstract-set-ViewModel').sourceSets.test.output
+}

@@ -8,20 +8,41 @@
 
 <?import ru.unn.agile.vectordistance.viewmodel.*?>
 
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <AnchorPane prefHeight="360.0" prefWidth="386.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.vectordistance.view.VectorDistance">
     <fx:define>
         <ViewModel fx:id="viewModel" />
     </fx:define>
    <children>
-      <Label layoutX="69.0" layoutY="56.0" text="Vector X" />
-      <Label layoutX="69.0" layoutY="107.0" text="Vector Y" />
-      <TextField fx:id="txtVectorX" layoutX="161.0" layoutY="52.0" />
-      <TextField fx:id="txtVectorY" layoutX="161.0" layoutY="103.0" />
-      <Button fx:id="btnCalc" defaultButton="true" disable="${viewModel.calculationDisabled}" layoutX="304.0" layoutY="168.0" mnemonicParsing="false" text="Calculate" />
-      <Label layoutX="69.0" layoutY="222.0" text="Result" />
-      <Label fx:id="lbResult" layoutX="222.0" layoutY="222.0" />
-      <Label layoutX="27.0" layoutY="172.0" text="Choose Distance" />
-      <ComboBox fx:id="cbDistances" items="${viewModel.distances}" layoutX="126.0" layoutY="168.0" prefWidth="150.0" />
-      <Label fx:id="lbStatus" layoutX="27.0" layoutY="140.0" />
+       <HBox>
+           <VBox>
+               <HBox>
+                   <Label layoutX="69.0" layoutY="56.0" text="Vector X" />
+                   <TextField fx:id="txtVectorX" layoutX="161.0" layoutY="52.0" />
+               </HBox>
+               <HBox>
+                   <Label layoutX="69.0" layoutY="107.0" text="Vector Y" />
+                   <TextField fx:id="txtVectorY" layoutX="161.0" layoutY="103.0" />
+               </HBox>
+               <Button fx:id="btnCalc" defaultButton="true" alignment="TOP_CENTER" disable="${viewModel.calculationDisabled}" mnemonicParsing="false" text="Calculate" />
+
+               <Label layoutX="69.0" layoutY="222.0" text="Result" />
+               <Label fx:id="lbResult" layoutX="222.0" layoutY="222.0" />
+               <Label layoutX="27.0" layoutY="172.0" text="Choose Distance" />
+               <ComboBox fx:id="cbDistances" items="${viewModel.distances}" layoutX="126.0" layoutY="168.0" prefWidth="150.0" />
+               <Label fx:id="lbStatus" layoutX="27.0" layoutY="140.0" />
+           </VBox>
+           <VBox>
+               <ScrollPane prefHeight="225.0" prefWidth="200.0">
+                   <content>
+                       <TextArea prefHeight="220.0" prefWidth="195.0" text="${viewModel.log}" wrapText="true"/>
+                   </content>
+               </ScrollPane>
+           </VBox>
+       </HBox>
    </children>
 </AnchorPane>
+

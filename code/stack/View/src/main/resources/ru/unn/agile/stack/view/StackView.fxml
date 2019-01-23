@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import ru.unn.agile.stack.viewmodel.*?>
+
+<AnchorPane prefHeight="535.0" prefWidth="479.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2" fx:controller="ru.unn.agile.stack.view.StackView">
+    <fx:define>
+        <ViewModel fx:id="viewModel"/>
+    </fx:define>
+    <children>
+        <Pane layoutX="3.0" layoutY="0.0" prefHeight="106.0" prefWidth="476.0">
+            <children>
+                <Label layoutX="11.0" layoutY="15.0" text="Stack:">
+                    <font>
+                        <Font size="23.0" fx:id="x2"/>
+                    </font>
+                </Label>
+                <Label fx:id="stackStatus" layoutX="83.0" layoutY="20.0" prefWidth="170.0"
+                       text="${viewModel.stackIsEmptyStatus}">
+                    <font>
+                        <Font name="System Italic" size="18.0" fx:id="x1"/>
+                    </font>
+                </Label>
+                <Label font="$x2" layoutX="267.0" layoutY="14.0" text="Size:"/>
+                <Label fx:id="stackSize" font="$x1" layoutX="341.0" layoutY="19.0" prefHeight="27.0" prefWidth="59.0"
+                       text="${viewModel.stackSize}"/>
+                <Label font="$x2" layoutX="267.0" layoutY="61.0" text="Top element:"/>
+                <Label fx:id="stackTopElement" font="$x1" layoutX="416.0" layoutY="66.0" prefWidth="59.0"
+                       text="${viewModel.stackTopElement}"/>
+                <Pane layoutX="-3.0" layoutY="111.0" prefHeight="79.0" prefWidth="479.0">
+                    <children>
+                        <Button fx:id="addElementButton" alignment="TOP_CENTER" layoutX="272.0" layoutY="14.0"
+                                minHeight="27.0" mnemonicParsing="false" prefHeight="34.5" prefWidth="116.0" text="Add"
+                                textAlignment="LEFT">
+                            <font>
+                                <Font size="18.0" fx:id="x4"/>
+                            </font>
+                        </Button>
+                        <Label font="$x2" layoutX="14.0" layoutY="14.0" text="Add element"/>
+                        <TextField fx:id="inputNewElemField" layoutX="169.0" layoutY="18.0" prefWidth="81.0"/>
+                        <Pane layoutX="0.0" layoutY="83.0" prefHeight="79.0" prefWidth="479.0">
+                            <children>
+                                <Label font="$x2" layoutX="14.0" layoutY="9.0" text="Pop element" visible="true"/>
+                                <Label fx:id="stackPopElement" font="$x1" layoutX="169.0" layoutY="14.0"
+                                       prefWidth="81.0" text="${viewModel.stackPopElement}" visible="true"/>
+                                <Button fx:id="popElementButton" alignment="TOP_CENTER" font="$x4" layoutX="272.0"
+                                        layoutY="7.0" minHeight="30.0" mnemonicParsing="false" prefHeight="34.5"
+                                        prefWidth="116.0" text="Pop" visible="${viewModel.popButtonVisible}"/>
+                                <Label font="$x2" layoutX="14.0" layoutY="79.0" text="Status" visible="true"/>
+                                <Label fx:id="" font="$x1" layoutX="110.0" layoutY="84.0" prefWidth="300.0"
+                                       text="${viewModel.statusMessage}" visible="true"/>
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+        <ScrollPane layoutX="14.0" layoutY="323.0" prefHeight="198.0" prefWidth="450.0">
+            <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="450.0">
+                    <children>
+                        <TextArea layoutX="0.0" layoutY="-1.0" prefHeight="198.0" prefWidth="450.0"
+                                  text="${viewModel.textLog}" wrapText="true"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

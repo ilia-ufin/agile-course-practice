@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?scenebuilder-background-color 0xfffb99ff?>
+
+<AnchorPane prefHeight="570.0" prefWidth="886.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ru.unn.agile.MyAbstractSet.view.AbstractSet">
+  <children>
+    <Label layoutX="323.0" layoutY="24.0" prefHeight="55.0" prefWidth="219.0" text="Abstract set" textAlignment="CENTER" textFill="#1400ff">
+      <font>
+        <Font name="Harrington" size="40.0" />
+      </font>
+    </Label>
+    <TextArea fx:id="firstSetTextArea" layoutX="34.0" layoutY="126.0" prefHeight="89.99990844726562" prefWidth="273.0000999999975" promptText="1,2,3" wrapText="true" />
+    <TextArea id="SecondSetTextArea" fx:id="secondSetTextArea" layoutX="556.0" layoutY="126.0" prefHeight="90.0" prefWidth="274.0" promptText="1,2,3" wrapText="true" />
+    <TextArea fx:id="resultTextArea" layoutX="457.0" layoutY="228.0" prefHeight="116.0" prefWidth="373.0" wrapText="true" />
+    <Button id="uniteButton" fx:id="executeButton" layoutX="299.0" layoutY="228.0" mnemonicParsing="false" text="execute">
+      <font>
+        <Font name="System Bold" size="25.0" />
+      </font>
+    </Button>
+    <Label layoutX="301.0" layoutY="291.0" text="Status:" />
+    <Label fx:id="status" layoutX="357.0" layoutY="291.0" prefWidth="86.0" text="" />
+    <Label layoutX="34.0" layoutY="91.0" text="Enter set A">
+      <font>
+        <Font name="System Bold Italic" size="25.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="556.0" layoutY="91.0" text="Enter set B" />
+    <ComboBox fx:id="comboOperation" layoutX="393.0" layoutY="127.0" />
+    <ScrollPane layoutX="301.0" layoutY="355.0" prefHeight="182.0" prefWidth="529.0">
+      <content>
+        <ListView fx:id="logList" prefHeight="182.0" prefWidth="508.0" />
+      </content>
+    </ScrollPane>
+  </children>
+</AnchorPane>

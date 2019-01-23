@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':deposit-calculator-ViewModel')
+	compile project(':deposit-calculator-Infrastructure')
+}

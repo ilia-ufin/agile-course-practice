@@ -2,5 +2,6 @@ apply from: rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'
 
 dependencies {
     compile project(':infix-to-postfix-notation-converter-ViewModel')
+    compile project(':infix-to-postfix-notation-converter-Infrastructure')
 }
 

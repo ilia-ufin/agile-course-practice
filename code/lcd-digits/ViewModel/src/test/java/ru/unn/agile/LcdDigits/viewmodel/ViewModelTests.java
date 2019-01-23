@@ -4,14 +4,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        if (viewModel == null) {
+            FakeLogger logger = new FakeLogger();
+            viewModel = new ViewModel(logger);
+        }
     }
 
     @After
@@ -42,7 +50,7 @@ public class ViewModelTests {
 
     @Test
     public void canRecognizeBadFormat() {
-        viewModel.digitsProperty().set("qwerty");
+        viewModel.setDigits("qwerty");
 
         assertEquals(Status.BAD_FORMAT.toString(), viewModel.getStatus());
     }
@@ -54,14 +62,14 @@ public class ViewModelTests {
 
     @Test
     public void transferringButtonIsDisabledWhenFieldIsEmpty() {
-        viewModel.digitsProperty().set("");
+        viewModel.setDigits("");
 
         assertTrue(viewModel.isTransferringDisabled());
     }
 
     @Test
     public void transferringButtonIsDisabledWhenFormatIsBad() {
-        viewModel.digitsProperty().set("trash");
+        viewModel.setDigits("trash");
 
         assertTrue(viewModel.isTransferringDisabled());
     }
@@ -93,7 +101,7 @@ public class ViewModelTests {
 
     @Test
     public void transferringHasCorrectResultOneDigit() {
-        viewModel.digitsProperty().set("3");
+        viewModel.setDigits("3");
 
         viewModel.transformLcdDigits();
 
@@ -102,7 +110,7 @@ public class ViewModelTests {
 
     @Test
     public void transferringHasCorrectResultLong() {
-        viewModel.digitsProperty().set("1234567890");
+        viewModel.setDigits("1234567890");
 
         viewModel.transformLcdDigits();
 
@@ -112,6 +120,123 @@ public class ViewModelTests {
     }
 
     private void setInputDigits() {
-        viewModel.digitsProperty().set("1234");
+        viewModel.setDigits("1234");
+    }
+
+    @Test
+    public void canCreateViewModelWithLogger() {
+        FakeLogger fakeLogger = new FakeLogger();
+        ViewModel myViewModel = new ViewModel(fakeLogger);
+
+        assertNotNull(myViewModel);
+    }
+
+    @Test
+    public void viewModelThrowsExceptionWithNullLogger() {
+        try {
+            new ViewModel(null);
+            fail("Exception was not thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Logger parameter cannot be null", e.getMessage());
+        } catch (Exception e) {
+            fail("Invalid exception type");
+        }
+    }
+
+    @Test
+    public void logIsEmptyAtTheBeginning() {
+        List<String> log = viewModel.getLog();
+
+        assertEquals(0, log.size());
+    }
+
+    @Test
+    public void isTransformPuttingSomething() {
+        viewModel.transformLcdDigits();
+
+        List<String> log = viewModel.getLog();
+
+        assertNotEquals(0, log.size());
+    }
+
+    @Test
+    public void isLogContainsProperMessage() {
+        viewModel.transformLcdDigits();
+        String logMessage = viewModel.getLog().get(0);
+
+        assertTrue(logMessage.matches(".*" + LogMessages.TRANSFORM_WAS_PRESSED + ".*"));
+    }
+
+    @Test
+    public void canLogContainInputParameters() {
+        viewModel.setDigits("1234567890");
+        viewModel.transformLcdDigits();
+
+        String logMessage = viewModel.getLog().get(0);
+
+        assertTrue(logMessage.matches(".*" + viewModel.getDigits() + ".*"));
+    }
+
+    @Test
+    public void isProperlyFormattingInfoAboutArguments() {
+        viewModel.setDigits("1234567890");
+        viewModel.transformLcdDigits();
+
+        String logMessage = viewModel.getLog().get(0);
+        assertTrue(logMessage.matches(".*" + viewModel.getLogPatternCalculate()));
+    }
+
+    @Test
+    public void isEditingFinishLogged() {
+        viewModel.setDigits("1234567890");
+
+        viewModel.focusLost();
+
+        String logMessage = viewModel.getLog().get(0);
+        assertTrue(logMessage.matches(".*" + LogMessages.EDITING_FINISHED + ".*"));
+    }
+
+    @Test
+    public void canParametersLogOnEditingProperly() {
+        viewModel.setDigits("41");
+
+        viewModel.focusLost();
+
+        String logMessage = viewModel.getLog().get(0);
+        assertTrue(logMessage.matches(".*" + "Updated input: Input argument is: \\[41\\]"));
+    }
+
+    @Test
+    public void canNotLogTheSameArgumentsTwice() {
+        viewModel.setDigits("41");
+        viewModel.setDigits("41");
+        viewModel.focusLost();
+        viewModel.focusLost();
+
+        String msg = viewModel.getLog().get(0);
+
+        assertTrue(msg.matches(".*" + LogMessages.EDITING_FINISHED + ".*"));
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void canLogWhenCalculateButtonIsDisabledWhenFormatIsBad() {
+        viewModel.setDigits("selfie");
+        viewModel.focusLost();
+
+        String logMessage = viewModel.getLog().get(0);
+
+        assertTrue(logMessage.matches(".*" + LogMessages.EDITING_FINISHED + ".*"));
+        assertEquals(1, viewModel.getLog().size());
+    }
+
+    @Test
+    public void doNotLogEqualParametersTwice() {
+        viewModel.setDigits("21");
+        viewModel.onFocusChanged(Boolean.TRUE, Boolean.FALSE);
+        viewModel.setDigits("21");
+        viewModel.onFocusChanged(Boolean.TRUE, Boolean.FALSE);
+
+        assertEquals(1, viewModel.getLog().size());
     }
 }

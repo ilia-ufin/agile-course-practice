@@ -2,9 +2,25 @@
 include "code/bevzuk-anton"
 project(":code/bevzuk-anton").name = "bevzuk-anton-Model"
 
-//Oleneva Maria
-include "code/oleneva-intersect-line-and-plane"
-project(":code/oleneva-intersect-line-and-plane").name = "code/oleneva-intersect-line-and-plane"
+// Intersect line and plane
+include "code/intersect-line-and-plane/View"
+project(":code/intersect-line-and-plane/View").name = "intersect-line-and-plane-View"
+include "code/intersect-line-and-plane/Model"
+project(":code/intersect-line-and-plane/Model").name = "intersect-line-and-plane-Model"
+include "code/intersect-line-and-plane/ViewModel"
+project(":code/intersect-line-and-plane/ViewModel").name = "intersect-line-and-plane-ViewModel"
+include "code/intersect-line-and-plane/Infrastructure"
+project(":code/intersect-line-and-plane/Infrastructure").name = "intersect-line-and-plane-Infrastructure"
+
+// Fibonacci Heap
+include "code/fibonacci-heap/Model"
+project(":code/fibonacci-heap/Model").name = "fibonacci-heap-Model"
+include "code/fibonacci-heap/ViewModel"
+project(":code/fibonacci-heap/ViewModel").name = "fibonacci-heap-ViewModel"
+include "code/fibonacci-heap/View"
+project(":code/fibonacci-heap/View").name = "fibonacci-heap-View"
+include "code/fibonacci-heap/Infrastructure"
+project(":code/fibonacci-heap/Infrastructure").name = "fibonacci-heap-Infrastructure"
 
 // Currency Converter
 include "code/currency-converter/Model"
@@ -14,13 +30,15 @@ project(":code/currency-converter/ViewModel").name = "currency-converter-ViewMod
 include "code/currency-converter/View"
 project(":code/currency-converter/View").name = "currency-converter-View"
 
-// nickshevr, Zhiltsov Max
+// Numerical Integration
 include "code/numerical-integration/Model"
 project(":code/numerical-integration/Model").name = "numerical-integration-Model-legacy"
 include "code/numerical-integration/ViewModel"
 project(":code/numerical-integration/ViewModel").name = "numerical-integration-ViewModel-legacy"
 include "code/numerical-integration/View"
 project(":code/numerical-integration/View").name = "numerical-integration-View-legacy"
+include "code/numerical-integration/Infrastructure"
+project(":code/numerical-integration/Infrastructure").name = "numerical-integration-Infrastructure-legacy"
 
 // Korniakov Kirill, lab1
 include "code/korniakov-kirill-lab1"
@@ -37,15 +55,18 @@ include "code/dijkstra/viewModel"
 project(":code/dijkstra/viewModel").name = "dijkstra-ViewModel"
 include "code/dijkstra/view"
 project(":code/dijkstra/view").name = "dijkstra-View"
+include "code/dijkstra/infrastructure"
+project(":code/dijkstra/infrastructure").name = "dijkstra-Infrastructure"
 
 // Ivanova Olga, lab1
 include "code/prime-number/model"
 project(":code/prime-number/model").name = "prime-number-Model"
 include "code/prime-number/view"
 project(":code/prime-number/view").name = "prime-number-View"
+include "code/prime-number/Infrastructure"
+project(":code/prime-number/Infrastructure").name = "prime-number-Infrastructure"
 include "code/prime-number/ViewModel"
 project(":code/prime-number/ViewModel").name = "prime-number-ViewModel"
-
 
 // Marchenko Andrey
 include "code/marchenko-andrey-complex-number"
@@ -58,10 +79,18 @@ include "code/triangle/ViewModel"
 project(":code/triangle/ViewModel").name = "triangle-ViewModel"
 include "code/triangle/View"
 project(":code/triangle/View").name = "triangle-View"
+include "code/triangle/Infrastructure"
+project(":code/triangle/Infrastructure").name = "triangle-Infrastructure"
 
-// Moiseev Nikita, lab 1
-include "code/abstract-set"
-project(":code/abstract-set").name = "abstract-set-Model"
+// abstract-set
+include "code/abstract-set/Model"
+project(":code/abstract-set/Model").name = "abstract-set-Model"
+include "code/abstract-set/ViewModel"
+project(":code/abstract-set/ViewModel").name = "abstract-set-ViewModel"
+include "code/abstract-set/View"
+project(":code/abstract-set/View").name = "abstract-set-View"
+include "code/abstract-set/Infrastructure"
+project(":code/abstract-set/Infrastructure").name = "abstract-set-Infrastructure"
 
 // Vector distance
 include "code/vector-distance/Model"
@@ -70,6 +99,8 @@ include "code/vector-distance/ViewModel"
 project(":code/vector-distance/ViewModel").name = "vector-distance-ViewModel"
 include "code/vector-distance/View"
 project(":code/vector-distance/View").name = "vector-distance-View"
+include "code/vector-distance/Infrastructure"
+project(":code/vector-distance/Infrastructure").name = "vector-distance-Infrastructure"
 
 // Korniakov Kirill, lab2-legacy
 include "code/korniakov-kirill-lab2-legacy/Model"
@@ -114,6 +145,8 @@ include "code/infix-to-postfix-notation-converter/View"
 project(":code/infix-to-postfix-notation-converter/View").name = "infix-to-postfix-notation-converter-View"
 include "code/infix-to-postfix-notation-converter/ViewModel"
 project(":code/infix-to-postfix-notation-converter/ViewModel").name = "infix-to-postfix-notation-converter-ViewModel"
+include "code/infix-to-postfix-notation-converter/Infrastructure"
+project(":code/infix-to-postfix-notation-converter/Infrastructure").name = "infix-to-postfix-notation-converter-Infrastructure"
 
 // Huffman
 include "code/huffman/Model"
@@ -122,14 +155,18 @@ include "code/huffman/ViewModel"
 project(":code/huffman/ViewModel").name = "huffman-ViewModel"
 include "code/huffman/View"
 project(":code/huffman/View").name = "huffman-View"
+include "code/huffman/Infrastructure"
+project(":code/huffman/Infrastructure").name = "huffman-Infrastructure"
 
-// Polyakov Igor & Podolov Kirill, sort
+// Polyakov Igor & Podolov Kirill & Flegontov Alexander, sort
 include "code/sort/Model"
 project(":code/sort/Model").name = "sort-Model"
 include "code/sort/ViewModel"
 project(":code/sort/ViewModel").name = "sort-ViewModel"
 include "code/sort/View"
 project(":code/sort/View").name = "sort-View"
+include "code/sort/Infrastructure"
+project(":code/sort/Infrastructure").name = "sort-Infrastructure"
 
 // Vector3D
 include "code/vector3d/Model"
@@ -148,10 +185,18 @@ include "code/string-calculator/ViewModel"
 project(":code/string-calculator/ViewModel").name = "string-calculator-ViewModel"
 include "code/string-calculator/View"
 project(":code/string-calculator/View").name = "string-calculator-View"
+include "code/string-calculator/Infrastructure"
+project(":code/string-calculator/Infrastructure").name = "string-calculator-Infrastructure"
 
 // Stack
-include "code/stack"
-project(":code/stack").name = "stack"
+include "code/stack/Model"
+project(":code/stack/Model").name = "stack-Model"
+include "code/stack/ViewModel"
+project(":code/stack/ViewModel").name = "stack-ViewModel"
+include "code/stack/View"
+project(":code/stack/View").name = "stack-View"
+include "code/stack/Infrastructure"
+project(":code/stack/Infrastructure").name = "stack-Infrastructure"
 
 // Roman number converter
 include "code/roman-number-converter/model"
@@ -160,18 +205,38 @@ include "code/roman-number-converter/viewModel"
 project(":code/roman-number-converter/viewModel").name = "roman-number-converter-ViewModel"
 include "code/roman-number-converter/view"
 project(":code/roman-number-converter/view").name = "roman-number-converter-View"
+include "code/roman-number-converter/Infrastructure"
+project(":code/roman-number-converter/Infrastructure").name = "roman-number-converter-Infrastructure"
 
-// Metelev Evgenii
-include "code/metelev-evgenii-mortgage-calculator"
-project(":code/metelev-evgenii-mortgage-calculator").name = "metelev-evgenii-Model"
+// Metelev Evgenii, Mortgage-calculator
+include "code/mortgage-calculator/Model"
+project(":code/mortgage-calculator/Model").name = "mortgage-calculator-Model"
+include "code/mortgage-calculator/View"
+project(":code/mortgage-calculator/View").name = "mortgage-calculator-View"
+include "code/mortgage-calculator/ViewModel"
+project(":code/mortgage-calculator/ViewModel").name = "mortgage-calculator-ViewModel"
+include "code/mortgage-calculator/Infrastructure"
+project(":code/mortgage-calculator/Infrastructure").name = "mortgage-calculator-Infrastructure"
 
-// Kochuev Andrey, Length Converter
-include "code/kochuev-andrey-length-converter"
-project(":code/kochuev-andrey-length-converter").name = "kochuev-andrey-length-converter"
+// Kochuev Andrey, Golovanova Tatyana Length Converter
+include "code/length-converter/Model"
+project(":code/length-converter/Model").name = "length-converter-Model"
+include "code/length-converter/View"
+project(":code/length-converter/View").name = "length-converter-View"
+include "code/length-converter/ViewModel"
+project(":code/length-converter/ViewModel").name = "length-converter-ViewModel"
+include "code/length-converter/Infrastructure"
+project(":code/length-converter/Infrastructure").name = "length-converter-Infrastructure"
 
 // Osechkin Sergey, DepositCalculator
-include "code/osechkin-deposit-calculator"
-project(":code/osechkin-deposit-calculator").name = "osechkin-deposit-calculator"
+include "code/deposit-calculator/Model"
+project(":code/deposit-calculator/Model").name = "deposit-calculator-Model"
+include "code/deposit-calculator/ViewModel"
+project(":code/deposit-calculator/ViewModel").name = "deposit-calculator-ViewModel"
+include "code/deposit-calculator/View"
+project(":code/deposit-calculator/View").name = "deposit-calculator-View"
+include "code/deposit-calculator/Infrastructure"
+project(":code/deposit-calculator/Infrastructure").name = "deposit-calculator-Infrastructure"
 
 // Three dimensional shapes area calculation
 include "code/shape-3d-area/model"
@@ -180,6 +245,8 @@ include "code/shape-3d-area/view-model"
 project(":code/shape-3d-area/view-model").name = "shape-3d-area-view-model"
 include "code/shape-3d-area/view"
 project(":code/shape-3d-area/view").name = "shape-3d-area-view"
+include "code/shape-3d-area/infrastructure"
+project(":code/shape-3d-area/infrastructure").name = "shape-3d-area-infrastructure"
 
 //Stepanov Nikolay, Salary calculator
 include "code/salary-calculator/Model"
@@ -188,18 +255,8 @@ include "code/salary-calculator/View"
 project(":code/salary-calculator/View").name = "salary-calculator-View"
 include "code/salary-calculator/ViewModel"
 project(":code/salary-calculator/ViewModel").name = "salary-calculator-ViewModel"
-
-// Gladkova Tatiana, Binary Search
-include "code/binary-search/Model"
-project(":code/binary-search/Model").name = "binary-search"
-include "code/binary-search/View"
-project(":code/binary-search/View").name = "binary-search-View"
-include "code/binary-search/ViewModel"
-project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
-
-// Kryukova Polina, caesar-cipher
-include "code/caesar-cipher"
-project(":code/caesar-cipher").name = "caesar-cipher"
+include "code/salary-calculator/Infrastructure"
+project(":code/salary-calculator/Infrastructure").name = "salary-calculator-Infrastructure"
 
 // Podolov Kirill & Flegontov Alexander, Queue
 include "code/queue/Model"
@@ -208,14 +265,18 @@ include "code/queue/ViewModel"
 project(":code/queue/ViewModel").name = "queue-ViewModel"
 include "code/queue/View"
 project(":code/queue/View").name = "queue-View"
+include "code/queue/Infrastructure"
+project(":code/queue/Infrastructure").name = "queue-Infrastructure"
 
-// Flegontov Alexander and Polyakov Igor, math-statistics
+// Flegontov Alexander & Polyakov Igor & Podolov Kirill, math-statistics
 include "code/math-statistics/Model"
 project(":code/math-statistics/Model").name = "math-statistics-Model"
 include "code/math-statistics/ViewModel"
 project(":code/math-statistics/ViewModel").name = "math-statistics-ViewModel"
 include "code/math-statistics/View"
 project(":code/math-statistics/View").name = "math-statistics-View"
+include "code/math-statistics/Infrastructure"
+project(":code/math-statistics/Infrastructure").name = "math-statistics-Infrastructure"
 
 // Fraction calculator
 include "code/frac-calc/Model"
@@ -224,10 +285,18 @@ include "code/frac-calc/ViewModel"
 project(":code/frac-calc/ViewModel").name = "frac-calc-ViewModel"
 include "code/frac-calc/View"
 project(":code/frac-calc/View").name = "frac-calc-View"
+include "code/frac-calc/Infrastructure"
+project(":code/frac-calc/Infrastructure").name = "frac-calc-Infrastructure"
 
 // 3D shapes volume
-include "code/shape-volume-calculator"
-project(":code/shape-volume-calculator").name = "shape-volume-calculator"
+include "code/shape-volume-calculator/Model"
+project(":code/shape-volume-calculator/Model").name = "shape-volume-calculator-Model"
+include "code/shape-volume-calculator/ViewModel"
+project(":code/shape-volume-calculator/ViewModel").name = "shape-volume-calculator-ViewModel"
+include "code/shape-volume-calculator/View"
+project(":code/shape-volume-calculator/View").name = "shape-volume-calculator-View"
+include "code/shape-volume-calculator/Infrastracture"
+project(":code/shape-volume-calculator/Infrastracture").name = "shape-volume-calculator-Infrastracture"
 
 // Rumiantseva Maria, Quadratic Equation Solver
 include "code/quadratic-equation-solver/Model"
@@ -236,14 +305,22 @@ include "code/quadratic-equation-solver/ViewModel"
 project(":code/quadratic-equation-solver/ViewModel").name = "quadratic-equation-solver-ViewModel"
 include "code/quadratic-equation-solver/View"
 project(":code/quadratic-equation-solver/View").name = "quadratic-equation-solver-View"
+include "code/quadratic-equation-solver/Infrastructure"
+project(":code/quadratic-equation-solver/Infrastructure").name = "quadratic-equation-solver-Infrastructure"
 
 // Podchishchaeva Mariya, RBTree
 include "code/podchishchaeva-rb-tree"
 project(":code/podchishchaeva-rb-tree").name = "podchishchaeva-rb-tree"
 
-// Golovanova Tatyana, Converter From Celsius
-include "code/golovanova-tatyana-converter-temperatures"
-project(":code/golovanova-tatyana-converter-temperatures").name = "golovanova-tatyana-converter-temperatures"
+// Converter From Celsius: Golovanova Tatyana, Shiryaeva Ekaterina, Kochuev Andrey
+include "code/converter-temperatures/Model"
+project(":code/converter-temperatures/Model").name = "converter-temperatures-Model"
+include "code/converter-temperatures/View"
+project(":code/converter-temperatures/View").name = "converter-temperatures-View"
+include "code/converter-temperatures/ViewModel"
+project(":code/converter-temperatures/ViewModel").name = "converter-temperatures-ViewModel"
+include "code/converter-temperatures/Infrastructure"
+project(":code/converter-temperatures/Infrastructure").name = "converter-temperatures-Infrastructure"
 
 // Shiryaeva Ekaterina, Kochuev Andrey Polynomial Calculator
 include "code/polynomial-calculator/Model"
@@ -252,14 +329,26 @@ include "code/polynomial-calculator/ViewModel"
 project(":code/polynomial-calculator/ViewModel").name = "polynomial-calculator-ViewModel"
 include "code/polynomial-calculator/View"
 project(":code/polynomial-calculator/View").name = "polynomial-calculator-View"
+include "code/polynomial-calculator/Infrastructure"
+project(":code/polynomial-calculator/Infrastructure").name = "polynomial-calculator-Infrastructure"
 
 // Sheptunov Vladislav, BinarySearchTree
-include "code/binary-search-tree"
-project(":code/binary-search-tree").name = "binary-search-tree"
+include "code/binary-search-tree/Model"
+project(":code/binary-search-tree/Model").name = "binary-search-tree-Model"
+include "code/binary-search-tree/View"
+project(":code/binary-search-tree/View").name = "binary-search-tree-View"
+include "code/binary-search-tree/ViewModel"
+project(":code/binary-search-tree/ViewModel").name = "binary-search-tree-ViewModel"
 
-//Pipikin Oleg, Matrix
-include "code/pipikin-oleg-matrix"
-project(":code/pipikin-oleg-matrix").name = "pipikin-oleg-matrix"
+// Matrix
+include "code/matrix/Model"
+project(":code/matrix/Model").name = "matrix-Model"
+include "code/matrix/View"
+project(":code/matrix/View").name = "matrix-View"
+include "code/matrix/ViewModel"
+project(":code/matrix/ViewModel").name = "matrix-ViewModel"
+include "code/matrix/Infrastructure"
+project(":code/matrix/Infrastructure").name = "matrix-Infrastructure"
 
 // Segments2D Intersection
 include "code/segments2d-intersection/Model"
@@ -268,26 +357,38 @@ include "code/segments2d-intersection/ViewModel"
 project(":code/segments2d-intersection/ViewModel").name = "segments2d-intersection-ViewModel"
 include "code/segments2d-intersection/View"
 project(":code/segments2d-intersection/View").name = "segments2d-intersection-View"
+include "code/segments2d-intersection/Infrastructure"
+project(":code/segments2d-intersection/Infrastructure").name = "segments2d-intersection-Infrastructure"
 
-// Mitrokhina Julia, Harry Potter Books
-include "code/mitrokhina-julia-harrypotter"
-project(":code/mitrokhina-julia-harrypotter").name = "mitrokhina-julia-harrypotter-Model"
+// Harry Potter Book Store. Mitrokhina Julia, Akhmedzhanov Dmitry, Beresneva Julia
+include "code/book-store/Model"
+project(":code/book-store/Model").name = "book-store-Model"
+include "code/book-store/view"
+project(":code/book-store/view").name = "book-store-view"
+include "code/book-store/ViewModel"
+project(":code/book-store/ViewModel").name = "book-store-ViewModel"
+include "code/book-store/Infrastructure"
+project(":code/book-store/Infrastructure").name = "book-store-Infrastructure"
 
-// Conway Game of Life
+// Conway Game of Life. Akhmedzhanov Dmitry, Beresneva Julia, Mitrokhina Julia
 include "code/conway-game/View"
 project(":code/conway-game/View").name = "conway-game-View"
 include "code/conway-game/Model"
 project(":code/conway-game/Model").name = "conway-game-Model"
 include "code/conway-game/ViewModel"
 project(":code/conway-game/ViewModel").name = "conway-game-ViewModel"
+include "code/conway-game/Infrastructure"
+project(":code/conway-game/Infrastructure").name = "conway-game-Infrastructure"
 
-// Lcd Digits. Beresneva Julia, Mitrokhina Julia
+// Lcd Digits. Beresneva Julia, Mitrokhina Julia, Akhmedzhanov Dmitry
 include "code/lcd-digits/View"
 project(":code/lcd-digits/View").name = "lcd-digits-View"
 include "code/lcd-digits/Model"
 project(":code/lcd-digits/Model").name = "lcd-digits-Model"
 include "code/lcd-digits/ViewModel"
 project(":code/lcd-digits/ViewModel").name = "lcd-digits-ViewModel"
+include "code/lcd-digits/Infrastructure"
+project(":code/lcd-digits/Infrastructure").name = "lcd-digits-Infrastructure"
 
 // Numeral Systems and Radix Calculator
 include "code/numeral-systems-calculator/Model"
@@ -296,6 +397,8 @@ include "code/numeral-systems-calculator/ViewModel"
 project(":code/numeral-systems-calculator/ViewModel").name = "numeral-systems-calculator-ViewModel"
 include "code/numeral-systems-calculator/View"
 project(":code/numeral-systems-calculator/View").name = "numeral-systems-calculator-View"
+include "code/numeral-systems-calculator/Infrastructure"
+project(":code/numeral-systems-calculator/Infrastructure").name = "numeral-systems-calculator-Infrastructure"
 
 // Krutoberezskaya Irina, numbers-in-words
 include "code/numbers-in-words/Model"
@@ -304,6 +407,32 @@ include "code/numbers-in-words/ViewModel"
 project(":code/numbers-in-words/ViewModel").name = "numbers-in-words-ViewModel"
 include "code/numbers-in-words/View"
 project(":code/numbers-in-words/View").name = "numbers-in-words-View"
+include "code/numbers-in-words/Infrastructure"
+project(":code/numbers-in-words/Infrastructure").name = "numbers-in-words-Infrastructure"
+
+// Ryabov Vladislav, AVLTree
+include "code/ryabov-avl-tree"
+project(":code/ryabov-avl-tree").name = "ryabov-avl-tree"
+
+// Kryukova Polina, caesar-cipher
+include "code/caesar-cipher/Model"
+project(":code/caesar-cipher/Model").name = "caesar-cipher-Model"
+include "code/caesar-cipher/ViewModel"
+project(":code/caesar-cipher/ViewModel").name = "caesar-cipher-ViewModel"
+include "code/caesar-cipher/View"
+project(":code/caesar-cipher/View").name = "caesar-cipher-View"
+include "code/caesar-cipher/Infrastructure"
+project(":code/caesar-cipher/Infrastructure").name = "caesar-cipher-Infrastructure"
+
+// Gladkova Tatiana, Binary Search
+include "code/binary-search/Model"
+project(":code/binary-search/Model").name = "binary-search-Model"
+include "code/binary-search/View"
+project(":code/binary-search/View").name = "binary-search-View"
+include "code/binary-search/ViewModel"
+project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
+include "code/binary-search/Infrastructure"
+project(":code/binary-search/Infrastructure").name = "binary-search-Infrastructure"
 
 // Zharikov, hashmap
 include "code/HashMap/Model"
@@ -312,3 +441,4 @@ include "code/HashMap/ViewModel"
 project(":code/HashMap/ViewModel").name = "HashMap-ViewModel"
 include "code/HashMap/View"
 project(":code/HashMap/View").name = "HashMap-View"
+

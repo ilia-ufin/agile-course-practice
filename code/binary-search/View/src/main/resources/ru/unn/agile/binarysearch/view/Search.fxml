@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import ru.unn.agile.binarysearch.viewmodel.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ru.unn.agile.binarysearch.view.Search">
+<AnchorPane prefHeight="383.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ru.unn.agile.binarysearch.view.Search">
   <fx:define>
     <ViewModel fx:id="viewModel" />
   </fx:define>
@@ -45,5 +45,6 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
+    <TextArea fx:id="textArea" layoutX="16.0" layoutY="106.0" prefHeight="263.0" prefWidth="340.0" wrapText="true" />
   </children>
 </AnchorPane>

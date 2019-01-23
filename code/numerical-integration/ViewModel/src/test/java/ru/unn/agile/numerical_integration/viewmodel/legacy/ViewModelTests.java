@@ -1,4 +1,4 @@
-package ru.unn.agile.numerical_integration.ViewModel.legacy;
+package ru.unn.agile.numerical_integration.viewmodel.legacy;
 
 import org.junit.Test;
 
@@ -451,5 +451,20 @@ public class ViewModelTests {
         model.setRightBorderValue("q");
 
         assertTrue(model.getOutputMessage().contains("\n"));
+    }
+
+    @Test
+    public void canSetLogger() {
+        ViewModel model = new ViewModel();
+        ILogger logger = new FakeLogger();
+
+        boolean success = true;
+        try {
+            model.setLogger(logger);
+        } catch (Exception e) {
+            success = false;
+        }
+
+        assertTrue(success);
     }
 }

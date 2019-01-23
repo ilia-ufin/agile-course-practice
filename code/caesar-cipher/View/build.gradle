@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':caesar-cipher-ViewModel')
+    compile project(':caesar-cipher-Infrastructure')
+}

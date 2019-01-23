@@ -1,11 +1,15 @@
 package ru.unn.agile.triangle.view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import ru.unn.agile.triangle.viewmodel.ViewModel;
+import ru.unn.agile.triangle.infrastructure.TxtLogger;
+
 
 public class TriangleForm {
     @FXML
@@ -41,14 +45,28 @@ public class TriangleForm {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./TxtLogger-lab3.log"));
 
-        // Two-way binding hasn't supported by FXML yet, so place it in code-behind
+        final ChangeListener<Boolean> booleanChangeListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(final ObservableValue<? extends Boolean> observable,
+                                final Boolean oldValueAttribute, final Boolean newValueAttribute) {
+                viewModel.checkOnFocusChanged(oldValueAttribute, newValueAttribute);
+            }
+        };
+
         aX.textProperty().bindBidirectional(viewModel.aXProperty());
-        bX.textProperty().bindBidirectional(viewModel.bXProperty());
-        cX.textProperty().bindBidirectional(viewModel.cXProperty());
+        aX.focusedProperty().addListener(booleanChangeListener);
         aY.textProperty().bindBidirectional(viewModel.aYProperty());
+        aY.focusedProperty().addListener(booleanChangeListener);
+        bX.textProperty().bindBidirectional(viewModel.bXProperty());
+        bX.focusedProperty().addListener(booleanChangeListener);
         bY.textProperty().bindBidirectional(viewModel.bYProperty());
+        bY.focusedProperty().addListener(booleanChangeListener);
+        cX.textProperty().bindBidirectional(viewModel.cXProperty());
+        cX.focusedProperty().addListener(booleanChangeListener);
         cY.textProperty().bindBidirectional(viewModel.cYProperty());
+        cY.focusedProperty().addListener(booleanChangeListener);
 
 
         btnCalcPerimeter.setOnAction(new EventHandler<ActionEvent>() {
