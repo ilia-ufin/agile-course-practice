@@ -11,36 +11,36 @@ public class ModifiedStackTest {
 	
     @Before
     public void setUp() {
-        this.Stack = new ModifiedStack();
+		this.Stack = new ModifiedStack();
     }
 	
 	@Test
     public void testStackTopPeek(){
 		Stack.push(3);
-        Stack.push(5);
-        assertEquals(5, Stack.peek());
+		Stack.push(5);
+		assertEquals(5, Stack.peek());
     }
 
     @Test
     public void testStackTopPeek(){
 		Stack.push(3);
-        Stack.push(5);
-        assertEquals(5, Stack.peek());
+		Stack.push(5);
+		assertEquals(5, Stack.peek());
     }
 
 	@Test
 	public void testStackPop(){
 		Stack.push(1);
-        Stack.push(2);
-        assertEquals(2, Stack.pop());
+		Stack.push(2);
+		assertEquals(2, Stack.pop());
 		assertEquals(1, Stack.pop());
     }
 
 	@Test	
 	public void testStackSearchMin(){
 		Stack.push(1);
-        Stack.push(2);
-        assertEquals(1, Stack.getMin());
+		Stack.push(2);
+		assertEquals(1, Stack.getMin());
     }
         
 };
