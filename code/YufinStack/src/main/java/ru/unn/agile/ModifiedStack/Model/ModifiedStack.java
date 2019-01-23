@@ -8,28 +8,29 @@ public class ModifiedStack {
   
     public ModifiedStack() {
 		StackElems = new Stack<Integer>(); 
-	}
+		} 
 
     Integer getMin() { 
         if (StackElems.isEmpty()) 
-			System.out.println("Stack is empty");
+            System.out.println("Stack is empty"); 
+  
         else
-			return MinElem; 
+            return MinElem; 
     } 
 
     void peek() { 
         if (StackElems.isEmpty()) 
         { 
-			System.out.println("Stack is empty "); 
-			return; 
+            System.out.println("Stack is empty "); 
+            return; 
         } 
   
-		Integer top = StackElems.peek();
+        Integer top = StackElems.peek();
 
-        if (top < MinElem)
-			return MinElem;
+        if (top < MinElem) 
+             return MinElem; 
         else
-			return top; 
+             return top; 
     } 
   
     Integer pop() { 
@@ -62,9 +63,10 @@ public class ModifiedStack {
         { 
             StackElems.push(2*x - MinElem); 
             MinElem = x; 
-        }
+        } 
+  
         else
-            StackElems.push(x);
-
+            StackElems.push(x); 
+   
     } 
 }; 
