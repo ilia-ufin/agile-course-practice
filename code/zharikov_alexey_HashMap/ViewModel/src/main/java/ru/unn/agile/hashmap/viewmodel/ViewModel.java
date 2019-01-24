@@ -192,20 +192,3 @@ public class ViewModel {
         }
     }
 }
-
-enum Status {
-    WAITING("Please set Vectors"),
-    READY("Input data correct. Press calculate."),
-    BAD_FORMAT("Bad data inserted"),
-    SUCCESS("Success");
-
-    private final String name;
-
-    Status(final String name) {
-        this.name = name;
-    }
-
-    public String toString() {
-        return name;
-    }
-}
