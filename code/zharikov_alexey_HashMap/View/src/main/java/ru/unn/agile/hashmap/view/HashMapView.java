@@ -13,11 +13,11 @@ public class HashMapView {
     private ViewModel viewModel;
 
     @FXML
-    private Button AddButton;
+    private Button addButton;
     @FXML
-    private Button GetButton;
+    private Button getButton;
     @FXML
-    private Button DelButton;
+    private Button delButton;
     @FXML
     private TextField inputKeyForAdd;
     @FXML
@@ -28,27 +28,33 @@ public class HashMapView {
     private TextField inputValueForGet;
     @FXML
     private TextField inputKeyForRemove;
+
     @FXML
     void initialize() {
-        inputKeyForAdd.textProperty().bindBidirectional(viewModel.addingInputKeyProperty());
-		inputValueForAdd.textProperty().bindBidirectional(viewModel.addingInputValueProperty());
-		inputKeyForGet.textProperty().bindBidirectional(viewModel.gettingInputKeyProperty());
-		inputValueForGet.textProperty().bindBidirectional(viewModel.gettingInputValueProperty());
-		inputKeyForRemove.textProperty().bindBidirectional(viewModel.removingInputKeyProperty());
+        inputKeyForAdd.textProperty().bindBidirectional(
+                viewModel.addingInputKeyProperty());
+        inputValueForAdd.textProperty().bindBidirectional(
+                viewModel.addingInputValueProperty());
+        inputKeyForGet.textProperty().bindBidirectional(
+                viewModel.gettingInputKeyProperty());
+        inputValueForGet.textProperty().bindBidirectional(
+                viewModel.gettingInputValueProperty());
+        inputKeyForRemove.textProperty().bindBidirectional(
+                viewModel.removingInputKeyProperty());
 
-        DelButton.setOnAction(new EventHandler<ActionEvent>() {
+        delButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
                 viewModel.delElement();
             }
         });
-        GetButton.setOnAction(new EventHandler<ActionEvent>() {
+        getButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
                 viewModel.getElement();
             }
         });
-        AddButton.setOnAction(new EventHandler<ActionEvent>() {
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent event) {
                 viewModel.addElement();

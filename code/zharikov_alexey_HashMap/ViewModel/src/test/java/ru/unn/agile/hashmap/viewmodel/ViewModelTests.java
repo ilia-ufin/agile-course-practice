@@ -21,14 +21,14 @@ public class ViewModelTests {
         viewModel = null;
     }
 
-   @Test
+    @Test
     public void correctDefaultStatusMessage() {
         assertEquals(viewModel.WAITING_FOR_INPUT, viewModel.statusMessageProperty().get());
     }
-	
-	@Test
+
+    @Test
     public void canSetDefaultValues() {
-        assertEquals(viewModel.IS_EMPTY, viewModel.GetIsEmptyStatusProperty());
-        assertEquals("0", viewModel.GetmapSizeProperty());
+        assertEquals(viewModel.IS_EMPTY, viewModel.getIsEmptyStatusProperty());
+        assertEquals("0", viewModel.getmapSizeProperty());
     }
 }

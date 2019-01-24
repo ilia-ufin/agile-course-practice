@@ -21,10 +21,11 @@ public class HashMap {
     }
 
     public boolean containsKey(final String key) {
-        for (Element ele : GetListOfElemsByKey(key))
+        for (Element ele : getListOfElemsByKey(key)) {
             if (ele.key.equals(key)) {
                 return true;
             }
+        }
         return false;
     }
 
@@ -34,7 +35,7 @@ public class HashMap {
 
     public void add(final String key, final Object value) {
         this.remove(key);
-        final LinkedList<Element> elements = GetListOfElemsByKey(key);
+        final LinkedList<Element> elements = getListOfElemsByKey(key);
         elements.add(new Element(key, value));
         size++;
     }
@@ -43,21 +44,21 @@ public class HashMap {
         return size;
     }
 
-    public int sizearray(String key) {
-        return GetListOfElemsByKey(key).size();
+    public int sizearray(final String key) {
+        return getListOfElemsByKey(key).size();
     }
 
     public ArrayList<LinkedList<Element>> getArray() {
         return array;
     }
 
-    public LinkedList<Element> GetListOfElemsByKey(final String key) {
+    public LinkedList<Element> getListOfElemsByKey(final String key) {
         final LinkedList<Element> elements = this.array.get(hash(key));
         return elements;
     }
 
     public Object get(final String key) {
-        for (Element ele : GetListOfElemsByKey(key)) {
+        for (Element ele : getListOfElemsByKey(key)) {
             if (ele.isEquals(key)) {
                 return ele.value;
             }
@@ -66,9 +67,9 @@ public class HashMap {
     }
 
     public void remove(final String key) {
-        for (Element ele : GetListOfElemsByKey(key)) {
+        for (Element ele : getListOfElemsByKey(key)) {
             if (ele.isEquals(key)) {
-                GetListOfElemsByKey(key).remove(ele);
+                getListOfElemsByKey(key).remove(ele);
                 size--;
                 break;
             }
@@ -80,10 +81,10 @@ public class HashMap {
     }
 
     private class Element {
-        public final String key;
-        public final Object value;
+        private final String key;
+        private final Object value;
 
-        public Element(final String key, final Object value) {
+        Element(final String key, final Object value) {
             this.key = key;
             this.value = value;
         }
