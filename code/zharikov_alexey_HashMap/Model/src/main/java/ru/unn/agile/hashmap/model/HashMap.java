@@ -5,11 +5,13 @@ import java.util.*;
 public class HashMap {
     public static final int SIZE_MAP = 128;
     private int size;
-    private ArrayList<LinkedList<Element>> array;
+
+    //private ArrayList<LinkedList<Element>> array;
+    private List<LinkedList<Element>> array;
 
     public HashMap() {
         this.size = 0;
-        this.array = new ArrayList<LinkedList<Element>>(SIZE_MAP);
+        this.array = new ArrayList<>(SIZE_MAP);
 
         for (int i = 0; i < SIZE_MAP; i++) {
             this.array.add(new LinkedList<Element>());
@@ -35,7 +37,7 @@ public class HashMap {
 
     public void add(final String key, final Object value) {
         this.remove(key);
-        final LinkedList<Element> elements = getListOfElemsByKey(key);
+        final List<Element> elements = getListOfElemsByKey(key);
         elements.add(new Element(key, value));
         size++;
     }
@@ -48,13 +50,12 @@ public class HashMap {
         return getListOfElemsByKey(key).size();
     }
 
-    public ArrayList<LinkedList<Element>> getArray() {
+    public List<LinkedList<Element>> getArray() {
         return array;
     }
 
-    public LinkedList<Element> getListOfElemsByKey(final String key) {
-        final LinkedList<Element> elements = this.array.get(hash(key));
-        return elements;
+    public List<Element> getListOfElemsByKey(final String key) {
+        return this.array.get(hash(key));
     }
 
     public Object get(final String key) {
