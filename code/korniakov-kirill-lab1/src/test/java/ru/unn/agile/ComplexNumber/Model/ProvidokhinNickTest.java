@@ -30,7 +30,7 @@ public class ProvidokhinNickTest {
         ComplexNumber y = new ComplexNumber(0, 100);
 
         ComplexNumber xyadd = x.add(y);
-        
+
         assertEquals(xyadd, new ComplexNumber(100, 100));
     }
 }
