@@ -4,7 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import ru.unn.agile.hashmap.model.HashMap;
+import ru.unn.agile.hashmap.model.hashmap;
 
 
 public class ViewModel {
