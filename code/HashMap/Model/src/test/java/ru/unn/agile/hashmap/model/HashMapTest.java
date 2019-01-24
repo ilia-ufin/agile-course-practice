@@ -1,8 +1,6 @@
-package ru.unn.agile.HashMap.Model;
+package ru.unn.agile.hashmap.model;
 
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
 
@@ -123,15 +121,4 @@ public class HashMapTest {
         assertTrue(map.isEmpty());
     }
 
-    @Test
-    public void testCollisionResolution(){
-        map.add("LOL", 5);
-        map.add("LOL", 5);
-        map.add("LOL", 5);
-        map.add("LOL", 5);
-        
-        assertFalse(sizearray("LOL") == 4);
-    } 
-    
-    
 };

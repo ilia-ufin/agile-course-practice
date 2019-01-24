@@ -1,4 +1,4 @@
-package ru.unn.agile.HashMap.Model;
+package ru.unn.agile.hashmap.model;
 
 import java.util.*;
 

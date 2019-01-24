@@ -4,7 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import ru.unn.agile.hashmap.model.hashmap;
+import ru.unn.agile.hashmap.model.HashMap;
 
 
 public class ViewModel {
@@ -17,6 +17,8 @@ public class ViewModel {
     private StringProperty addingInputValue = new SimpleStringProperty();
     private StringProperty gettingInputKey = new SimpleStringProperty();
     private StringProperty gettingInputValue = new SimpleStringProperty();
+    private StringProperty settingInputKey = new SimpleStringProperty();
+    private StringProperty settingInputValue = new SimpleStringProperty();
     private StringProperty removingInputKey = new SimpleStringProperty();   
 
 	private BooleanProperty delButtonVisible = new SimpleBooleanProperty();
@@ -39,7 +41,7 @@ public class ViewModel {
 
     public ViewModel() {
         this.map = new HashMap();
-        IsEmptyStatus.set(STACK_IS_EMPTY);
+        IsEmptyStatus.set(IS_EMPTY);
         statusMessage.set(WAITING_FOR_INPUT);
     }
 
@@ -93,29 +95,29 @@ public class ViewModel {
         return statusMessage.get();
     }
 
-    public String setIsEmptyStatusProperty(final String addElem){
-        return IsEmptyStatus.set(addElem);
+    public void  setIsEmptyStatusProperty(final String addElem){
+         IsEmptyStatus.set(addElem);
     }
-	public String setaddingInputKeyProperty(final String addElem){
-        return addingInputKey.set(addElem);
+	public void setaddingInputKeyProperty(final String addElem){
+         addingInputKey.set(addElem);
     }
-	public String setaddingInputValueProperty(final String addElem){
-        return addingInputValue.set(addElem);
+	public void setaddingInputValueProperty(final String addElem){
+         addingInputValue.set(addElem);
     }
-	public String setgettingInputKeyProperty(final String addElem){
-        return settingInputKey.set(addElem);
+	public void setgettingInputKeyProperty(final String addElem){
+         settingInputKey.set(addElem);
     }	
-	public String setgettingInputValueProperty(final String addElem){
-        return settingInputValue.set(addElem);
+	public void setgettingInputValueProperty(final String addElem){
+         settingInputValue.set(addElem);
     }
-	public String setremovingInputKeyProperty(final String addElem){
-        return removingInputKey.set(addElem);
+	public void setremovingInputKeyProperty(final String addElem){
+         removingInputKey.set(addElem);
     }
-	public String setmapSizeProperty(final String addElem){
-        return mapSize.set(addElem);
+	public void setmapSizeProperty(final String addElem){
+         mapSize.set(addElem);
     }
-    public String setstatusMessageProperty(final String addElem){
-        return statusMessage.set(addElem);
+    public void setstatusMessageProperty(final String addElem){
+         statusMessage.set(addElem);
     }
 
     public void addElement() {
@@ -148,8 +150,7 @@ public class ViewModel {
 				setgettingInputValueProperty("");
             }
 			else if (map.containsKey(gettingKey)) {
-				map.add(addingKey,addingValue);
-				setgettingInputValueProperty(map.get(gettingKey));
+				setgettingInputValueProperty(map.get(gettingKey).toString());
                 statusMessage.set(COMPLETE_GET);
             }
 			else {		
@@ -168,7 +169,7 @@ public class ViewModel {
 				setgettingInputValueProperty("");
             }
 			else if (map.containsKey(removingKey)) {
-				map.remove(addingKey);
+				map.remove(removingKey);
 				setgettingInputValueProperty("");
                 statusMessage.set(COMPLETE_DELETED);
                 changeStackProperties();
@@ -184,10 +185,10 @@ public class ViewModel {
     private void changeStackProperties() {
         int intMapSize = map.size();
         mapSize.set(Integer.toString(intMapSize));
-        if (mapSize.isEmpty()) {
-            IsEmptyStatus.set(IS_EMPTY);
-        } else {
+        if (mapSize.isBound()) {
             IsEmptyStatus.set(IS_NOT_EMPTY);
+        } else {
+            IsEmptyStatus.set(IS_EMPTY);
         }
     }
 }
