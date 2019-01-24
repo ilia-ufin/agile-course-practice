@@ -90,6 +90,7 @@ public class TextLoggerTest {
 
         logger.log(STRING_LOG_CONSTANT_1);
         logger.log(STRING_LOG_CONSTANT_2);
+        
         assertEquals(STRING_LOG_CONSTANT_2, logger.getLogs().get(1));
     }
 
