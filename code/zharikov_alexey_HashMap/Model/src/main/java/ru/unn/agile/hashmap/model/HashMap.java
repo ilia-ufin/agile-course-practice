@@ -16,11 +16,11 @@ public class HashMap {
         }
     }
 
-    public boolean maybeContainsKey(String key){
+    public boolean maybeContainsKey(final String key) {
         return sizearray(key) > 0;
     }
 
-    public boolean containsKey(String key){
+    public boolean containsKey(final String key) {
         for (Element ele : GetListOfElemsByKey(key))
             if (ele.key.equals(key)) {
                 return true;
@@ -28,11 +28,11 @@ public class HashMap {
         return false;
     }
 
-    public boolean isEmpty () {
+    public boolean isEmpty() {
         return size() == 0;
     }
 
-    public void add(String key, Object value){
+    public void add(final String key, final Object value) {
         this.remove(key);
         final LinkedList<Element> elements = GetListOfElemsByKey(key);
         elements.add(new Element(key, value));
@@ -51,12 +51,12 @@ public class HashMap {
         return array;
     }
 
-   public  LinkedList<Element> GetListOfElemsByKey(String key) {
-       final LinkedList<Element> elements = this.array.get(hash(key));
-       return elements;
+    public LinkedList<Element> GetListOfElemsByKey(final String key) {
+        final LinkedList<Element> elements = this.array.get(hash(key));
+        return elements;
     }
 
-    public Object get(String key){
+    public Object get(final String key) {
         for (Element ele : GetListOfElemsByKey(key)) {
             if (ele.isEquals(key)) {
                 return ele.value;
@@ -65,7 +65,7 @@ public class HashMap {
         throw new NoSuchElementException();
     }
 
-    public void remove(String key){
+    public void remove(final String key) {
         for (Element ele : GetListOfElemsByKey(key)) {
             if (ele.isEquals(key)) {
                 GetListOfElemsByKey(key).remove(ele);
@@ -75,7 +75,7 @@ public class HashMap {
         }
     }
 
-    private int hash (String key){
+    private int hash(final String key) {
         return key.hashCode() % SIZE_MAP;
     }
 
@@ -83,12 +83,12 @@ public class HashMap {
         public final String key;
         public final Object value;
 
-        public Element(String key, Object value) {
+        public Element(final String key, final Object value) {
             this.key = key;
             this.value = value;
         }
 
-        public boolean isEquals (String key) {
+        public boolean isEquals(final String key) {
             return this.key.equals(key);
         }
 
