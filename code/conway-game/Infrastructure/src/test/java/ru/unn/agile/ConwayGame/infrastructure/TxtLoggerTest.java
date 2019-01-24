@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class TxtLoggerTest {
     private static final String FILE_NAME = "./ConwayGame-TextLogger.log";
     private static final String DATE_TIME_LOG =
-            "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*";
+            "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} - .*";
     private static final String TEST_MESSAGE = "Some text";
     private TxtLogger txtLogger;
 
@@ -63,6 +63,6 @@ public class TxtLoggerTest {
 
         List<String> logs = txtLogger.getLog();
         String message = logs.get(0);
-        assertTrue(message.matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*"));
+        assertTrue(message.matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} - .*"));
     }
 }
