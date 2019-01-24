@@ -439,3 +439,11 @@ include "code/binary-search/ViewModel"
 project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
 include "code/binary-search/Infrastructure"
 project(":code/binary-search/Infrastructure").name = "binary-search-Infrastructure"
+
+// Yufin Ilia, Modifide Stack
+include "code/modifide-stack/Model"
+project(":code/modifide-stack/Model").name = "modifide-stack-Model"
+include "code/modifide-stack/ViewModel"
+project(":code/modifide-stack/ViewModel").name = "modifide-stack-ViewModel"
+include "code/modifide-stack/View"
+project(":code/modifide-stack/View").name = "modifide-stack-View"
