@@ -1,4 +1,4 @@
-package ru.unn.agile.hashmap.view;
+package ru.unn.agile.MyHashMap.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ public class Main extends Application {
     public static final int HIEGHT = 275;
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("HashMapView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MyHashMapView.fxml"));
         primaryStage.setTitle("HashMap using");
         primaryStage.setScene(new Scene(root, WIEGHT, HIEGHT));
         primaryStage.show();

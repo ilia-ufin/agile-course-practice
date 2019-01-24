@@ -1,15 +1,14 @@
-package ru.unn.agile.hashmap.model;
+package ru.unn.agile.myhashmap.model;
 
 import java.util.*;
 
-public class HashMap {
-    public static final int SIZE_MAP = 128;
+public class MyHashMap {
+    private List<LinkedList<Element>> array;
+    static final int SIZE_MAP = 128;
     private int size;
 
-    //private ArrayList<LinkedList<Element>> array;
-    private List<LinkedList<Element>> array;
-
-    public HashMap() {
+    public MyHashMap() {
+        super();
         this.size = 0;
         this.array = new ArrayList<>(SIZE_MAP);
 

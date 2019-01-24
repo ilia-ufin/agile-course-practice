@@ -1,4 +1,4 @@
-package ru.unn.agile.hashmap.view;
+package ru.unn.agile.myhashmap.view;
 
 import org.junit.Ignore;
 import org.junit.Test;

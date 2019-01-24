@@ -1,13 +1,13 @@
-package ru.unn.agile.hashmap.viewmodel;
+package ru.unn.agile.myhashmap.viewmodel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import ru.unn.agile.hashmap.model.HashMap;
-
+import ru.unn.agile.myhashmap.model.MyHashMap;
+//import java.util.*;
 
 public class ViewModel {
 
-    private HashMap map;
+    private MyHashMap map = new MyHashMap();
     private StringProperty isEmptyStatus = new SimpleStringProperty();
     private StringProperty mapSize = new SimpleStringProperty();
     private StringProperty statusMessage = new SimpleStringProperty();
@@ -34,9 +34,7 @@ public class ViewModel {
     public static final String NONE = "None";
 
 
-
     public ViewModel() {
-        map = new HashMap();
         isEmptyStatus.set(IS_EMPTY);
         statusMessage.set(WAITING_FOR_INPUT);
     }

@@ -436,9 +436,9 @@ project(":code/binary-search/Infrastructure").name = "binary-search-Infrastructu
 
 // Zharikov, hashmap
 include "code/zharikov_alexey_HashMap/Model"
-project(":code/zharikov_alexey_HashMap/Model").name = "HashMap-Model"
+project(":code/zharikov_alexey_HashMap/Model").name = "MyHashMap-Model"
 include "code/zharikov_alexey_HashMap/ViewModel"
-project(":code/zharikov_alexey_HashMap/ViewModel").name = "HashMap-ViewModel"
+project(":code/zharikov_alexey_HashMap/ViewModel").name = "MyHashMap-ViewModel"
 include "code/zharikov_alexey_HashMap/View"
-project(":code/zharikov_alexey_HashMap/View").name = "HashMap-View"
+project(":code/zharikov_alexey_HashMap/View").name = "MyHashMap-View"
 

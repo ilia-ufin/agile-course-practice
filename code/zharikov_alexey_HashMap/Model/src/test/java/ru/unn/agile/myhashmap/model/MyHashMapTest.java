@@ -1,4 +1,4 @@
-package ru.unn.agile.hashmap.model;
+package ru.unn.agile.myhashmap.model;
 
 import org.junit.*;
 
@@ -6,12 +6,12 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-public class HashMapTest {
-    private HashMap map;
+public class MyHashMapTest {
+    private MyHashMap map;
 
     @Before
     public void setUp() {
-        this.map = new HashMap();
+        this.map = new MyHashMap();
     }
 
     @Test(expected = NoSuchElementException.class)
