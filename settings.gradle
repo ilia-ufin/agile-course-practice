@@ -308,9 +308,13 @@ project(":code/quadratic-equation-solver/View").name = "quadratic-equation-solve
 include "code/quadratic-equation-solver/Infrastructure"
 project(":code/quadratic-equation-solver/Infrastructure").name = "quadratic-equation-solver-Infrastructure"
 
-// Podchishchaeva Mariya, RBTree
-include "code/podchishchaeva-rb-tree"
-project(":code/podchishchaeva-rb-tree").name = "podchishchaeva-rb-tree"
+// Podchishchaeva Mariya, Vladislav Ryabov RBTree
+include "code/rb-tree/Model"
+project(":code/rb-tree/Model").name = "rb-tree-Model"
+include "code/rb-tree/View"
+project(":code/rb-tree/View").name = "rb-tree-View"
+include "code/rb-tree/ViewModel"
+project(":code/rb-tree/ViewModel").name = "rb-tree-ViewModel"
 
 // Converter From Celsius: Golovanova Tatyana, Shiryaeva Ekaterina, Kochuev Andrey
 include "code/converter-temperatures/Model"
@@ -440,6 +444,7 @@ project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
 include "code/binary-search/Infrastructure"
 project(":code/binary-search/Infrastructure").name = "binary-search-Infrastructure"
 
+<<<<<<< HEAD
 // Yufin Ilia, Modifide Stack
 include "code/modifide-stack/Model"
 project(":code/modifide-stack/Model").name = "modifide-stack-Model"
@@ -449,3 +454,14 @@ include "code/modifide-stack/View"
 project(":code/modifide-stack/View").name = "modifide-stack-View"
 include "code/modifide-stack/Infrastructure"
 project(":code/modifide-stack/Infrastructure").name = "modifide-stack-Infrastructure"
+=======
+// Zharikov, hashmap
+include "code/zharikov_alexey_HashMap/Model"
+project(":code/zharikov_alexey_HashMap/Model").name = "MyHashMap-Model"
+include "code/zharikov_alexey_HashMap/ViewModel"
+project(":code/zharikov_alexey_HashMap/ViewModel").name = "MyHashMap-ViewModel"
+include "code/zharikov_alexey_HashMap/View"
+project(":code/zharikov_alexey_HashMap/View").name = "MyHashMap-View"
+include "code/zharikov_alexey_HashMap/Infrastructure"
+project(":code/zharikov_alexey_HashMap/Infrastructure").name = "MyHashMap-Infrastructure"
+>>>>>>> upstream/master
