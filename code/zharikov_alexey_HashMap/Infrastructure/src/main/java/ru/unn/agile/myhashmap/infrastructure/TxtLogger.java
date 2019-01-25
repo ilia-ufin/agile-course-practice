@@ -1,7 +1,6 @@
 package ru.unn.agile.myhashmap.infrastructure;
 
 import ru.unn.agile.myhashmap.viewmodel.ILogger;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -55,5 +54,4 @@ public class TxtLogger implements ILogger {
     private static String getNowTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
     }
-
 }
