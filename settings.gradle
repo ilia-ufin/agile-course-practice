@@ -439,3 +439,13 @@ include "code/binary-search/ViewModel"
 project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
 include "code/binary-search/Infrastructure"
 project(":code/binary-search/Infrastructure").name = "binary-search-Infrastructure"
+
+// Zharikov, hashmap
+include "code/zharikov_alexey_HashMap/Model"
+project(":code/zharikov_alexey_HashMap/Model").name = "MyHashMap-Model"
+include "code/zharikov_alexey_HashMap/ViewModel"
+project(":code/zharikov_alexey_HashMap/ViewModel").name = "MyHashMap-ViewModel"
+include "code/zharikov_alexey_HashMap/View"
+project(":code/zharikov_alexey_HashMap/View").name = "MyHashMap-View"
+include "code/zharikov_alexey_HashMap/Infrastructure"
+project(":code/zharikov_alexey_HashMap/Infrastructure").name = "MyHashMap-Infrastructure"

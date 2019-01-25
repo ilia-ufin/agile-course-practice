@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':MyHashMap-ViewModel')
+    testCompile project(':MyHashMap-ViewModel').sourceSets.test.output
+}
