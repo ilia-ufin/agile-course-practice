@@ -1,6 +1,6 @@
 package ru.unn.agile.myhashmap.infrastructure;
 
-import ru.unn.agile.modifideStack.viewmodel.ILogger;
+import ru.unn.agile.myhashmap.viewmodel.ILogger;
 
 import java.io.*;
 import java.time.LocalDateTime;
