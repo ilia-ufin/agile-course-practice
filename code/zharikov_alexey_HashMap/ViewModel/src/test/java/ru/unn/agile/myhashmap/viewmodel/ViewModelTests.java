@@ -24,19 +24,19 @@ public class ViewModelTests {
     public void tearDown() {
         viewMod = null;
     }
-	
-	@Test
+
+    @Test
     public void canCreateViewModelNotLogger() {
         ViewModel newViewMod = new ViewModel();
 
         assertNotNull(newViewMod);
     }
-    
+
     @Test
     public void validDefaultStatusMessage() {
         assertEquals(viewMod.WAITING_FOR_INPUT, viewMod.statusMessageProperty().get());
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void canNotCreateViewModelWithNullLogger() {
         ViewModel newViewMod = new ViewModel(null);
@@ -48,7 +48,7 @@ public class ViewModelTests {
         assertEquals("0", viewModel.getmapSizeProperty());
     }
     */
-    
+
     @Test
     public void canCreateViewModelNotNullLogger() {
         ViewModel newViewMod = new ViewModel(new FakeLogger());

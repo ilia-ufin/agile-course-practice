@@ -24,7 +24,6 @@ public class ViewModel {
     private StringProperty settingInputValue = new SimpleStringProperty();
     private StringProperty removingInputKey = new SimpleStringProperty();
     private StringProperty textLog = new SimpleStringProperty();
-
     public static final String WAITING_FOR_INPUT = "Waiting for new element";
     public static final String NOT_FOUND_BY_KEY = "Element not found by key";
     public static final String READY_TO_ADD = "Ready to add new element";
@@ -148,10 +147,10 @@ public class ViewModel {
         statusMessage.set(addElem);
     }
 
-	public String getTextLog() {
+    public String getTextLog() {
         return textLog.get();
     }
-    
+
     public void addElement() {
         String addingKey = getaddingInputKeyProperty();
         String addingValue = getaddingInputValueProperty();
@@ -184,7 +183,7 @@ public class ViewModel {
         }
         textLog.set(logMes.toString());
     }
-    
+
     public void getElement() {
         try {
             String gettingKey = getgettingInputKeyProperty();
@@ -222,11 +221,11 @@ public class ViewModel {
             statusMessage.set(INVALID_FORMAT);
         }
     }
-    
+
     public List<String> getLogList() {
         return logger.getLog();
     }
-    
+
     private void changeStackProperties() {
         int intMapSize = map.size();
         mapSize.set(Integer.toString(intMapSize));
@@ -247,7 +246,6 @@ public class ViewModel {
         }
         this.logger = logger;
     }
-
 
 
 }
