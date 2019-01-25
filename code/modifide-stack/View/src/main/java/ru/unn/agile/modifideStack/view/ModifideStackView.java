@@ -5,6 +5,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
+import ru.unn.agile.modifideStack.infrastructure.TxtLogger;
 import ru.unn.agile.modifideStack.viewmodel.ViewModel;
 
 
@@ -22,6 +24,8 @@ public class ModifideStackView {
 
     @FXML
     void initialize() {
+        viewModel.setILogger(new TxtLogger("./ModifideStack.log"));
+
         inputNewElemField.textProperty().bindBidirectional(viewModel.pushElementProperty());
 
         pushElementButton.setOnAction(new EventHandler<ActionEvent>() {

@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ru.unn.agile.modifideStack.model.ModifideStack;
 
+import java.util.List;
+
 public class ViewModel {
     public static final String WAITING_FOR_INPUT = "Waiting for new element";
     public static final String READY_TO_ADD = "Ready to add new element";
@@ -14,6 +16,9 @@ public class ViewModel {
     public static final String STACK_IS_EMPTY = "Modifide Stack is empty.";
     public static final String STACK_IS_NOT_EMPTY = "Modifide Stack is not empty.";
     public static final String NONE = "None";
+
+    private static final String LOGGER_IS_NULL = "Logger can not be null";
+    private static final String EMPTY_ELEMENT = "Adding element is empty";
 
     private ModifideStack integerModifideStack;
 
@@ -24,10 +29,18 @@ public class ViewModel {
     private StringProperty pushElement = new SimpleStringProperty();
     private StringProperty minElem = new SimpleStringProperty();
     private StringProperty statusMessageTxt = new SimpleStringProperty();
+    private StringProperty logTxt = new SimpleStringProperty();
 
     private BooleanProperty popButtonVisible = new SimpleBooleanProperty();
 
+    private ILogger logger;
+
     public ViewModel() {
+        initDefaultValues();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setILogger(logger);
         initDefaultValues();
     }
 
@@ -41,8 +54,38 @@ public class ViewModel {
         minElem.set(NONE);
         pushElement.set("");
         statusMessageTxt.set(WAITING_FOR_INPUT);
+        logTxt.set("");
 
         popButtonVisible.set(false);
+    }
+
+    public StringProperty logTxtProperty() {
+        return logTxt;
+    }
+
+    public String getlogTxt() {
+        return logTxt.get();
+    }
+
+    public List<String> getLogsList() {
+        return logger.getLog();
+    }
+
+    public final void setILogger(final ILogger iLog) {
+        if (iLog == null) {
+            throw new IllegalArgumentException(LOGGER_IS_NULL);
+        }
+        this.logger = iLog;
+    }
+
+    private void writeLog(final String message) {
+        logger.log(message);
+        StringBuilder logMessages = new StringBuilder();
+        List<String> logList = getLogsList();
+        for (String log : logList) {
+            logMessages.append(log).append("\n");
+        }
+        logTxt.set(logMessages.toString());
     }
 
     public StringProperty modifideStackEmptyStatusProperty() {
@@ -118,14 +161,17 @@ public class ViewModel {
         try {
             if (pushElement.isEmpty()) {
                 statusMessageTxt.set(WAITING_FOR_INPUT);
+                writeLog(EMPTY_ELEMENT);
             } else {
                 Integer element = Integer.parseInt(pushElement);
                 integerModifideStack.push(element);
                 statusMessageTxt.set(READY_TO_ADD);
                 changeModifideStackProperties();
+                writeLog("Add " + element + " element into stack");
             }
         } catch (NumberFormatException e) {
             statusMessageTxt.set(INVALID_FORMAT);
+            writeLog("Adding element " + pushElement + " has invalid format");
         }
     }
 
@@ -149,6 +195,7 @@ public class ViewModel {
         if (!integerModifideStack.isEmpty()) {
             modifideStackPopElement.set(Integer.toString(integerModifideStack.pop()));
             changeModifideStackProperties();
+            writeLog("Pop " + getModifideStackPopElement() + " element from stack");
         }
     }
 }

@@ -9,9 +9,13 @@ import static org.junit.Assert.assertEquals;
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    public void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
-    public void setUp() {
-        viewModel = new ViewModel();
+    public void setUpModel() {
+        viewModel = new ViewModel(new FakeLogger());
     }
 
     @After
