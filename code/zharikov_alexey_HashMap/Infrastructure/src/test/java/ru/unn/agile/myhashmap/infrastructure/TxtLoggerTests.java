@@ -1,4 +1,4 @@
-package ru.unn.agile.modifideStack.infrastructure;
+package ru.unn.agile.myhashmap.infrastructure;
 
 import org.junit.After;
 import org.junit.Before;
