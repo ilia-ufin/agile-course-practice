@@ -3,7 +3,8 @@ package ru.unn.agile.myhashmap.viewmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import ru.unn.agile.myhashmap.model.MyHashMap;
-//import java.util.*;
+
+import java.util.*;
 
 public class ViewModel {
 
@@ -12,6 +13,9 @@ public class ViewModel {
     private StringProperty mapSize = new SimpleStringProperty();
     private StringProperty statusMessage = new SimpleStringProperty();
 
+    private static final String LOGGER_IS_NULL = "Logger can not be null";
+    //private static final String EMPTY_ELEMENT = "Adding element is empty";
+
     private StringProperty addingInputKey = new SimpleStringProperty();
     private StringProperty addingInputValue = new SimpleStringProperty();
     private StringProperty gettingInputKey = new SimpleStringProperty();
@@ -19,6 +23,7 @@ public class ViewModel {
     private StringProperty settingInputKey = new SimpleStringProperty();
     private StringProperty settingInputValue = new SimpleStringProperty();
     private StringProperty removingInputKey = new SimpleStringProperty();
+    private StringProperty textLog = new SimpleStringProperty();
 
     public static final String WAITING_FOR_INPUT = "Waiting for new element";
     public static final String NOT_FOUND_BY_KEY = "Element not found by key";
@@ -31,12 +36,20 @@ public class ViewModel {
 
     public static final String IS_EMPTY = "Map is empty.";
     public static final String IS_NOT_EMPTY = "Map is not empty.";
-    public static final String NONE = "None";
+    //public static final String NONE = "None";
 
+    private ILogger logger;
 
     public ViewModel() {
         isEmptyStatus.set(IS_EMPTY);
         statusMessage.set(WAITING_FOR_INPUT);
+        textLog.set("");
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+        statusMessage.set(WAITING_FOR_INPUT);
+        textLog.set("");
     }
 
     public StringProperty isEmptyStatusProperty() {
@@ -136,12 +149,13 @@ public class ViewModel {
     }
 
     public void addElement() {
+        String addingKey = getaddingInputKeyProperty();
+        String addingValue = getaddingInputValueProperty();
         try {
-            String addingKey = getaddingInputKeyProperty();
-            String addingValue = getaddingInputValueProperty();
             if (addingKey.isEmpty()) {
                 statusMessage.set(INVALID_KEY_FORMAT);
                 setgettingInputValueProperty("");
+                writeLog(INVALID_KEY_FORMAT);
             } else if (addingValue.isEmpty()) {
                 statusMessage.set(INVALID_VALUE_FORMAT);
                 setgettingInputValueProperty("");
@@ -149,9 +163,10 @@ public class ViewModel {
                 map.add(addingKey, addingValue);
                 setgettingInputValueProperty("");
                 statusMessage.set(READY_TO_ADD);
-                changeStackProperties();
+                writeLog("Add " + addingKey + "=" + addingValue + " element into map");
             }
         } catch (NumberFormatException e) {
+            writeLog("Adding element " + addingKey + "=" + addingValue + " has invalid format");
             statusMessage.set(INVALID_FORMAT);
         }
     }
@@ -203,4 +218,34 @@ public class ViewModel {
             isEmptyStatus.set(IS_EMPTY);
         }
     }
+
+    public StringProperty textLogProperty() {
+        return textLog;
+    }
+
+    public String getTextLog() {
+        return textLog.get();
+    }
+
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException(LOGGER_IS_NULL);
+        }
+        this.logger = logger;
+    }
+
+    private void writeLog(final String message) {
+        logger.log(message);
+        StringBuilder logMessages = new StringBuilder();
+        List<String> logList = getLogList();
+        for (String log : logList) {
+            logMessages.append(log).append("\n");
+        }
+        textLog.set(logMessages.toString());
+    }
+
 }

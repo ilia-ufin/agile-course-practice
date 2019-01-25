@@ -1,4 +1,4 @@
-package ru.unn.agile.MyHashMap.view;
+package ru.unn.agile.myhashmap.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
