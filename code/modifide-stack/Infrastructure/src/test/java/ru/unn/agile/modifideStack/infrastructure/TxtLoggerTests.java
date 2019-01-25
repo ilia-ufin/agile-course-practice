@@ -10,81 +10,81 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class TxtLoggerTests {
-    private static final String FILE_NAME = "./TxtLoggerTests.log";
-    private static final String LOG_PATTERN = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*";
     private static final String TEST_MESSAGE = "Tes test";
+    private static final String LOG_PATTERN = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*";
+    private static final String FILE_NAME = "./TxtLoggerTests.log";
 
-    private TxtLogger txtLogger;
+    private TxtLogger txtLoggerT;
 
     @Before
     public void setUp() {
-        txtLogger = new TxtLogger(FILE_NAME);
+        txtLoggerT = new TxtLogger(FILE_NAME);
     }
 
     @After
     public void tearDown() {
-        txtLogger = null;
+        txtLoggerT = null;
     }
 
     @Test
     public void canCreateLoggerWithFileName() {
-        assertNotNull(txtLogger);
+        assertNotNull(txtLoggerT);
     }
 
     @Test(expected = Test.None.class)
     public void canCreateLogWithEmptyFilename() {
-        TxtLogger testLogger = new TxtLogger("");
+        TxtLogger testLoggerT = new TxtLogger("");
 
-        assertEquals(0, testLogger.getLog().size());
+        assertEquals(0, testLoggerT.getLog().size());
     }
 
     @Test(expected = Test.None.class)
     public void canReadLogWithEmptyFilename() {
-        TxtLogger testLogger = new TxtLogger("");
+        TxtLogger testLoggerT = new TxtLogger("");
 
-        assertEquals(0, testLogger.getLog().size());
+        assertEquals(0, testLoggerT.getLog().size());
     }
 
     @Test(expected = Test.None.class)
     public void canWriteIntoLogWithEmptyFilename() {
-        TxtLogger testTxtLogger = new TxtLogger("");
+        TxtLogger txtLoggerTest = new TxtLogger("");
 
-        testTxtLogger.log(TEST_MESSAGE);
+        txtLoggerTest.log(TEST_MESSAGE);
 
-        assertEquals(0, testTxtLogger.getLog().size());
+        assertEquals(0, txtLoggerTest.getLog().size());
     }
 
     @Test
     public void canCreateFileLogOnDisk() {
         try {
             new BufferedReader(new FileReader(FILE_NAME));
-        } catch (FileNotFoundException ex) {
-            fail("File " + FILE_NAME + " was not found on disk!");
+        } catch (FileNotFoundException err) {
+            fail("File '" + FILE_NAME + "' was not found on disk!");
         }
     }
 
     @Test
-    public void areDateAndTime() {
-        txtLogger.log(TEST_MESSAGE);
+    public void areDateAndTimeTest() {
+        txtLoggerT.log(TEST_MESSAGE);
 
-        String log = txtLogger.getLog().get(0);
+        String log = txtLoggerT.getLog().get(0);
         assertTrue(log.matches(LOG_PATTERN));
     }
 
     @Test
     public void canWriteLogMessage() {
-        txtLogger.log(TEST_MESSAGE);
+        txtLoggerT.log(TEST_MESSAGE);
 
-        String message = txtLogger.getLog().get(0);
+        String message = txtLoggerT.getLog().get(0);
         assertTrue(message.matches(".*" + message + "$"));
     }
 
     @Test
     public void canWriteTwoLogMessages() {
-        txtLogger.log(TEST_MESSAGE.concat(" #1"));
-        txtLogger.log(TEST_MESSAGE.concat(" #2"));
+        txtLoggerT.log(TEST_MESSAGE.concat(" #1"));
+        txtLoggerT.log(TEST_MESSAGE.concat(" #2"));
 
-        List<String> messages = txtLogger.getLog();
+        List<String> messages = txtLoggerT.getLog();
 
         for (int i = 0; i < messages.size(); i++) {
             String message = messages.get(i);

@@ -444,7 +444,6 @@ project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
 include "code/binary-search/Infrastructure"
 project(":code/binary-search/Infrastructure").name = "binary-search-Infrastructure"
 
-<<<<<<< HEAD
 // Yufin Ilia, Modifide Stack
 include "code/modifide-stack/Model"
 project(":code/modifide-stack/Model").name = "modifide-stack-Model"
@@ -454,7 +453,7 @@ include "code/modifide-stack/View"
 project(":code/modifide-stack/View").name = "modifide-stack-View"
 include "code/modifide-stack/Infrastructure"
 project(":code/modifide-stack/Infrastructure").name = "modifide-stack-Infrastructure"
-=======
+
 // Zharikov, hashmap
 include "code/zharikov_alexey_HashMap/Model"
 project(":code/zharikov_alexey_HashMap/Model").name = "MyHashMap-Model"
@@ -464,4 +463,4 @@ include "code/zharikov_alexey_HashMap/View"
 project(":code/zharikov_alexey_HashMap/View").name = "MyHashMap-View"
 include "code/zharikov_alexey_HashMap/Infrastructure"
 project(":code/zharikov_alexey_HashMap/Infrastructure").name = "MyHashMap-Infrastructure"
->>>>>>> upstream/master
+

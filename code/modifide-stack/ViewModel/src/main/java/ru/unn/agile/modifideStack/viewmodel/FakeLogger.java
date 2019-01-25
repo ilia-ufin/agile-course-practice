@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FakeLogger implements ILogger {
-    private List<String> logList = new ArrayList<String>();
+    private List<String> logListFake = new ArrayList<String>();
 
     @Override
-    public void log(final String logMessage) {
-        logList.add(logMessage);
+    public void log(final String logMessageFake) {
+        logListFake.add(logMessageFake);
     }
 
     @Override
     public List<String> getLog() {
-        return logList;
+        return logListFake;
     }
 }
