@@ -9,40 +9,38 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
-    private ViewModel viewModel;
+    private ViewModel viewMod;
 
-    public void setViewModel(final ViewModel viewModel) {
-        this.viewModel = viewModel;
+    public void setViewModel(final ViewModel viewMod) {
+        this.viewMod = viewMod;
     }
 
     @Before
     public void setUp() {
-        viewModel = new ViewModel(new FakeLogger());
+        viewMod = new ViewModel(new FakeLogger());
     }
 
     @After
     public void tearDown() {
-        viewModel = null;
+        viewMod = null;
     }
+	
+	@Test
+    public void canCreateViewModelNotLogger() {
+        ViewModel newViewMod = new ViewModel();
 
+        assertNotNull(newViewMod);
+    }
+    
+    @Test
+    public void validDefaultStatusMessage() {
+        assertEquals(viewMod.WAITING_FOR_INPUT, viewMod.statusMessageProperty().get());
+    }
+    
     @Test(expected = IllegalArgumentException.class)
     public void canNotCreateViewModelWithNullLogger() {
-        ViewModel newViewModel = new ViewModel(null);
+        ViewModel newViewMod = new ViewModel(null);
     }
-
-    @Test
-    public void correctDefaultStatusMessage() {
-        assertEquals(viewModel.WAITING_FOR_INPUT, viewModel.statusMessageProperty().get());
-    }
-
-    @Test
-    public void canCreateViewModelBezLogger() {
-        ViewModel newViewModel = new ViewModel();
-
-        assertNotNull(newViewModel);
-    }
-
-
     /*
     @Test
     public void canSetDefaultValues() {
@@ -50,11 +48,12 @@ public class ViewModelTests {
         assertEquals("0", viewModel.getmapSizeProperty());
     }
     */
+    
     @Test
-    public void canCreateViewModelWithNotNullLogger() {
-        ViewModel newViewModel = new ViewModel(new FakeLogger());
+    public void canCreateViewModelNotNullLogger() {
+        ViewModel newViewMod = new ViewModel(new FakeLogger());
 
-        assertNotNull(newViewModel);
+        assertNotNull(newViewMod);
     }
 
 

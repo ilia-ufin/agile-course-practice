@@ -1,9 +1,10 @@
-package ru.unn.agile.myhashmap.infrastructure;
+package ru.unn.agile.modifideStack.infrastructure;
 
-import ru.unn.agile.myhashmap.viewmodel.ILogger;
+import ru.unn.agile.modifideStack.viewmodel.ILogger;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class TxtLogger implements ILogger {
@@ -14,23 +15,24 @@ public class TxtLogger implements ILogger {
 
     public TxtLogger(final String filename) {
         this.filename = filename;
-        BufferedWriter logWriter = null;
+
+        BufferedWriter newLogWriter = null;
         try {
-            logWriter = new BufferedWriter(new FileWriter(filename));
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            newLogWriter = new BufferedWriter(new FileWriter(filename));
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
-        this.writer = logWriter;
+        this.writer = newLogWriter;
     }
 
     @Override
     public void log(final String message) {
         try {
-            writer.write(now() + " > " + message);
-            writer.newLine();
+            String lineLog = getNowTime() + " > " + message + "\n";
+            writer.write(lineLog);
             writer.flush();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
     }
 
@@ -38,22 +40,20 @@ public class TxtLogger implements ILogger {
     public List<String> getLog() {
         ArrayList<String> log = new ArrayList<String>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
-            String line = reader.readLine();
-            while (line != null) {
-                log.add(line);
-                line = reader.readLine();
+            BufferedReader bReader = new BufferedReader(new FileReader(filename));
+            String newLine = bReader.readLine();
+            while (newLine != null) {
+                log.add(newLine);
+                newLine = bReader.readLine();
             }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
         return log;
     }
 
-    private static String now() {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
-        return sdf.format(calendar.getTime());
+    private static String getNowTime() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
     }
 
 }

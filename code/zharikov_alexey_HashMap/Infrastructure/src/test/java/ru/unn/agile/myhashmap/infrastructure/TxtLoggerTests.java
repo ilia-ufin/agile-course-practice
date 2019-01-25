@@ -1,4 +1,4 @@
-package ru.unn.agile.myhashmap.infrastructure;
+package ru.unn.agile.modifideStack.infrastructure;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class TxtLoggerTests {
     private static final String FILE_NAME = "./TxtLoggerTests.log";
     private static final String LOG_PATTERN = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*";
-    private static final String TEST_MESSAGE = "Test message";
+    private static final String TEST_MESSAGE = "Tes test";
 
     private TxtLogger txtLogger;
 
@@ -27,68 +27,68 @@ public class TxtLoggerTests {
     }
 
     @Test
-    public void canCreateTxtLoggerWithFileName() {
+    public void canCreateLoggerWithFileName() {
         assertNotNull(txtLogger);
     }
 
     @Test(expected = Test.None.class)
-    public void canCreateTxtLoggerWithEmptyFilename() {
+    public void canCreateLogWithEmptyFilename() {
         TxtLogger testLogger = new TxtLogger("");
 
         assertEquals(0, testLogger.getLog().size());
     }
 
     @Test(expected = Test.None.class)
-    public void canReadTxtLoggerWithEmptyFilename() {
+    public void canReadLogWithEmptyFilename() {
         TxtLogger testLogger = new TxtLogger("");
 
         assertEquals(0, testLogger.getLog().size());
     }
 
     @Test(expected = Test.None.class)
-    public void canWriteIntoTxtLoggerWithEmptyFilename() {
-        TxtLogger testLogger = new TxtLogger("");
+    public void canWriteIntoLogWithEmptyFilename() {
+        TxtLogger testTxtLogger = new TxtLogger("");
 
-        testLogger.log(TEST_MESSAGE);
+        testTxtLogger.log(TEST_MESSAGE);
 
-        assertEquals(0, testLogger.getLog().size());
+        assertEquals(0, testTxtLogger.getLog().size());
     }
 
     @Test
-    public void canCreateLogFileOnDisk() {
+    public void canCreateFileLogOnDisk() {
         try {
             new BufferedReader(new FileReader(FILE_NAME));
         } catch (FileNotFoundException ex) {
-            fail("File " + FILE_NAME + " was not found!");
+            fail("File " + FILE_NAME + " was not found on disk!");
         }
     }
 
     @Test
-    public void areDateAndTimeContainedInLog() {
+    public void areDateAndTime() {
         txtLogger.log(TEST_MESSAGE);
 
-        String logMessage = txtLogger.getLog().get(0);
-        assertTrue(logMessage.matches(LOG_PATTERN));
+        String log = txtLogger.getLog().get(0);
+        assertTrue(log.matches(LOG_PATTERN));
     }
 
     @Test
-    public void canWriteOneLogMessage() {
+    public void canWriteLogMessage() {
         txtLogger.log(TEST_MESSAGE);
 
-        String logMessage = txtLogger.getLog().get(0);
-        assertTrue(logMessage.matches(".*" + logMessage + "$"));
+        String message = txtLogger.getLog().get(0);
+        assertTrue(message.matches(".*" + message + "$"));
     }
 
     @Test
-    public void canWriteSeveralLogMessages() {
+    public void canWriteTwoLogMessages() {
         txtLogger.log(TEST_MESSAGE.concat(" #1"));
         txtLogger.log(TEST_MESSAGE.concat(" #2"));
 
-        List<String> logMessages = txtLogger.getLog();
+        List<String> messages = txtLogger.getLog();
 
-        for (int i = 0; i < logMessages.size(); i++) {
-            String logMessage = logMessages.get(i);
-            assertTrue(logMessage.matches(".*" + logMessage + "$"));
+        for (int i = 0; i < messages.size(); i++) {
+            String message = messages.get(i);
+            assertTrue(message.matches(".*" + message + "$"));
         }
     }
 }

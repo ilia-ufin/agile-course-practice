@@ -148,6 +148,10 @@ public class ViewModel {
         statusMessage.set(addElem);
     }
 
+	public String getTextLog() {
+        return textLog.get();
+    }
+    
     public void addElement() {
         String addingKey = getaddingInputKeyProperty();
         String addingValue = getaddingInputValueProperty();
@@ -171,6 +175,16 @@ public class ViewModel {
         }
     }
 
+    private void writeLog(final String mes) {
+        logger.log(mes);
+        StringBuilder logMes = new StringBuilder();
+        List<String> logList = getLogList();
+        for (String log : logList) {
+            logMes.append(log).append("\n");
+        }
+        textLog.set(logMes.toString());
+    }
+    
     public void getElement() {
         try {
             String gettingKey = getgettingInputKeyProperty();
@@ -208,7 +222,11 @@ public class ViewModel {
             statusMessage.set(INVALID_FORMAT);
         }
     }
-
+    
+    public List<String> getLogList() {
+        return logger.getLog();
+    }
+    
     private void changeStackProperties() {
         int intMapSize = map.size();
         mapSize.set(Integer.toString(intMapSize));
@@ -223,14 +241,6 @@ public class ViewModel {
         return textLog;
     }
 
-    public String getTextLog() {
-        return textLog.get();
-    }
-
-    public List<String> getLogList() {
-        return logger.getLog();
-    }
-
     public final void setLogger(final ILogger logger) {
         if (logger == null) {
             throw new IllegalArgumentException(LOGGER_IS_NULL);
@@ -238,14 +248,6 @@ public class ViewModel {
         this.logger = logger;
     }
 
-    private void writeLog(final String message) {
-        logger.log(message);
-        StringBuilder logMessages = new StringBuilder();
-        List<String> logList = getLogList();
-        for (String log : logList) {
-            logMessages.append(log).append("\n");
-        }
-        textLog.set(logMessages.toString());
-    }
+
 
 }
